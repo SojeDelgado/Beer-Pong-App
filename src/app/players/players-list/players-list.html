@@ -1,0 +1,13 @@
+<div class="content">
+    <div>
+        <h2>Jugadores</h2>
+        <ul>
+            @for (player of players(); track player.id) {
+            <li>
+                <app-player-item [player]="player" />
+            </li>
+            }
+        </ul>
+    </div>
+    <div class="vertical-line"></div>
+</div>

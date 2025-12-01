@@ -1,0 +1,33 @@
+<div [ngClass]="{'active': isAddingMatch, 'disabled': !isAddingMatch}">
+  <div class="backdrop" (click)="onCloseAddMatchWindow()"></div>
+  <dialog open>
+    @if(players().length === 0 ){
+    <app-select-players (selectedPlayers)="onSelectedPlayers($event)" />
+    }
+
+    @if (pairings.length !== 0) {
+    <app-round-robin-form [pairings]="pairings" />
+    }
+  </dialog>
+</div>
+
+
+<h1 style="text-align: center;">Torneos de Clasificación</h1>
+
+<header>
+  <app-round-robin-list />
+  <div>
+    <router-outlet class="content" />
+  </div>
+
+</header>
+
+@if (pairings.length !==0) {
+<div class="button">
+  <button type="button" (click)="onStartAddMatchWindow()"> Continuar Torneo </button>
+</div>
+} @else {
+<div class="button">
+  <button type="button" (click)="onStartAddMatchWindow()"> Nuevo Torneo </button>
+</div>
+}

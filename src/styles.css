@@ -1,0 +1,75 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  font-family: "Lexend", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 100;
+  font-style: normal;
+
+  background: radial-gradient(circle at top left, #1f1f1f, #000000);
+  color: white;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+h2 {
+  margin-top: 0;
+  font-weight: 300;
+}
+
+.btn-text {
+  cursor: pointer;
+  font-size: 1.3rem;
+  font-weight: 200;
+  color: rgb(255, 255, 255, 0.5);
+  display: inline-block;
+  text-decoration: none;
+  border-bottom: 1px solid rgb(255, 255, 255, 0.1);
+  padding: 3px;
+  transition: all 0.2s;
+
+  animation: moveInBottom 0.5s ease-out 0.75s;
+  animation-fill-mode: backwards;
+}
+.btn-text:hover {
+  color: rgb(255, 255, 255, 0.9);
+  box-shadow: 0 10px 20px rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid #895cce;
+
+  transform: translateY(-2px);
+}
+.btn-text:active {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes moveInBottom {
+  0% {
+    opacity: 0;
+    transform: translateY(3rem);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Morado: #895cce */

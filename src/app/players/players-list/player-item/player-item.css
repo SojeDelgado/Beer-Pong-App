@@ -1,0 +1,44 @@
+div {
+  /* overflow: hidden; */
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid rgb(255, 255, 255, 0);
+  border-radius: 6px;
+  animation: appear 2s;
+}
+
+h3 {
+  cursor: pointer;
+}
+
+a {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.5rem;
+  /* background: #222; */
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  width: 100%;
+  min-width: 10rem;
+  text-align: left;
+  text-decoration: none;
+}
+
+div:hover,
+div.selected {
+  color: white;
+  background-color: rgb(61, 59, 59);
+  border: 1px solid rgb(255, 255, 255, 0.2);
+  border-radius: 6px;
+  transform: scale(1.03);
+}
+
+span {
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  font-weight: normal;
+}

@@ -1,0 +1,34 @@
+.item {
+    width: 8rem;
+    max-width: 8rem;
+    animation: appear 2s;
+}
+
+.date p {
+    padding: 0;
+    margin: 0;
+}
+
+.player {
+    padding-top: 1rem;
+}
+
+.winner {
+    border-bottom: 1px solid lightgreen;
+}
+
+.score {
+    font-size: 2.5rem;
+}
+
+.match {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.vs {
+    font-size: 0.8rem;
+}

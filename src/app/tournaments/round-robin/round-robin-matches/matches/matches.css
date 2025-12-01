@@ -1,0 +1,17 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    place-items: center;
+}
+
+.matches {
+    display: flex;
+    gap: 0.3rem;
+    justify-content: center;
+    max-width: 20rem;
+    width: 20rem;
+    background-color:rgb(146, 102, 172, 0.3);
+
+    padding: 0.5rem;
+    margin: 0.5rem;
+}

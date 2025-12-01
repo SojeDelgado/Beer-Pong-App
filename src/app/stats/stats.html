@@ -1,0 +1,9 @@
+<div>
+    @for (stat of playerStats(); track stat.playerId) {
+    <div>
+        <app-stat [stat]="stat" />
+    </div>
+    } @empty {
+    <p>Play matches to start adding stats</p>
+    }
+</div>

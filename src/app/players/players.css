@@ -1,0 +1,14 @@
+menu {
+  text-align: center;
+}
+
+div {
+  width: 100%;
+}
+
+header {
+  display: flex;
+  max-width: 50rem;
+  margin: 2.5rem auto;
+  border-radius: 10px;
+}

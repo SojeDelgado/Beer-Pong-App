@@ -1,0 +1,24 @@
+@if (isAddingMatch) {
+<app-new-match (close)="onCloseAddMatchWindow()" />
+}
+<div>
+    <h2>Matches</h2>
+    <div class="horizontal-rule"></div>
+</div>
+
+<div class="container">
+    @for (match of matches(); track $index) {
+        <div>
+            <app-match [match]="match" />
+        </div>
+        }
+</div>
+
+
+<menu>
+    <a class="btn-text">
+        nueva partida
+        <span class="material-symbols-outlined">
+            add
+        </span></a>
+</menu>

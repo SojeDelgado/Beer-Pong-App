@@ -1,0 +1,14 @@
+<div class="layout">
+    <aside class="sidenav" [ngClass]="{'open': isSidebarOpen}">
+        <div class="btn-open" (click)="toggleSidebar()" [ngClass]="{'btn-close': !isSidebarOpen}" >
+            <span class="material-symbols-outlined arrow">
+                {{ isSidebarOpen ? 'arrow_left' : 'menu' }}
+            </span>
+        </div>
+        <app-header />
+    </aside>
+
+    <main class="content" [ngClass]="{'open-content': isSidebarOpen}">
+        <router-outlet />
+    </main>
+</div>

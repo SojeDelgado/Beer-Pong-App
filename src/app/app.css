@@ -1,0 +1,83 @@
+.layout {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.sidenav {
+  width: 300px;
+  flex-shrink: 0;
+  color: #fff;
+  height: 100%;
+  position: fixed;
+  left: 0;
+  top: 0;
+  border-right: 1px solid rgb(255, 255, 255, 0.1);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.8);
+
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+}
+
+.sidenav.open {
+  transform: translateX(0);
+}
+
+
+.sidenav.open~.content {
+  margin-left: 300px;
+  width: calc(100% - 300px);
+}
+
+.content {
+  margin-left: 0;
+  width: 100%;
+  padding: 20px;
+  overflow-y: auto;
+  height: 100vh;
+  transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
+}
+
+.open-content {
+  margin-left: 300px;
+  width: calc(100% - 300px);
+}
+
+.btn-open {
+  position: absolute;
+  display: flex;
+  top: 5.3rem;
+  right: -0.8rem;
+
+  justify-content: center;
+  max-width: 1.5rem;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(54, 54, 54, 1);
+
+  cursor: pointer;
+}
+
+.btn-close {
+  animation: appear 2s;
+  position: absolute;
+  display: flex;
+  top: 2rem;
+  right: -4rem;
+
+  justify-content: center;
+  max-width: 1.5rem;
+  background-color: transparent;
+  border: 0px;
+  
+
+  cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  main {
+    margin: 4rem auto;
+    grid-template-columns: 1fr 3fr;
+  }
+}

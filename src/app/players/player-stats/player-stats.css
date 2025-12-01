@@ -1,0 +1,30 @@
+h2 {
+    font-weight: 250;
+}
+
+div {
+    width: 100%;
+    text-align: center;
+}
+
+menu {
+    margin: 0;
+    padding: 0;
+}
+
+menu a {
+    font: inherit;
+    cursor: pointer;
+    color: #181223;
+    background-color: #9965dd;
+    border-radius: 4px;
+    border: none;
+    padding: 0.35rem 0.8rem;
+    font-size: 0.9rem;
+    text-decoration: none;
+}
+
+menu a:hover,
+menu a:active {
+    background-color: #a565dd
+}

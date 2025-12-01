@@ -1,0 +1,14 @@
+<h3>Players</h3>
+
+<form [formGroup]="playersForm">
+  @for (player of allPlayers(); track $index) {
+  <div class="player-item">
+    <input type="checkbox" [id]="player.id" [value]="player.id" (change)="onCheckChange($event)" />
+    <label [for]="player.id">{{ player.nickname }}</label>
+  </div>
+  }
+
+  <div>
+    <button (click)="OnSubmit()">Aceptar</button>
+  </div>
+</form>

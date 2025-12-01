@@ -1,0 +1,63 @@
+<header>
+    <div class="title-row">
+        <span class="material-symbols-outlined">
+            network_ping
+        </span>
+
+        <a [routerLink]="['']">
+            <h1>Beer Pong</h1>
+        </a>
+    </div>
+    <p class="header">Torneos de Beer Pong</p>
+
+    <div class="horizontal-rule"></div>
+
+    <div id="content">
+        <div class="item" [routerLink]="['players']" routerLinkActive="selected">
+            <span class="material-symbols-outlined">
+                person
+            </span>
+            Jugadores
+        </div>
+
+        <div class="item" [routerLink]="['matches']" routerLinkActive="selected">
+            <span class="material-symbols-outlined">
+                compare_arrows
+            </span>
+            Matches
+        </div>
+
+        <div class="dropdown item" (click)="toggleDropdown()" [class.open]="dropdownOpen">
+            <div class="dropdown-item">
+                <span class="material-symbols-outlined">trophy</span>
+                Torneos
+            </div>
+
+            <span class="material-symbols-outlined arrow">arrow_left</span>
+        </div>
+
+        <div class="dropdown-content" [class.open]="dropdownOpen">
+            
+            <div class="dropdown-item" [routerLink]="['tournaments/round-robin']" routerLinkActive="selected">
+                <span class="material-symbols-outlined">leaderboard</span>
+                Clasificación
+            </div>
+            <div class="dropdown-item">
+                <span class="material-symbols-outlined">upcoming</span>
+                Proximamente
+            </div>
+        </div>
+
+    </div>
+</header>
+<!-- <div class="links">
+        <div>
+            <a [routerLink]="['players']" routerLinkActive="selected">Players</a>
+        </div>
+        <div>
+            <a [routerLink]="['matches']" routerLinkActive="selected">Matches</a>
+        </div>
+        <div>
+            <a [routerLink]="['tournaments']" routerLinkActive="selected">Tournaments</a>
+        </div>
+    </div> -->

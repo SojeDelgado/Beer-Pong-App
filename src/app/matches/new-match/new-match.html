@@ -1,0 +1,60 @@
+<div class="backdrop" (click)="onCloseWindow()"></div>
+
+<dialog open>
+    <h2>Playing match</h2>
+    <form [formGroup]="matchForm" (ngSubmit)="onSubmit()">
+        <div class="section">
+            <p>
+                <label for="islaP2">Isla:
+                    <input type="checkbox" formControlName="islaP1">
+                </label>
+            </p>
+
+            <p>
+                <label for="player1Id">Player 1</label>
+                <select type="text" id="player1Id" name="player1Id" formControlName="player1Id">
+                    @for (player of players(); track $index) {
+                    @if (matchForm.value.player2Id !== player.id) {
+                    <option [ngValue]="player.id">
+                        {{ player.nickname }}
+                    </option>
+                    }
+                    }
+                </select>
+            </p>
+            <p>
+                <input type="number" id="scoreP1" name="scoreP1" formControlName="scoreP1">
+            </p>
+            <p style="padding-top: 18px;">
+                VS
+            </p>
+            <p>
+                <input type="number" id="scoreP2" name="scoreP2" formControlName="scoreP2">
+            </p>
+            <p>
+                <label for="player2Id">Player 2</label>
+                <select type="text" id="player2Id" name="playerId1" formControlName="player2Id">
+                    @for (player of players(); track $index) {
+                    @if (matchForm.value.player1Id !== player.id) {
+                    <option [ngValue]="player.id">
+                        {{ player.nickname }}
+                    </option>
+                    }
+                    }
+                </select>
+            </p>
+            <p>
+                <label for="islaP2">Isla:
+                    <input type="checkbox" formControlName="islaP2">
+                </label>
+            </p>
+        </div>
+        <br>
+        <p id="actions">
+            <button type="button" (click)="onCloseWindow()">Cancel</button>
+            <button type="submit" [disabled]="matchForm.invalid || matchForm.value.scoreP1 === matchForm.value.scoreP2">
+                Save Match
+            </button>
+        </p>
+    </form>
+</dialog>

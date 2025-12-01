@@ -1,0 +1,98 @@
+h2 {
+  font-weight: 250;
+  text-align: center;
+}
+
+form {
+  animation: appear 1s;
+  align-content: center;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 50px transparent inset !important;
+  -webkit-text-fill-color: white !important;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+input {
+  border-bottom: 1px solid rgb(255, 255, 255, 0.5) !important;
+  outline: none !important;
+  
+}
+
+input {
+  width: 25%;
+  color: white;
+  font: inherit;
+  padding: 0.15rem 0.25rem;
+  background-color: transparent;
+  border: 0;
+
+  transition: width 0.4s ease-in-out;
+}
+
+input:focus {
+  width: 30%;
+  border-bottom: 1px solid #895cce !important;
+  border: 0;
+}
+
+input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+  /* ajusta el tono */
+}
+
+
+p.inputs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  font-weight: 150;
+  text-align: center;
+}
+
+button[type="submit"]:disabled,
+button[type="submit"]:disabled:hover {
+  background-color: rgb(61, 59, 59, 0.5);
+  color: rgb(255, 255, 255, 0.4);
+  box-shadow: 0 0 0 rgba(255, 255, 255);
+
+}
+
+span {
+  margin: 0;
+  padding: 0;
+}
+
+button {
+  margin: 1rem;
+  font: inherit;
+  cursor: pointer;
+  border: none;
+  padding: 0.35rem 1.25rem;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+button[type="submit"] {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+
+  color: white;
+  background-color: rgb(61, 59, 59);
+  border: 1px solid rgb(255, 255, 255, 0.2);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+
+  padding: 0.35rem 1.1rem;
+}
+
+button[type="submit"]:hover{
+  background-color: #895cce;
+  box-shadow: 0 1px 6px rgba(255, 255, 255, 0.5);
+  
+}

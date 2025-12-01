@@ -1,0 +1,13 @@
+<h2> Nuevo jugador </h2>
+<form [formGroup]="playerForm" (ngSubmit)="onSubmit()">
+
+    <p class="inputs">
+        <input id="nickname" type="text" name="nickname" formControlName="nickname" placeholder="Nombre del jugador" />
+
+        <button [disabled]="playerForm.invalid" type="submit">
+            Guardar
+        </button>
+
+    </p>
+
+</form>

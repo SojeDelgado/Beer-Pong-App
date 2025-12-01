@@ -1,0 +1,15 @@
+<header>
+    <app-players-list />
+    <div>
+        <router-outlet class="content" />
+    </div>
+</header>
+
+
+<menu>
+    <a [routerLink]="['new-player',]" class="btn-text" (click)="onStartAddPlayerWindow()">
+        nuevo jugador
+        <span class="material-symbols-outlined">
+            add
+        </span></a>
+</menu>
