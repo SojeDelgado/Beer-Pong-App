@@ -1,11 +1,8 @@
-import { Timestamp } from "firebase/firestore"
+import { Player } from "../../../players/players-list/player-item/player.model"
 
 export interface Match {
-    playerId1: string,
-    player1Nickname: string
-
-    playerId2: string,
-    player2Nickname: string,
+    player1: Player,
+    player2: Player,
 
     scoreP1: number,
     scoreP2: number,
@@ -14,8 +11,20 @@ export interface Match {
     islaP2: boolean,
 
     winner: string,
+    date: Date
+}
 
-    date: Timestamp,
+export interface NewMatch {
+    player1: string,
+    player2: string,
+
+    scoreP1: number,
+    scoreP2: number,
+
+    islaP1: boolean,
+    islaP2: boolean,
+
+    winner: string
 }
 
 export interface TournamentMatch {

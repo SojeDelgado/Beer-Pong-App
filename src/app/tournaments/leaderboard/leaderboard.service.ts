@@ -1,6 +1,8 @@
 import { Injectable } from "@angular/core";
-import { Leaderboard } from "./leaderboard.model";
+import { Leaderboard, Results } from "./leaderboard.model";
 import { Match } from "../../matches/matches-list/match/match.model";
+
+
 
 
 @Injectable({
@@ -8,7 +10,7 @@ import { Match } from "../../matches/matches-list/match/match.model";
 })
 export class LeaderboardService {
 
-    generateLeaderboard(matches: Match[]) {
+    generateLeaderboard(results: Results[]) {
     const statsMap = new Map<string, Leaderboard>();
 
     const getOrCreatePlayer = (id: string, nickname: string) => {
@@ -26,22 +28,22 @@ export class LeaderboardService {
       return statsMap.get(id)!;
     };
 
-    matches.forEach(match => {
-      const home = getOrCreatePlayer(match.playerId1, match.player1Nickname);
-      const away = getOrCreatePlayer(match.playerId2, match.player2Nickname);
+    results.forEach(result => {
+      const home = getOrCreatePlayer(result.playerId1, result.player1Nickname);
+      const away = getOrCreatePlayer(result.playerId2, result.player2Nickname);
 
-      home.pFavor += match.scoreP1;
-      home.pContra += match.scoreP2;
+      home.pFavor += result.scoreP1;
+      home.pContra += result.scoreP2;
       home.diferencia = home.pFavor - home.pContra;
 
-      away.pFavor += match.scoreP2;
-      away.pContra += match.scoreP1;
+      away.pFavor += result.scoreP2;
+      away.pContra += result.scoreP1;
       away.diferencia = away.pFavor - away.pContra;
 
-      if (match.scoreP1 > match.scoreP2) {
+      if (result.scoreP1 > result.scoreP2) {
         home.wins++;
         away.losses++;
-      } else if (match.scoreP2 > match.scoreP1){
+      } else if (result.scoreP2 > result.scoreP1){
         away.wins++;
         home.losses++;
       }

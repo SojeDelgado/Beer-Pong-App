@@ -17,7 +17,6 @@ export class RoundRobinComponent {
   players = signal<{ id: string; nickname: string }[]>([]);
   pairings: Pairings[] = [];
   isAddingMatch = false
-hidden: any;
 
   onSelectedPlayers(players: { id: string; nickname: string }[]) {
     this.players.set(players);
@@ -37,7 +36,7 @@ hidden: any;
     if (!this.isEven(n)) {
       list.push({ id: "BYE", nickname: "BYE" });
     }
-    
+
     const totalPlayers = list.length;
     const arr = [...list];
 
@@ -46,7 +45,7 @@ hidden: any;
         const home = arr[i];
         const away = arr[totalPlayers - 1 - i];
 
-        if (home.id === "BYE" || away.id === "BYE") {continue;} 
+        if (home.id === "BYE" || away.id === "BYE") { continue; }
 
         pairings.push({
           playerId1: home.id,
@@ -64,10 +63,10 @@ hidden: any;
   }
 
   onStartAddMatchWindow() {
-    this.isAddingMatch=true
+    this.isAddingMatch = true
   }
 
   onCloseAddMatchWindow() {
-    this.isAddingMatch=false
+    this.isAddingMatch = false
   }
 }

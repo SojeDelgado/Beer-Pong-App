@@ -1,7 +1,6 @@
 import { Component, inject, output } from '@angular/core';
 import { PlayersService } from '../../players/players.service';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-select-players',
@@ -11,7 +10,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 })
 export class SelectPlayers {
   private playersService = inject(PlayersService);
-  allPlayers = toSignal(this.playersService.players$);
+  allPlayers = this.playersService.players;
   private formBuilder = inject(FormBuilder);
   selectedPlayers = output<{ id: string; nickname: string }[]>();
 

@@ -1,6 +1,7 @@
 import { Component, computed, inject, input } from '@angular/core';
 import { LeaderboardService } from './leaderboard.service';
 import { Match } from '../../matches/matches-list/match/match.model';
+import { Results } from './leaderboard.model';
 
 @Component({
   selector: 'app-leaderboard',
@@ -11,7 +12,7 @@ import { Match } from '../../matches/matches-list/match/match.model';
 export class LeaderboardComponent {
   leaderboardService = inject(LeaderboardService);
 
-  matches = input.required<Match[]>();
+  matches = input.required<Results[]>();
 
   leaderboard = computed(() => {
     const currentMatches = this.matches();

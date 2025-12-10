@@ -15,11 +15,18 @@ export class NewPlayer {
     nickname: new FormControl('', { 
       validators: [Validators.required], 
     }),
+    firstname: new FormControl(''),
+    lastname: new FormControl('')
   });
 
   onSubmit() {
     if(this.playerForm.valid){
-      this.playerService.addPlayer(this.playerForm.value.nickname?.toString() ?? "");
+      const formValue = this.playerForm.value;
+      const nickname = formValue.nickname ?? '';
+      const firstname = formValue.firstname ?? '';
+      const lastname = formValue.lastname ?? '';
+
+      this.playerService.addPlayer(nickname, firstname, lastname);
       this.playerForm.reset();
     }
   }

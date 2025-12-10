@@ -1,40 +1,31 @@
 import { inject, Injectable } from "@angular/core";
-import { Match } from "./matches-list/match/match.model";
-
-// 
-import { addDoc, collection, collectionData, Firestore } from "@angular/fire/firestore";
+import { Match, NewMatch } from "./matches-list/match/match.model";
 import { Observable } from "rxjs";
 import { toSignal } from "@angular/core/rxjs-interop";
+import { environment } from "../../environments/environment";
+import { HttpClient } from "@angular/common/http";
 
 @Injectable({
     providedIn: 'root',
 })
 export class MatchesService {
-    private firestore = inject(Firestore);
+    private httpClient = inject(HttpClient);
+    private matchesUrl = `${environment.apiurl}/matches`;
+
     matches = toSignal<Match[]>(this.getAllMatches());
 
-    getAllMatches(): Observable<Match[]> {
-        const matchesRef = collection(this.firestore, 'matches');
-        return collectionData(matchesRef, { idField: 'id' }) as Observable<Match[]>;
+    private getAllMatches(): Observable<Match[]> {
+        return this.httpClient.get<Match[]>(this.matchesUrl)
     }
 
-    addMatch(match: Match) {
-        try {
-            addDoc(
-                collection(this.firestore, 'matches'), {
-                playerId1: match.playerId1,
-                player1Nickname: match.player1Nickname,
-                playerId2: match.playerId2,
-                player2Nickname: match.player2Nickname,
-                scoreP1: match.scoreP1,
-                scoreP2: match.scoreP2,
-                islaP1: match.islaP1,
-                islaP2: match.islaP2,
-                winner: match.winner,
-                date: new Date()
-            });
-        } catch (err) {
-            console.log("Error adding match", err);
-        }
+    addMatch(match: NewMatch) {
+        return this.httpClient.post(this.matchesUrl, match).subscribe({
+            next:(response) => {
+                console.log(response);
+            },
+            error: (err) => {
+                console.log(err);
+            }
+        });
     }
 }

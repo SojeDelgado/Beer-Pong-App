@@ -1,7 +1,7 @@
 <div class="item">
     <div class="match">
         <span class="player">
-            {{ match().player1Nickname }}
+            {{ match().player1.nickname }}
         </span>
         <span class="score" [ngClass]="{'winner': match().scoreP1 > match().scoreP2}">
             {{ match().scoreP1 }}
@@ -11,21 +11,22 @@
             {{ match().scoreP2 }}
         </span>
         <span class="player">
-            {{ match().player2Nickname }}
+            {{ match().player2.nickname }}
+
         </span>
     </div>
     @if ( match().date ) {
-        <div class="date">
-            <p>
-                {{ match().date.toDate() | date: 'd/M/yy' }}
-            </p>
-        </div>
+    <div class="date">
+        <p>
+            {{ match().date| date: 'd/M/yy' }}
+        </p>
+    </div>
     } @else {
-        <div class="date">
-            <p>
-                12/12/12
-            </p>
-        </div>
+    <div class="date">
+        <p>
+            12/12/12
+        </p>
+    </div>
     }
 </div>
 

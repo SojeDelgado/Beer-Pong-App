@@ -12,6 +12,7 @@ export class Header {
 
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
+    console.log(this.dropdownOpen ? "Open" : "Close");
   }
 
 }

@@ -10,5 +10,4 @@ import { DatePipe, NgClass } from '@angular/common';
 })
 export class MatchComponent {
   match = input.required<Match>();
-
 }

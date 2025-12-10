@@ -2,7 +2,12 @@
 <form [formGroup]="playerForm" (ngSubmit)="onSubmit()">
 
     <p class="inputs">
-        <input id="nickname" type="text" name="nickname" formControlName="nickname" placeholder="Nombre del jugador" />
+        <input id="nickname" type="text" name="nickname" formControlName="nickname" placeholder="Nickname del jugador" />
+
+        <input id="firstname" type="text" name="firstname" formControlName="firstname" placeholder="Nombre" />
+
+        <input id="lastname" type="text" name="lastname" formControlName="lastname" placeholder="Apellido" />
+
 
         <button [disabled]="playerForm.invalid" type="submit">
             Guardar
