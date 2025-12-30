@@ -19,4 +19,8 @@ export class App {
     this.isSidebarOpen = !this.isSidebarOpen;
   }
 
+  toggle() {
+    document.body.classList.toggle("light");
+  }
+
 }

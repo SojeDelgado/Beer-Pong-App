@@ -1,60 +1,203 @@
-<div class="backdrop" (click)="onCloseWindow()"></div>
-
-<dialog open>
-    <h2>Playing match</h2>
-    <form [formGroup]="matchForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="matchForm" (ngSubmit)="onSubmit()">
+    <div class="close" [routerLink]="['../']">
+        <span class="material-symbols-outlined icon">
+            close
+        </span>
+    </div>
+    <div class="form">
         <div class="section">
-            <p>
-                <label for="islaP2">Isla:
-                    <input type="checkbox" formControlName="islaP1">
-                </label>
-            </p>
+            <div class="label">
+                <span class="material-symbols-outlined h1">
+                    home
+                </span>
+                <h1>Casa</h1>
+            </div>
 
-            <p>
-                <label for="player1Id">Player 1</label>
-                <select type="text" id="player1" name="player1" formControlName="player1">
-                    @for (player of players(); track $index) {
-                    @if (matchForm.value.player2 !== player.id) {
-                    <option [ngValue]="player.id">
-                        {{ player.nickname }}
-                    </option>
-                    }
-                    }
-                </select>
-            </p>
-            <p>
-                <input type="number" id="scoreP1" name="scoreP1" formControlName="scoreP1">
-            </p>
-            <p style="padding-top: 18px;">
-                VS
-            </p>
-            <p>
-                <input type="number" id="scoreP2" name="scoreP2" formControlName="scoreP2">
-            </p>
-            <p>
-                <label for="player2">Player 2</label>
-                <select type="text" id="player2" name="player2" formControlName="player2">
-                    @for (player of players(); track $index) {
-                    @if (matchForm.value.player1 !== player.id) {
-                    <option [ngValue]="player.id">
-                        {{ player.nickname }}
-                    </option>
-                    }
-                    }
-                </select>
-            </p>
-            <p>
-                <label for="islaP2">Isla:
-                    <input type="checkbox" formControlName="islaP2">
-                </label>
-            </p>
+            <div class="row">
+                <div class="label">
+                    <span class="material-symbols-outlined">
+                        person
+                    </span>
+                    <label for="player1Id">Jugador</label>
+                </div>
+                <div>
+                    <select type="text" id="player1" name="player1" formControlName="player1">
+                        @for (player of players(); track $index) {
+                        @if (matchForm.value.player2 !== player.id) {
+                        <option [ngValue]="player.id">
+                            {{ player.nickname }}
+                        </option>
+                        }
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="label">
+                    <span class="material-symbols-outlined">
+                        sports_bar
+                    </span>
+                    <label for="scoreP2">Vasos</label>
+                </div>
+                <div>
+                    <input type="number" id="scoreP1" name="scoreP1" formControlName="scoreP1">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="label">
+                    <span class="material-symbols-outlined">
+                        change_history
+                    </span>
+                    <label for="islaP2">Isla</label>
+                </div>
+                <div>
+                    <label class="switch">
+                        <input type="checkbox" formControlName="islaP1">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="label">
+                    <span class="material-symbols-outlined">
+                        counter_2
+                    </span>
+                    <label for="islaP2">2 en 1</label>
+                </div>
+
+                <div>
+                    <label class="switch">
+                        <input type="checkbox" formControlName="home2in1">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="label">
+                    <span class="material-symbols-outlined">
+                        counter_3
+                    </span>
+                    <label for="islaP2">3 en 1</label>
+                </div>
+
+                <div>
+                    <label class="switch">
+                        <input type="checkbox" formControlName="home3in1">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
         </div>
-        <br>
-        <p id="actions">
-            <button type="button" (click)="onCloseWindow()">Cancel</button>
+
+        <!-- Away -->
+
+        <div class="section">
+            <div class="label">
+                <span class="material-symbols-outlined h1">
+                    location_away
+                </span>
+                <h1>Visita</h1>
+            </div>
+            <div class="row">
+                <div class="label">
+                    <span class="material-symbols-outlined">
+                        person
+                    </span>
+                    <label for="player2">Jugador</label>
+                </div>
+
+                <div>
+                    <select type="text" id="player2" name="player2" formControlName="player2">
+                        @for (player of players(); track $index) {
+                        @if (matchForm.value.player1 !== player.id) {
+                        <option [ngValue]="player.id">
+                            {{ player.nickname }}
+                        </option>
+                        }
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="label">
+                    <span class="material-symbols-outlined">
+                        sports_bar
+                    </span>
+                    <label for="scoreP2">Vasos</label>
+                </div>
+
+                <div>
+                    <input type="number" id="scoreP2" name="scoreP2" formControlName="scoreP2">
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="label">
+                    <span class="material-symbols-outlined">
+                        change_history
+                    </span>
+                    <label for="islaP2">Isla</label>
+                </div>
+                <div>
+                    <label class="switch">
+                        <input type="checkbox" formControlName="islaP2">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="label">
+                    <span class="material-symbols-outlined">
+                        counter_2
+                    </span>
+                    <label for="islaP2">2 en 1</label>
+                </div>
+
+                <div>
+                    <label class="switch">
+                        <input type="checkbox" formControlName="away2in1">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="label">
+                    <span class="material-symbols-outlined">
+                        counter_3
+                    </span>
+                    <label for="islaP2">3 en 1</label>
+                </div>
+
+                <div>
+                    <label class="switch">
+                        <input type="checkbox" formControlName="away3in1">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="actions">
+        <div>
+            <button type="button" [routerLink]="['../']">Cancelar</button>
+        </div>
+
+        <div>
             <button type="submit" [disabled]="matchForm.invalid || matchForm.value.scoreP1 === matchForm.value.scoreP2">
-                Save Match
+                Guardar
             </button>
-        </p>
-    </form>
-</dialog>
+        </div>
+
+    </div>
+</form>

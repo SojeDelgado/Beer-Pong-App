@@ -1,24 +1,24 @@
 <div class="item">
     <div class="match">
-        <span class="player">
-            {{ match().player1.nickname }}
+        <span class="player" [ngClass]="{'winner': match().homeScore > match().awayScore}">
+            {{ match().home.nickname }}
         </span>
-        <span class="score" [ngClass]="{'winner': match().scoreP1 > match().scoreP2}">
-            {{ match().scoreP1 }}
+        <span class="score">
+            {{ match().homeScore }}
         </span>
         <span class="vs">VS</span>
-        <span class="score" [ngClass]="{'winner': match().scoreP1 < match().scoreP2}">
-            {{ match().scoreP2 }}
+        <span class="score">
+            {{ match().awayScore }}
         </span>
-        <span class="player">
-            {{ match().player2.nickname }}
+        <span class="player" [ngClass]="{'winner': match().homeScore < match().awayScore}">
+            {{ match().away.nickname }}
 
         </span>
     </div>
     @if ( match().date ) {
     <div class="date">
         <p>
-            {{ match().date| date: 'd/M/yy' }}
+            {{ match().date| date: 'd/M/yy' }} <small>{{ match().date| date: 'h:mm' }}</small>
         </p>
     </div>
     } @else {
@@ -29,43 +29,3 @@
     </div>
     }
 </div>
-
-<!-- <header>
-    <table>
-        <th></th>
-        <tr>
-            <td style="max-width: 4rem;">
-                @if (match().date) {
-                    {{ match().date.toDate() | date: 'd/M/yy' }}
-                }
-            </td>
-
-            <td style="text-align: end;">
-                @if (match().islaP1) {
-                    Isla
-                }
-            </td>
-
-            <td style="text-align: end;">
-                {{ match().player1Nickname }}: {{ match().scoreP1 }}
-            </td>
-            <td style="max-width: 3rem; text-align: center;"> VS </td>
-            <td>
-                {{ match().player2Nickname }}: {{ match().scoreP2 }}
-            </td>
-            <td>
-                @if (match().islaP2) {
-                    Isla
-                }
-            </td>
-        </tr>
-    </table>
-
-    <span>
-        @if ( match().date ) {
-            {{ match().date.toDate() | date: 'd/M/yy' }}
-        }
-    </span>
-    <span> | {{ match().player1Nickname }}: {{ match().scoreP1 }} vs {{ match().player2Nickname }}: {{ match().scoreP2 }} </span>
-
-</header> -->

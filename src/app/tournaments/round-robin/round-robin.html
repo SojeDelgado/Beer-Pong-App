@@ -1,12 +1,12 @@
 <div [ngClass]="{'active': isAddingMatch, 'disabled': !isAddingMatch}">
   <div class="backdrop" (click)="onCloseAddMatchWindow()"></div>
   <dialog open>
-    @if(players().length === 0 ){
+    @if(playerIds().length === 0 ){
     <app-select-players (selectedPlayers)="onSelectedPlayers($event)" />
     }
 
-    @if (pairings.length !== 0) {
-    <app-round-robin-form [pairings]="pairings" />
+    @if (matchups.length !== 0) {
+    <app-round-robin-form [matchups]="matchups" />
     }
   </dialog>
 </div>
@@ -22,7 +22,7 @@
 
 </header>
 
-@if (pairings.length !==0) {
+@if (matchups.length !==0) {
 <div class="button">
   <button type="button" (click)="onStartAddMatchWindow()"> Continuar Torneo </button>
 </div>

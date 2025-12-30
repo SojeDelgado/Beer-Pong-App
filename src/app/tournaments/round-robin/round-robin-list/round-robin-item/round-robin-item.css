@@ -1,35 +1,38 @@
 div {
-    border-radius: 6px;
-    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    margin-bottom: 6px;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  border-radius: 6px;
+  border: var(--no-line);
+  border-radius: 6px;
+  animation: appear 2s;
 }
 
 h3 {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 a {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.35rem 0.5rem;
-    background-color: #433352;
-    color: #c3b3d1;
-    border: none;
-    font: inherit;
-    cursor: pointer;
-    width: 100%;
-    min-width: 10rem;
-    text-align: left;
-    text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.5rem;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  width: 100%;
+  min-width: 10rem;
+  text-align: left;
+  text-decoration: none;
 }
 
-a:hover,
-a:active,
-.selected {
-  background-color: #9965dd;
-  color: #150722;
+div:hover,
+div.selected {
+  color: var(--text);
+  background-color: var(--gradient);
+  border: var(--border-card);
+  border-radius: 6px;
+  transform: scale(1.03);
+  box-shadow: var(--shadow);
 }
 
 span {

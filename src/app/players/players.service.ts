@@ -21,8 +21,8 @@ export class PlayersService {
     return this.httpClient.get<Player[]>(this.playersUrl);
   }
 
-  async addPlayer(nickname: string, firstname: string, lastname: string) {
-    return this.httpClient.post(this.playersUrl, { nickname, firstname, lastname }).subscribe({
+  async addPlayer(nickname: string) {
+    return this.httpClient.post(this.playersUrl, {nickname} ).subscribe({
       next: (response) => {
         console.log(response);
       },
@@ -31,9 +31,9 @@ export class PlayersService {
       }
     });
   }
-  
+
   getPlayerById(id: string): Observable<Player> {
-    return this.httpClient.get<Player>(`${this.playersUrl}/${id}`)
+    return this.httpClient.get<Player>(`${this.playersUrl}/${id}`);
   }
 
   async deletePlayer(playerId: string) {

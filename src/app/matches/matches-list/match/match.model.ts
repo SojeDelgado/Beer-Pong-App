@@ -1,30 +1,34 @@
 import { Player } from "../../../players/players-list/player-item/player.model"
 
 export interface Match {
-    player1: Player,
-    player2: Player,
+    home: Player,
+    away: Player,
 
-    scoreP1: number,
-    scoreP2: number,
+    homeScore: number,
+    awayScore: number,
 
-    islaP1: boolean,
-    islaP2: boolean,
+    homeIsla: boolean,
+    awayIsla: boolean,
 
-    winner: string,
     date: Date
 }
 
 export interface NewMatch {
-    player1: string,
-    player2: string,
+    home: string,
+    away: string,
 
-    scoreP1: number,
-    scoreP2: number,
+    homeScore: number,
+    awayScore: number,
 
-    islaP1: boolean,
-    islaP2: boolean,
+    homeIsla: boolean,
+    awayIsla: boolean,
 
-    winner: string
+    home2in1: boolean,
+    away2in1: boolean,
+
+    home3in1: boolean,
+    away3in1: boolean,
+
 }
 
 export interface TournamentMatch {

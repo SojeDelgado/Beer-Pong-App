@@ -11,13 +11,4 @@ import { RouterOutlet, RouterLinkWithHref } from "@angular/router"
 })
 export class PlayersComponent {
   playersService = inject(PlayersService);
-  isAddingPlayer = false;
-
-  onStartAddPlayerWindow() {
-    this.isAddingPlayer=true
-  }
-
-  onCloseAddPlayerWindow() {
-    this.isAddingPlayer=false
-  }
 }

@@ -1,6 +1,6 @@
 import { Component, input, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { RoundRobin } from '../../round-robin.model';
+import { TournamentData } from '../../tournament-data.model';
 import { RouterLink, RouterLinkActive } from "@angular/router";
 
 @Component({
@@ -10,5 +10,5 @@ import { RouterLink, RouterLinkActive } from "@angular/router";
   styleUrl: './round-robin-item.css',
 })
 export class RoundRobinItem {
-  roundRobin = input.required<RoundRobin>();
+  roundRobin = input.required<TournamentData>();
 }

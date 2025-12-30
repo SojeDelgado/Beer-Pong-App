@@ -8,7 +8,7 @@
         </div>
     </div>
 
-    <app-leaderboard [matches]="matchesForLeaderboard()" />
+    <app-leaderboard [results]="resultsForLeaderboard()" />
 
     <div formArrayName="matches" class="matches-container">
 
@@ -18,16 +18,22 @@
 
             <div [formGroupName]="i" class="match-group">
                 <div class="team-info">
-                    <span class="home-team">{{ matchGroup.value.player1Nickname }}</span>
+                    <label for="islaP2">Isla:
+                        <input type="checkbox" formControlName="homeIsla">
+                    </label>
+                    <span class="home-team">{{ matchups()[i].home.nickname }}</span>
                     <label>
-                        <input type="number" formControlName="scoreP1" min="0" placeholder="0"
+                        <input type="number" formControlName="homeScore" min="0" placeholder="0"
                             [ngClass]="{'saved':matchHasBeenSubmited(i)}">
                     </label>
                     <span class="vs">vs</span>
-                    <span class="away-team">{{ matchGroup.value.player2Nickname }}</span>
+                    <span class="away-team">{{ matchups()[i].away.nickname }}</span>
                     <label>
-                        <input type="number" formControlName="scoreP2" min="0" placeholder="0"
+                        <input type="number" formControlName="awayScore" min="0" placeholder="0"
                             [ngClass]="{'saved':matchHasBeenSubmited(i)}">
+                    </label>
+                    <label for="islaP2">Isla:
+                        <input type="checkbox" formControlName="awayIsla">
                     </label>
                     @if (matchGroup.invalid || !matchGroup.pristine) {
                     <button type="button" (click)="onSingleSubmit(i)"

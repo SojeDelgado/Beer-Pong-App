@@ -1,34 +1,22 @@
-import { Component, effect, inject, input, OnInit, signal } from '@angular/core';
-import { RoundRobinService } from '../../round-robin.service';
+import { Component, inject, input, OnInit, Signal, signal } from '@angular/core';
 import { Match } from '../../../../matches/matches-list/match/match.model';
-import { LeaderboardComponent } from "../../../leaderboard/leaderboard";
+import { RoundRobinService } from '../../round-robin.service';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-matches',
-  imports: [LeaderboardComponent],
   templateUrl: './matches.html',
   styleUrl: './matches.css',
 })
 export class Matches {
-  private roundRobinService = inject(RoundRobinService);
+  roundRobinService = inject(RoundRobinService);
   roundRobinId = input.required<string>();
 
-  matches = signal<Match[]>([]);
-
-  constructor() {
-    effect((onCleanup) => {
-      if (this.roundRobinId()) {
-        const subscription = this.roundRobinService.getMatchesForTournament(this.roundRobinId())
-          .subscribe(
-            {
-              next: (matches) => this.matches.set(matches),
-            }
-          );
-
-        onCleanup(() => {
-          subscription.unsubscribe();
-        });
-      }
-    })
-  }
+  matches = toSignal(
+    toObservable(this.roundRobinId).pipe(
+      switchMap(id => this.roundRobinService.getMatchesById(id))
+    ),
+    { initialValue: [] as Match[] }
+  );
 }

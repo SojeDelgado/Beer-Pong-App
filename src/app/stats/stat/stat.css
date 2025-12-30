@@ -14,7 +14,7 @@
 }
 
 .stats-item:not(:nth-child(3n)){
-  border-right: 1px solid rgb(255, 255, 255, 0.1);
+  border-right: var(--border-light-card);
 
 }
 
@@ -26,5 +26,5 @@
 
 .stats-item span {
   font-size: 15px;
-  color: rgb(255, 255, 255, 0.5);
+  color: var(--text-muted);
 }

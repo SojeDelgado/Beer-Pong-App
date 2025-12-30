@@ -16,8 +16,8 @@ h1 {
 }
 
 p {
-    color: rgb(255, 255, 255, 0.6);
-    font-size: 15px;
+    color: var(--text-muted);
+    font-size: 0.9rem;
     margin: 0;
     animation: moveInRight 1s ease-in-out;
 }

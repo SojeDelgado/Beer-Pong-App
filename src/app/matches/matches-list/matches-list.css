@@ -11,7 +11,7 @@ ul {
 
 .horizontal-rule {
   height: 1px;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: var(--border-light);
 }
 
 
@@ -21,4 +21,8 @@ div {
 
 menu {
   text-align: center;
+}
+
+a {
+  margin: 4rem 0 0 0;
 }

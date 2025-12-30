@@ -1,3 +1,9 @@
+.icon {
+  top: 2rem;
+  right: 2rem;
+  z-index: 3;
+}
+
 .layout {
   display: flex;
   height: 100vh;
@@ -13,8 +19,8 @@
   position: fixed;
   left: 0;
   top: 0;
-  border-right: 1px solid rgb(255, 255, 255, 0.1);
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.8);
+  border-right: var(--border-light-card);
+  box-shadow: var(--shadow);
 
   transform: translateX(-100%);
   transition: transform 0.3s ease-in-out;
@@ -53,8 +59,8 @@
   justify-content: center;
   max-width: 1.5rem;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background-color: rgba(54, 54, 54, 1);
+  border: var(--border-light-card);
+  background-color: var(--bg-light);
 
   cursor: pointer;
 }
@@ -70,7 +76,7 @@
   max-width: 1.5rem;
   background-color: transparent;
   border: 0px;
-  
+
 
   cursor: pointer;
 }

@@ -1,5 +1,5 @@
 <ul>
-    @for (rr of rrTournaments(); track $index) {
+    @for (rr of roundRobins(); track $index) {
         <li>
             <app-round-robin-item [roundRobin]="rr" routerLinkActive="selected"/>
         </li>

@@ -1,3 +1,5 @@
+import { Player } from "../../players/players-list/player-item/player.model"
+
 export interface Leaderboard {
   playerId: string,
   nickname: string,
@@ -12,10 +14,8 @@ export interface Leaderboard {
 }
 
 export interface Results {
-  playerId1: string,
-  playerId2: string,
-  player1Nickname: string,
-  player2Nickname: string,
-  scoreP1: number, 
-  scoreP2: number
+  home: Player,
+  away: Player,
+  homeScore: number, 
+  awayScore: number
 }

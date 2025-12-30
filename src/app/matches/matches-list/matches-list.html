@@ -1,11 +1,3 @@
-@if (isAddingMatch) {
-<app-new-match (close)="onCloseAddMatchWindow()" />
-}
-<div>
-    <h2>Matches</h2>
-    <div class="horizontal-rule"></div>
-</div>
-
 <div class="container">
     @for (match of matches(); track $index) {
         <div>
@@ -16,10 +8,8 @@
 
 
 <menu>
-    <a  [routerLink]="['new-match']" class="btn-text" >
+    <a  [routerLink]="['../new-match']" class="btn-text" >
         nueva partida
-        <span class="material-symbols-outlined">
-            add
-        </span></a>
+        <img src="/icons/add.svg" alt="add" class="material-symbols-outlined"></a>
         <router-outlet/>
 </menu>

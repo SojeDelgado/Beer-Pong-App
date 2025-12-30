@@ -1,6 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { RoundRobinService } from '../round-robin.service';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { RoundRobinItem } from "./round-robin-item/round-robin-item";
 
 @Component({
@@ -11,5 +10,5 @@ import { RoundRobinItem } from "./round-robin-item/round-robin-item";
 })
 export class RoundRobinList {
   rrService = inject(RoundRobinService);
-  rrTournaments = toSignal(this.rrService.roundRobins$);
+  roundRobins =  computed(() => this.rrService.roundRobins());
 }

@@ -1,40 +1,47 @@
-import { inject, Injectable, Injector, runInInjectionContext } from "@angular/core";
-import { collection, collectionData, Firestore, query, where } from '@angular/fire/firestore';
+import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { RoundRobin } from "./round-robin.model";
+import { HttpClient } from "@angular/common/http";
+import { environment } from "../../../environments/environment";
+import { MatchUp } from "../matchup.model";
+import { Tournament } from "../tournament.service";
+import { toSignal } from "@angular/core/rxjs-interop";
+import { TournamentData } from "./tournament-data.model";
 import { Match } from "../../matches/matches-list/match/match.model";
-import { Tournament, TournamentsService } from "../tournament.service";
 
 @Injectable({
     providedIn: 'root',
 })
 export class RoundRobinService {
-    private firestore = inject(Firestore);
-    private injector = inject(Injector);
-    private tournamentService = inject(TournamentsService);
+    private httpClient = inject(HttpClient);
+    private tournamentUrl = `${environment.apiurl}/tournaments`;
+    type = "RoundRobin";
+    roundRobins = toSignal<TournamentData[]>(this.getAll())
 
-    roundRobins$ = collectionData(
-        query(
-            collection(this.firestore, "tournaments"),
-            where('type', '==', 'ROUND_ROBIN')
-        ),
-        { idField: 'id' }
-    ) as Observable<RoundRobin[]>;
-
-
-    async saveTournamentAndMatches(tournamentData: Tournament, matchesData: Match[]): Promise<void> {
-        try {
-            const tournamentId = await this.tournamentService.createTournament(tournamentData);
-            this.tournamentService.addTournamentMatches(tournamentId, matchesData);
-        } catch (error) {
-            console.error("Error en la creacion del torneo", error);
-        }
+    private getAll(): Observable<TournamentData[]> {
+        const type = this.type;
+        let params = { type };
+        return this.httpClient.get<TournamentData[]>(`${this.tournamentUrl}`, { params })
     }
 
-    getMatchesForTournament(tournamentId: string): Observable<Match[]> {
-        return runInInjectionContext(this.injector, () => {
-            const matchesCollection = collection(this.firestore, `tournaments/${tournamentId}/matches`)
-            return collectionData(matchesCollection, { idField: 'id' }) as Observable<Match[]>;
-        })
+    getMatchesById(id: string): Observable<Match[]>{
+        return this.httpClient.get<Match[]>(`${this.tournamentUrl}/${id}`);
+    }
+
+    generateMatchups(playersIds: string[]): Observable<MatchUp[]> {
+        return this.httpClient.post<MatchUp[]>(
+            `${this.tournamentUrl}/generate-matchups`,
+            { playersIds: playersIds, type: this.type }
+        )
+    }
+
+    createTournament(tournament: Tournament) {
+        return this.httpClient.post(this.tournamentUrl, tournament).subscribe({
+            next: (response) => {
+                console.log(response);
+            },
+            error: (err) => {
+                console.error(err);
+            }
+        });
     }
 }

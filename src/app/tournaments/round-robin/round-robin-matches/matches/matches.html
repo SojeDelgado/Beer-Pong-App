@@ -1,24 +1,25 @@
-<app-leaderboard [matches]="matches()" />
+<!-- <app-leaderboard [results]="matches()" /> -->
 
 <div class="grid-container"> 
+    
     @for (match of matches(); track $index) {
         <div>
             <div class="matches">
-                @if (match.scoreP1 > match.scoreP2) {
+                @if (match.homeScore > match.awayScore) {
                     <span style="color: lightgreen;">
-                        Prueba: {{ match.scoreP1 }}
+                        {{ match.home.nickname }}: {{ match.homeScore }}
                     </span>
                     <span> VS </span>
                     <span>
-                        Prueba2: {{ match.scoreP2 }}
+                        {{ match.away.nickname }}: {{ match.awayScore }}
                     </span>
                 } @else {
                     <span>
-                        Prueba: {{ match.scoreP1 }}
+                        {{ match.home.nickname }}: {{ match.homeScore }}
                     </span>
                     <span>VS</span>
                     <span style="color: lightgreen;">
-                        Prueba2: {{ match.scoreP2 }}
+                        {{ match.away.nickname }}: {{ match.awayScore }}
                     </span>
                 }
             </div>

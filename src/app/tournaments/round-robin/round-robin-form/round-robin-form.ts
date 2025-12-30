@@ -6,11 +6,18 @@ import { NgClass } from '@angular/common';
 import { LeaderboardComponent } from "../../leaderboard/leaderboard";
 // Service
 import { RoundRobinService } from '../round-robin.service';
-import { StatsService } from '../../../stats/stats.service';
 // Model
 import { Tournament } from '../../tournament.service';
-import { Pairings } from '../../pairings.model';
-import { Match } from '../../../matches/matches-list/match/match.model';
+import { Results } from '../../leaderboard/leaderboard.model';
+import { MatchUp } from '../../matchup.model';
+import { NewMatch } from '../../../matches/matches-list/match/match.model';
+
+interface ResultFormValue {
+  home: string;
+  away: string;
+  homeScore: number;
+  awayScore: number;
+}
 
 @Component({
   selector: 'app-round-robin-form',
@@ -20,18 +27,15 @@ import { Match } from '../../../matches/matches-list/match/match.model';
 })
 export class RoundRobinForm implements OnInit {
   private roundRobinService = inject(RoundRobinService);
-  private statsService = inject(StatsService);
-  pairings = input.required<Pairings[]>();
-  matchesResults = output<Match[]>();
-  matchesForLeaderboard = signal<Match[]>([]);
-
+  matchups = input.required<MatchUp[]>();
+  resultsForLeaderboard = signal<Results[]>([]);
   tournamentForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
     this.tournamentForm = this.fb.group({
-      name: new FormControl('', {validators: Validators.required}),
-      place: new FormControl('', {validators: Validators.required}),
-      matches: this.fb.array([], {validators: Validators.required})
+      name: new FormControl('', { validators: Validators.required }),
+      place: new FormControl('', { validators: Validators.required }),
+      matches: this.fb.array([], { validators: Validators.required })
     });
   }
 
@@ -44,27 +48,27 @@ export class RoundRobinForm implements OnInit {
   }
 
   buildForm() {
-    const pairingsData = this.pairings();
+    const matchupsData = this.matchups();
 
-    if (pairingsData && pairingsData.length) {
+    if (matchupsData && matchupsData.length) {
       this.matches.clear();
 
-      pairingsData.forEach(pairing => {
-        this.matches.push(this.createMatchFormGroup(pairing));
+      matchupsData.forEach(matchup => {
+        this.matches.push(this.createMatchFormGroup(matchup));
       });
 
       this.updateLeaderboardData();
     }
   }
 
-  private createMatchFormGroup(pairing: Pairings): FormGroup {
+  private createMatchFormGroup(matchup: MatchUp): FormGroup {
     return this.fb.group({
-      playerId1: [pairing.playerId1],
-      playerId2: [pairing.playerId2],
-      player1Nickname: [pairing.player1Nickname],
-      player2Nickname: [pairing.player2Nickname],
-      scoreP1: ["", [Validators.required, Validators.min(0), Validators.max(10)]],
-      scoreP2: ["", [Validators.required, Validators.min(0), Validators.max(10)]]
+      home: [matchup.home.id],
+      away: [matchup.away.id],
+      homeScore: ["", [Validators.required, Validators.min(0), Validators.max(10)]],
+      awayScore: ["", [Validators.required, Validators.min(0), Validators.max(10)]],
+      homeIsla: [false],
+      awayIsla: [false]
     });
   }
 
@@ -80,9 +84,20 @@ export class RoundRobinForm implements OnInit {
   }
 
   private updateLeaderboardData() {
-    const allMatchesData = this.matches.getRawValue() as Match[];
-    this.matchesForLeaderboard.set(allMatchesData);
-    this.matchesResults.emit(allMatchesData);
+    const formValues = this.matches.getRawValue() as ResultFormValue[];
+    const matchups = this.matchups();
+    const results: Results[] = formValues.map((value, index) => {
+      const matchup = matchups[index];
+
+      return {
+        home: matchup.home,
+        away: matchup.away,
+        homeScore: Number(value.homeScore),
+        awayScore: Number(value.awayScore),
+      };
+    });
+
+    this.resultsForLeaderboard.set(results);
   }
 
   matchHasBeenSubmited(index: number) {
@@ -91,16 +106,17 @@ export class RoundRobinForm implements OnInit {
   }
 
   onSubmit(): void {
-    const matches: Match[] = this.tournamentForm.get('matches')?.value;
-    console.log('Matches:', matches)
+    const matches: NewMatch[] = this.tournamentForm.get('matches')?.value;
     const newTournament: Tournament = {
       name: this.tournamentForm.get('name')?.value,
       place: this.tournamentForm.get('place')?.value,
-      type: "ROUND_ROBIN",
-      date: new Date()
+      type: this.roundRobinService.type,
+      matches: matches
     }
+
+    console.log("Enviando torneo:", newTournament);
+    this.roundRobinService.createTournament(newTournament);
+
     this.tournamentForm.reset();
-    this.roundRobinService.saveTournamentAndMatches(newTournament, matches);
-    this.statsService.updatePlayerStatsByMatches(matches);
   }
 }

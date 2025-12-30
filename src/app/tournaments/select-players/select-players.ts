@@ -1,6 +1,7 @@
 import { Component, inject, output } from '@angular/core';
 import { PlayersService } from '../../players/players.service';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RoundRobinService } from '../round-robin/round-robin.service';
 
 @Component({
   selector: 'app-select-players',
@@ -11,8 +12,10 @@ import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Va
 export class SelectPlayers {
   private playersService = inject(PlayersService);
   allPlayers = this.playersService.players;
+
   private formBuilder = inject(FormBuilder);
-  selectedPlayers = output<{ id: string; nickname: string }[]>();
+
+  selectedPlayers = output<string[]>();
 
 
   playersForm = new FormGroup({
@@ -25,11 +28,8 @@ export class SelectPlayers {
     return this.playersForm.get('players') as FormArray;
   }
 
-  addPlayer(player: {
-    id?: string,
-    nickname?: string
-  }) {
-    this.players.push(this.formBuilder.control(player))
+  addPlayer(playerId: string) {
+    this.players.push(this.formBuilder.control(playerId))
   }
 
   removePlayer(index: number) {
@@ -39,17 +39,12 @@ export class SelectPlayers {
   onCheckChange(event: Event) {
     const input = event.target as HTMLInputElement;
     const playerId = input.value;
-    const player = this.allPlayers()?.find(p => p.id === playerId);
 
     if (input.checked) {
-      this.addPlayer({
-        id: player?.id, nickname: player?.nickname
-      });
+      this.addPlayer(playerId);
 
     } else {
-      const index = this.players.controls
-        .findIndex(ctrl => ctrl.value === player?.id);
-
+      const index = this.players.controls.findIndex(ctrl => ctrl.value === playerId);
       this.removePlayer(index);
     }
   }

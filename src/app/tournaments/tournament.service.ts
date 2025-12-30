@@ -1,11 +1,12 @@
 import { inject, Injectable } from "@angular/core";
 import { addDoc, collection, doc, Firestore, writeBatch } from "@angular/fire/firestore";
+import { NewMatch } from "../matches/matches-list/match/match.model";
 
 export interface Tournament {
     name: string,
     type: string,
     place: string,
-    date: Date
+    matches: NewMatch[]
 }
 
 @Injectable({
