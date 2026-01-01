@@ -1,31 +1,38 @@
 <div class="item">
-    <div class="match">
-        <span class="player" [ngClass]="{'winner': match().homeScore > match().awayScore}">
-            {{ match().home.nickname }}
-        </span>
-        <span class="score">
-            {{ match().homeScore }}
-        </span>
-        <span class="vs">VS</span>
-        <span class="score">
-            {{ match().awayScore }}
-        </span>
-        <span class="player" [ngClass]="{'winner': match().homeScore < match().awayScore}">
-            {{ match().away.nickname }}
+    <div class="main-content">
+        <div class="team-block">
+            <span class="player" [class.winner]="match().homeScore > match().awayScore">
+                {{ match().home.nickname }}
+            </span>
+            <div class="badge-container">
+                @if (match().homeIsla) { <span class="badge island">Isla</span> }
+                @if (match().home2in1) { <span class="badge combo">2en1</span> }
+                @if (match().home3in1) { <span class="badge combo">3en1</span> }
+            </div>
+        </div>
 
+        <div class="score-board">
+            <span class="score" [class.win-text]="match().homeScore > match().awayScore">{{ match().homeScore }}</span>
+            <span class="vs">VS</span>
+            <span class="score" [class.win-text]="match().awayScore > match().homeScore">{{ match().awayScore }}</span>
+        </div>
+
+        <div class="team-block">
+            <span class="player" [class.winner]="match().awayScore > match().homeScore">
+                {{ match().away.nickname }}
+            </span>
+            <div class="badge-container">
+                @if (match().awayIsla) { <span class="badge island">Isla</span> }
+                @if (match().away2in1) { <span class="badge combo">2en1</span> }
+                @if (match().away3in1) { <span class="badge combo">3en1</span> }
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <span class="date-label">
+            {{ (match().date | date: 'd MMM, yyyy') || '12/12/12' }} 
+            <small>{{ match().date | date: 'h:mm a' }}</small>
         </span>
     </div>
-    @if ( match().date ) {
-    <div class="date">
-        <p>
-            {{ match().date| date: 'd/M/yy' }} <small>{{ match().date| date: 'h:mm' }}</small>
-        </p>
-    </div>
-    } @else {
-    <div class="date">
-        <p>
-            12/12/12
-        </p>
-    </div>
-    }
 </div>

@@ -1,5 +1,5 @@
 <div>
-    @for (stat of playerStats(); track stat.playerId) {
+    @for (stat of playerStats(); track stat.player.id) {
     <div>
         <app-stat [stat]="stat" />
     </div>

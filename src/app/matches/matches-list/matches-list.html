@@ -1,15 +1,4 @@
-<div class="container">
-    @for (match of matches(); track $index) {
-        <div>
-            <app-match [match]="match" />
-        </div>
-        }
+<div class="container"> @for (match of matches(); track $index) {
+    <app-match [match]="match" class="match-item" />
+    }
 </div>
-
-
-<menu>
-    <a  [routerLink]="['../new-match']" class="btn-text" >
-        nueva partida
-        <img src="/icons/add.svg" alt="add" class="material-symbols-outlined"></a>
-        <router-outlet/>
-</menu>

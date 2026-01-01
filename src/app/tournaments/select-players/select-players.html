@@ -3,7 +3,10 @@
 <form [formGroup]="playersForm">
   @for (player of allPlayers(); track $index) {
   <div class="player-item">
-    <input type="checkbox" [id]="player.id" [value]="player.id" (change)="onCheckChange($event)" />
+    <label class="switch">
+      <input type="checkbox" class="1" [id]="player.id" [value]="player.id" (change)="onCheckChange($event)" />
+       <span class="slider"></span>
+    </label>
     <label [for]="player.id">{{ player.nickname }}</label>
   </div>
   }

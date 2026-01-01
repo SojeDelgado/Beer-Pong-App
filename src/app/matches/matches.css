@@ -15,13 +15,18 @@ span {
 
 .box {
     display: flex;
-    flex-direction: row;
     justify-content: space-around;
 }
 
 .section {
-    padding: 1rem;
-    margin: 1rem;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+
+    padding: 0;
+    margin: 0.5rem;
     width: 10rem;
 
     background: var(--bg-dark);
@@ -33,20 +38,42 @@ span {
     color: var(--text-muted);
     text-align: center;
 
+    transition: all 0.8s ease;
+
+}
+
+.section::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%; /* Empieza en el centro */
+    width: 0;   /* Empieza con ancho 0 */
+    height: 2px;
+    background-color: var(--text-secondary);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+p {
+    margin: 0;
+    padding: 0;
 }
 
 .selected,
 .section:hover {
     cursor: pointer;
-    /* background: var(--gradient-hover); */
-    background: var(--gradient-hover);
-    border-top: solid 1px var(--highlight);
+    
+    border-bottom: solid 2px var(--text-secondary); 
     color: var(--text-secondary);
     box-shadow: var(--shadow-l);
 
 }
 
-.selected .material-symbols-outlined ,
+.material-symbols-outlined{
+    font-size: 1.5rem;
+}
+
+.selected .material-symbols-outlined,
 .section:hover .material-symbols-outlined {
     color: var(--text);
     font-variation-settings:

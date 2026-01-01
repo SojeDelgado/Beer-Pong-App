@@ -23,19 +23,4 @@ export class StatsService {
     private getAllStats(): Observable<Stat[]> {
         return this.httpClient.get<Stat[]>(this.statsUrl);
     }
-
-    async createOrUpdate(playerId: string, body: UpdateStat) {
-        return this.httpClient.post(`${this.statsUrl}/${playerId}`, body).subscribe({
-            next: (response) => {
-                console.log(response);
-            },
-            error: (err) => {
-                console.error(err);
-            }
-        })
-    }
-    
-    async updatePlayerStatsByMatches(matches: Match[]) {
-        return
-    }
 }

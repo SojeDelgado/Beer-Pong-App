@@ -1,5 +1,7 @@
+import { Player } from "../../players/players-list/player-item/player.model";
+
 export interface Stat {
-    playerId: string,
+    player: Player,
 
     puntos_favor_totales: number,
     puntos_contra_totales: number,

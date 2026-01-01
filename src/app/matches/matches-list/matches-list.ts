@@ -1,12 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { MatchesService } from '../matches.service';
 import { MatchComponent } from "./match/match.component";
-import { NewMatch } from '../new-match/new-match';
-import { RouterLink, RouterOutlet } from "@angular/router";
 
 @Component({
   selector: 'app-matches-list',
-  imports: [MatchComponent, NewMatch, RouterLink, RouterOutlet],
+  imports: [MatchComponent],
   templateUrl: './matches-list.html',
   styleUrl: './matches-list.css',
 })

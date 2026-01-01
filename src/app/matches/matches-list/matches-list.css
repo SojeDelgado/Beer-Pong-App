@@ -2,21 +2,21 @@ ul {
   list-style-type: none;
 }
 
+
 .container {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  place-items: center;
-  row-gap: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center; /* Centra las cartas si sobra espacio a los lados */
+}
+
+app-match {
+  flex: 0 0 20rem; 
 }
 
 .horizontal-rule {
   height: 1px;
   background-color: var(--border-light);
-}
-
-
-div {
-  text-align: center;
 }
 
 menu {
