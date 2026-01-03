@@ -1,12 +1,13 @@
 import { Routes } from '@angular/router';
 
 import { routes as playerRoutes } from './players/players.routes';
-import { routes as tournamentRoutes } from './tournaments/tournaments.routes';
 import { routes as matchesRoutes } from './matches/matches.routes';
+import { routes as roundRobinRoutes } from './tournaments/round-robin/round-robin-routes';
 import { Homepage } from './homepage/homepage';
 import { PlayersComponent } from './players/players.component';
-import { Tournaments } from './tournaments/tournaments';
 import { MatchesComponent } from './matches/matchesComponent';
+import { RoundRobinComponent } from './tournaments/round-robin/round-robin';
+
 
 export const routes: Routes = [
     {
@@ -24,8 +25,8 @@ export const routes: Routes = [
         children: matchesRoutes
     },
     {
-        path: 'tournaments',
-        component: Tournaments,
-        children: tournamentRoutes
+        path: 'round-robin',
+        component: RoundRobinComponent,
+        children: roundRobinRoutes
     }
 ];

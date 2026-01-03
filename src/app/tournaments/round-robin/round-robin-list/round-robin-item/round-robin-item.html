@@ -1,5 +1,5 @@
 <header>
-    <div [routerLink]="['/tournaments/round-robin', roundRobin().id, 'matches']" routerLinkActive="selected">
+    <div [routerLink]="['/round-robin', roundRobin().id, 'matches']" routerLinkActive="selected">
         <a>
             <span> {{ roundRobin().place }} </span>
             <span> {{ roundRobin().date | date: 'd/M/yy' }} {{ roundRobin().date | date: 'shortTime'}}</span>

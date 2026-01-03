@@ -1,7 +1,6 @@
 import { Component, inject, output } from '@angular/core';
 import { PlayersService } from '../../players/players.service';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RoundRobinService } from '../round-robin/round-robin.service';
 
 @Component({
   selector: 'app-select-players',
@@ -51,5 +50,6 @@ export class SelectPlayers {
 
   OnSubmit() {
     this.selectedPlayers.emit(this.players.value);
+    console.log(this.players.value);
   }
 }

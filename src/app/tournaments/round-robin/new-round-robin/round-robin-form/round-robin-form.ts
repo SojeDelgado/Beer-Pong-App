@@ -3,14 +3,14 @@ import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Va
 import { Component, inject, input, OnInit, output, signal } from '@angular/core';
 import { NgClass } from '@angular/common';
 // Component
-import { LeaderboardComponent } from "../../leaderboard/leaderboard";
+import { LeaderboardComponent } from "../../../leaderboard/leaderboard";
 // Service
-import { RoundRobinService } from '../round-robin.service';
+import { RoundRobinService } from '../../round-robin.service';
 // Model
-import { Tournament } from '../../tournament.service';
-import { Results } from '../../leaderboard/leaderboard.model';
-import { MatchUp } from '../../matchup.model';
-import { NewMatch } from '../../../matches/matches-list/match/match.model';
+import { Tournament } from '../../../tournament.model'; 
+import { Results } from '../../../leaderboard/leaderboard.model';
+import { MatchUp } from '../../../matchup.model';
+import { NewMatch } from '../../../../matches/matches-list/match/match.model';
 
 interface ResultFormValue {
   home: string;

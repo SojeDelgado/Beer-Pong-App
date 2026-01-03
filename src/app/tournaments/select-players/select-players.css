@@ -1,3 +1,117 @@
-.player-item{
-    background-color: aliceblue;
+.selector-container {
+  background-color: var(--bg-light);
+  padding: 2rem;
+  margin: 0.5rem;
+  border-radius: 12px;
+  color: var(--text);
+  box-shadow: var(--shadow-l);
+}
+
+.title {
+  color: var(--text);
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.players-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.player-card-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 1rem;
+  background-color: var(--bg-dark);
+  border: var(--border-card);
+  border-radius: 10px;
+  box-shadow: var(--shadow-s);
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  position: relative;
+}
+
+.player-card-content:hover {
+  background: var(--gradient-hover);
+  box-shadow: var(--shadow-m);
+  transform: translateY(-2px);
+  border-color: var(--highlight);
+}
+
+/* Estado Seleccionado */
+.hidden-checkbox:checked + .player-card-content {
+  border: var(--border-secondary-card);
+  background: var(--bg-light);
+  box-shadow: var(--shadow-l);
+}
+
+.hidden-checkbox:checked + .player-card-content .selection-indicator {
+  background: var(--text-secondary);
+  box-shadow: 0 0 10px var(--text-secondary);
+}
+
+/* Detalles internos */
+.avatar {
+  width: 40px;
+  height: 40px;
+  background: var(--bg-dark);
+  border: var(--border-light-card);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  font-weight: bold;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.nickname {
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.selection-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border);
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  transition: all 0.3s ease;
+}
+
+/* Botón Aceptar */
+.btn-primary {
+  width: 100%;
+  padding: 0.8rem;
+  background: var(--bg-light);
+  color: var(--text-secondary);
+  border: var(--border-secondary-card);
+  border-radius: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: var(--shadow-s);
+  transition: all 0.2s;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--text-secondary);
+  color: var(--bg-dark);
+  box-shadow: var(--shadow-m);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(1);
 }
