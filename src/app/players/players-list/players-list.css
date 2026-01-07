@@ -2,6 +2,14 @@
     display: flex;
 }
 
+.players {
+    display: flex;
+}
+
+.players-content {
+    flex: 1 1 auto;
+}
+
 .vertical-line {
     display: flex;
     margin: -1rem 0 -1rem 1.5rem;
@@ -16,4 +24,15 @@ ul {
     flex-direction: column;
     margin: 0;
     padding: 0;
+}
+
+@media (max-width:390px){
+  div{
+    width: 75%;
+  }
+
+  .vertical-line {
+    display: none;
+}
+
 }

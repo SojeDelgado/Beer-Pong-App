@@ -1,13 +1,10 @@
 .item {
-    display: flex;
-    flex-direction: column;
     padding: 1.5rem;
     background: var(--bg);
     border: 1px solid var(--border-card);
-    border-radius: 16px; /* Más redondeado = más moderno */
+    border-radius: 16px;
     box-shadow: var(--shadow-s);
     transition: transform 0.2s ease;
-    margin-bottom: 1rem;
 }
 
 .item:hover {
@@ -17,7 +14,7 @@
 
 .main-content {
     display: grid;
-    grid-template-columns: 1fr auto 1fr; /* Columna central fija para el VS */
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
     gap: 1rem;
     margin-bottom: 1rem;
@@ -64,12 +61,14 @@
 
 .badge-container {
     display: flex;
-    gap: 4px;
-    height: 18px;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2px;
 }
 
 .badge {
     font-size: 0.6rem;
+    flex: 0 1 auto;
     padding: 2px 6px;
     border-radius: 4px;
     text-transform: uppercase;
@@ -77,7 +76,11 @@
     box-shadow: var(--shadow-s);
 }
 
-.island, .combo { background: var(--bg-light); color: var(--text-secondary); }
+.island,
+.combo {
+    background: var(--bg-light);
+    color: var(--text-secondary);
+}
 
 .footer {
     border-top: 1px solid var(--border-light);

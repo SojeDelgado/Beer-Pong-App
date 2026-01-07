@@ -3,7 +3,7 @@ import { Observable } from "rxjs";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
 import { MatchUp } from "../matchup.model";
-import { Tournament } from "../tournament.model";
+import { NewTournament } from "../tournament.model";
 import { toSignal } from "@angular/core/rxjs-interop";
 import { TournamentData } from "./tournament-data.model";
 import { Match } from "../../matches/matches-list/match/match.model";
@@ -34,7 +34,7 @@ export class RoundRobinService {
         )
     }
 
-    createTournament(tournament: Tournament) {
+    createTournament(tournament: NewTournament) {
         return this.httpClient.post(this.tournamentUrl, tournament).subscribe({
             next: (response) => {
                 console.log(response);

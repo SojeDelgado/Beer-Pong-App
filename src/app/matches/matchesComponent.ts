@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 
@@ -8,6 +8,5 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
   templateUrl: './matches.html',
   styleUrl: './matches.css',
 })
-export class MatchesComponent {
-
+export class MatchesComponent{
 }

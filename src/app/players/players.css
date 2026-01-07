@@ -1,5 +1,8 @@
 menu {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  padding: 0;
 }
 
 div {
@@ -9,6 +12,15 @@ div {
 header {
   display: flex;
   max-width: 50rem;
-  margin: 2.5rem auto;
-  border-radius: 10px;
+  margin: 5rem auto;
+
+  margin-bottom: 0;
+}
+
+
+@media (max-width:390px){
+  div{
+    margin-left: -3rem;
+  }
+
 }

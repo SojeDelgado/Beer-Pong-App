@@ -1,10 +1,7 @@
-.selector-container {
-  background-color: var(--bg-light);
-  padding: 2rem;
-  margin: 0.5rem;
-  border-radius: 12px;
-  color: var(--text);
-  box-shadow: var(--shadow-l);
+h3 {
+  display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 .title {
@@ -14,22 +11,38 @@
   letter-spacing: 0.5px;
 }
 
-.players-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+.container {
+  display: flex;
+  justify-content: center;
+  margin: 1rem auto;
+  max-width: 80vh;
+}
+
+.selector-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  
+  padding: 2rem;
+  margin: 1rem;
   gap: 1rem;
-  margin-bottom: 2rem;
+
+  border-radius: 12px;
+  
+  background-color: var(--bg-light);
+  color: var(--text);
+  box-shadow: var(--shadow-l);
 }
 
 .player-card-content {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  flex: 0 0 auto;
+  min-width: 8rem;
   padding: 1rem;
   background-color: var(--bg-dark);
   border: var(--border-card);
   border-radius: 10px;
   box-shadow: var(--shadow-s);
+  
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   position: relative;
@@ -42,10 +55,9 @@
   border-color: var(--highlight);
 }
 
-/* Estado Seleccionado */
 .hidden-checkbox:checked + .player-card-content {
   border: var(--border-secondary-card);
-  background: var(--bg-light);
+  background: var(--gradient-hover);
   box-shadow: var(--shadow-l);
 }
 
@@ -54,7 +66,7 @@
   box-shadow: 0 0 10px var(--text-secondary);
 }
 
-/* Detalles internos */
+
 .avatar {
   width: 40px;
   height: 40px;
@@ -89,29 +101,9 @@
   transition: all 0.3s ease;
 }
 
-/* Botón Aceptar */
-.btn-primary {
-  width: 100%;
-  padding: 0.8rem;
-  background: var(--bg-light);
-  color: var(--text-secondary);
-  border: var(--border-secondary-card);
-  border-radius: 8px;
-  font-weight: 700;
-  text-transform: uppercase;
-  cursor: pointer;
-  box-shadow: var(--shadow-s);
-  transition: all 0.2s;
-}
 
-.btn-primary:hover:not(:disabled) {
-  background: var(--text-secondary);
-  color: var(--bg-dark);
-  box-shadow: var(--shadow-m);
-}
+.form-actions {
+  display: flex;
+  justify-content: center;
 
-.btn-primary:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  filter: grayscale(1);
 }

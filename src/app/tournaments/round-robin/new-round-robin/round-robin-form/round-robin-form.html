@@ -1,54 +1,174 @@
 <form [formGroup]="tournamentForm" (ngSubmit)="onSubmit()">
-    <div style="text-align: center;">
-        <div style="display: inline-block;">
-            <label>Nombre del Torneo:</label>
-            <input type="text" formControlName="name">
-            <label style="padding-left: 2rem;">Lugar: </label>
-            <input type="text" formControlName="place">
-        </div>
-    </div>
 
     <app-leaderboard [results]="resultsForLeaderboard()" />
 
-    <div formArrayName="matches" class="matches-container">
+    <div class="tournament">
+        <div class="tournament-data">
+            <div>
+                <label>Nombre</label>
+            </div>
+            <div>
+                <input type="text" formControlName="name">
+            </div>
+        </div>
 
-        <div style="text-align: center;">
-            <h3>Partidos:</h3>
-            @for ( matchGroup of matches.controls; track i; let i = $index) {
+        <div class="tournament-data">
+            <div>
+                <label>Lugar </label>
+            </div>
+            <div>
+                <input type="text" formControlName="place">
+            </div>
+        </div>
+    </div>
+
+    <div formArrayName="matches">
+        <div class="matches-container">
+
+            @for (matchGroup of matches.controls; track i; let i = $index) {
+
+            @if (i === 0 || matchups()[i].round !== matchups()[i-1].round) {
+            <div class="round-separator">
+                <hr>
+                <h2>Ronda {{ matchups()[i].round }}</h2>
+                <hr>
+            </div>
+            }
 
             <div [formGroupName]="i" class="match-group">
-                <div class="team-info">
-                    <label for="islaP2">Isla:
-                        <input type="checkbox" formControlName="homeIsla">
-                    </label>
-                    <span class="home-team">{{ matchups()[i].home.nickname }}</span>
-                    <label>
-                        <input type="number" formControlName="homeScore" min="0" placeholder="0"
-                            [ngClass]="{'saved':matchHasBeenSubmited(i)}">
-                    </label>
-                    <span class="vs">vs</span>
-                    <span class="away-team">{{ matchups()[i].away.nickname }}</span>
-                    <label>
-                        <input type="number" formControlName="awayScore" min="0" placeholder="0"
-                            [ngClass]="{'saved':matchHasBeenSubmited(i)}">
-                    </label>
-                    <label for="islaP2">Isla:
-                        <input type="checkbox" formControlName="awayIsla">
-                    </label>
-                    @if (matchGroup.invalid || !matchGroup.pristine) {
-                    <button type="button" (click)="onSingleSubmit(i)"
-                        [disabled]="matchGroup.invalid || matchGroup.pristine">
-                        Guardar
-                    </button>
-                    }
+                <div class="round" [ngClass]="{'submited': matchHasBeenSubmited(i)}">
+
+                    <div class="match-card" [ngClass]="{'submited': matchHasBeenSubmited(i)}">
+                        <div class="label">
+                            <span class="material-symbols-outlined h1">home</span>
+                            <h1>{{ matchups()[i].home.nickname }}</h1>
+                        </div>
+
+                        <div class="row">
+                            <div class="label">
+                                <span class="material-symbols-outlined">sports_bar</span>
+                                <label>Vasos</label>
+                            </div>
+                            <div>
+                                <input type="number" formControlName="homeScore" min="0" placeholder="0"
+                                    [ngClass]="{'saved': matchHasBeenSubmited(i)}">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="label">
+                                <span class="material-symbols-outlined">change_history</span>
+                                <label>Isla</label>
+                            </div>
+                            <div>
+                                <label class="switch">
+                                    <input type="checkbox" formControlName="homeIsla">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="label">
+                                <span class="material-symbols-outlined">counter_2</span>
+                                <label>2 en 1</label>
+                            </div>
+                            <div>
+                                <label class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="label">
+                                <span class="material-symbols-outlined">counter_3</span>
+                                <label>3 en 1</label>
+                            </div>
+                            <div>
+                                <label class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="match-card" [ngClass]="{'submited': matchHasBeenSubmited(i)}">
+                        <div class="label">
+                            <span class="material-symbols-outlined h1">home</span>
+                            <h1>{{ matchups()[i].away.nickname }}</h1>
+                        </div>
+
+                        <div class="row">
+                            <div class="label">
+                                <span class="material-symbols-outlined">sports_bar</span>
+                                <label>Vasos</label>
+                            </div>
+                            <div>
+                                <input type="number" formControlName="awayScore" min="0" placeholder="0"
+                                    [ngClass]="{'saved': matchHasBeenSubmited(i)}">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="label">
+                                <span class="material-symbols-outlined">change_history</span>
+                                <label>Isla</label>
+                            </div>
+                            <div>
+                                <label class="switch">
+                                    <input type="checkbox" formControlName="awayIsla">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="label">
+                                <span class="material-symbols-outlined">counter_2</span>
+                                <label>2 en 1</label>
+                            </div>
+                            <div>
+                                <label class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="label">
+                                <span class="material-symbols-outlined">counter_3</span>
+                                <label>3 en 1</label>
+                            </div>
+                            <div>
+                                <label class="switch">
+                                    <input type="checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="button">
+                        @if (matchGroup.invalid || !matchGroup.pristine) {
+                        <button type="button" (click)="onSingleSubmit(i)"
+                            [disabled]="matchGroup.invalid || matchGroup.pristine">
+                            Guardar Resultado
+                        </button>
+                        }
+                    </div>
                 </div>
             </div>
             }
         </div>
     </div>
-    <div class="button">
+
+    <div class="submit-btn">
         <button type="submit" [disabled]="tournamentForm.invalid || !matches.pristine">
-            Guardar Resultados
+            Finalizar Torneo
         </button>
     </div>
 </form>

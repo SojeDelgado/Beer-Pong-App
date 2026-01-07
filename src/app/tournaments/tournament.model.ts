@@ -4,5 +4,13 @@ export interface Tournament {
     name: string,
     type: string,
     place: string,
-    matches: NewMatch[]
+    matches: NewMatch[],
+    round: number
+}
+
+export interface NewTournament {
+    name: string,
+    type: string,
+    place: string,
+    matches: NewMatch[],
 }

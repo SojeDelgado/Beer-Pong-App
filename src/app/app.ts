@@ -13,7 +13,7 @@ import { NgClass } from '@angular/common';
 export class App {
   protected readonly title = signal('angular-project');
 
-  isSidebarOpen: boolean = true; 
+  isSidebarOpen: boolean = true;
 
   toggleSidebar() {
     this.isSidebarOpen = !this.isSidebarOpen;
@@ -22,5 +22,4 @@ export class App {
   toggle() {
     document.body.classList.toggle("light");
   }
-
 }

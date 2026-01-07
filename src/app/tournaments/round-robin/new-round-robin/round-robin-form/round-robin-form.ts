@@ -7,7 +7,7 @@ import { LeaderboardComponent } from "../../../leaderboard/leaderboard";
 // Service
 import { RoundRobinService } from '../../round-robin.service';
 // Model
-import { Tournament } from '../../../tournament.model'; 
+import { NewTournament } from '../../../tournament.model'; 
 import { Results } from '../../../leaderboard/leaderboard.model';
 import { MatchUp } from '../../../matchup.model';
 import { NewMatch } from '../../../../matches/matches-list/match/match.model';
@@ -107,7 +107,7 @@ export class RoundRobinForm implements OnInit {
 
   onSubmit(): void {
     const matches: NewMatch[] = this.tournamentForm.get('matches')?.value;
-    const newTournament: Tournament = {
+    const newTournament: NewTournament = {
       name: this.tournamentForm.get('name')?.value,
       place: this.tournamentForm.get('place')?.value,
       type: this.roundRobinService.type,

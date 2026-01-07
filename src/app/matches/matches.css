@@ -46,8 +46,7 @@ span {
     content: '';
     position: absolute;
     bottom: 0;
-    left: 50%; /* Empieza en el centro */
-    width: 0;   /* Empieza con ancho 0 */
+    left: 50%;
     height: 2px;
     background-color: var(--text-secondary);
     transition: all 0.3s ease;
@@ -62,7 +61,6 @@ p {
 .selected,
 .section:hover {
     cursor: pointer;
-    
     border-bottom: solid 2px var(--text-secondary); 
     color: var(--text-secondary);
     box-shadow: var(--shadow-l);
@@ -87,9 +85,7 @@ p {
 }
 
 main {
-    overflow: hidden;
     width: 100%;
-    height: 80%;
     max-width: 50rem;
     margin: 2.5rem auto;
     border-radius: 10px;

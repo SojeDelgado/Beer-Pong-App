@@ -22,7 +22,7 @@
   direction: ltr;
   -webkit-font-feature-settings: 'liga';
   -webkit-font-smoothing: antialiased;
-  
+
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
   transition: font-variation-settings 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
@@ -139,7 +139,8 @@ button[type="submit"]:disabled:hover {
   color: var(--text-muted);
 }
 
-button[type="submit"], button[type="button"] {
+button[type="submit"],
+button[type="button"] {
   display: flex;
   align-items: center;
   gap: 0.35rem;
@@ -152,7 +153,8 @@ button[type="submit"], button[type="button"] {
   padding: 0.35rem 1.1rem;
 }
 
-button[type="submit"]:hover, button[type="button"]:hover {
+button[type="submit"]:hover,
+button[type="button"]:hover {
   background-color: var(--text-secondary);
   color: var(--text);
   border: var(--border-light-card)
@@ -199,7 +201,7 @@ select {
   box-shadow: var(--shadow-m);
 }
 
-select:hover{
+select:hover {
   cursor: pointer;
 }
 

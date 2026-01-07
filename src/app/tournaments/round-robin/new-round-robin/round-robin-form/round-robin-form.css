@@ -1,73 +1,149 @@
+.tournament{
+  display: flex;
+  justify-content: center;
+  margin: 3rem;
+  gap: 2rem;
+}
+
+.tournament-data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.matches {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
 .matches-container {
-  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0 2rem;
+}
+
+.round-separator {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  gap: 1.5rem;
+}
+
+.round-separator h2 {
+  color: var(--text-muted);
+  font-size: 1.8rem;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.round-separator hr {
+  flex-grow: 1;
+  border: none;
+  border-top: 1px solid var(--border-card);
+  opacity: 0.5;
 }
 
 .match-group {
-  display: inline-block;
-  max-width: 40rem;
-  text-align: center;
-  margin-bottom: 15px;
-  padding: 10px 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  margin-bottom: 1rem;
 }
 
-.team-info {
-  flex: 1;
-  font-size: 16px;
-  font-weight: bold;
-}
-
-.vs {
-  margin: 0 10px;
-  color: #666;
-}
-
-.score-inputs {
+.round {
   display: flex;
-  gap: 15px;
+  flex-wrap: wrap;
+  max-width: 46rem;
+  
+  justify-content: center;
+  align-items: center;
+  
+  gap: 1.5rem;
+  margin: 1rem 1rem;
+  padding: 1rem;
+
+  border: var(--border-card);
+  border-radius: 10px;
+  box-shadow: var(--shadow-s);
+
+  background-color: var(--bg-dark);
+
+  transition: all 0.2s ease-in-out;
+
 }
 
-input[type="number"] {
-  width: 60px;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  margin-left: 5px;
+.submited {
+  border: solid 1px var(--text-secondary);
+  background: var(--bg-light); 
+  box-shadow: var(--shadow-l) !important;
+} 
+
+h1 {
+  color: var(--text);
+  font-weight: 400;
+  margin: 0;
+  text-align: center;
 }
 
-.error-message {
-    color: red;
-    font-size: 12px;
-    margin-left: 10px;
+.h1 {
+  color: var(--text);
+  font-size: 1.95rem;
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24
+}
+
+.match-card {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  gap: 1rem;
+
+  border: var(--border-card);
+  border-top: solid 1px var(--highlight);
+  border-radius: 6px;
+
+  background: var(--bg);
+  box-shadow: var(--shadow-s);
+
+  transition: all 0.2s ease-in-out;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 
 .button {
-  display: inline-block;
-  width: 99%;
-  text-align: center;
-  padding: 0;
-  margin: 10px;
+  display: flex;
+  position: static;
+  justify-content: center;
+  width: 100%;  
 }
 
-button[type="submit"] {
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
+button {
+  margin: 0;
 }
 
-button[type="submit"]:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
-}
-
-.btn-save-single {
-  margin-left: 20px;
-}
-
-.saved {
-  background-color: lightgreen;
+.submit-btn{
+  display: flex;
+  justify-content: center;
+  margin: 3rem;
 }
