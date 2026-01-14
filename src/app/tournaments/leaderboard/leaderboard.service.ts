@@ -26,8 +26,8 @@ export class LeaderboardService {  generateLeaderboard(results: Results[]) {
 
     
     results.forEach(result => {
-      const home = getOrCreatePlayer(result.home);
-      const away = getOrCreatePlayer(result.away);
+      const home = getOrCreatePlayer(result.home!);
+      const away = getOrCreatePlayer(result.away!);
 
       home.pFavor += result.homeScore;
       home.pContra += result.awayScore;

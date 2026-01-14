@@ -41,7 +41,7 @@
                     <div class="match-card" [ngClass]="{'submited': matchHasBeenSubmited(i)}">
                         <div class="label">
                             <span class="material-symbols-outlined h1">home</span>
-                            <h1>{{ matchups()[i].home.nickname }}</h1>
+                            <h1>{{ matchups()[i].home?.nickname }}</h1>
                         </div>
 
                         <div class="row">
@@ -75,7 +75,7 @@
                             </div>
                             <div>
                                 <label class="switch">
-                                    <input type="checkbox">
+                                    <input type="checkbox" formControlName="home2in1">
                                     <span class="slider"></span>
                                 </label>
                             </div>
@@ -88,7 +88,7 @@
                             </div>
                             <div>
                                 <label class="switch">
-                                    <input type="checkbox">
+                                    <input type="checkbox" formControlName="home3in1">
                                     <span class="slider"></span>
                                 </label>
                             </div>
@@ -98,7 +98,7 @@
                     <div class="match-card" [ngClass]="{'submited': matchHasBeenSubmited(i)}">
                         <div class="label">
                             <span class="material-symbols-outlined h1">home</span>
-                            <h1>{{ matchups()[i].away.nickname }}</h1>
+                            <h1>{{ matchups()[i].away?.nickname }}</h1>
                         </div>
 
                         <div class="row">
@@ -132,7 +132,7 @@
                             </div>
                             <div>
                                 <label class="switch">
-                                    <input type="checkbox">
+                                    <input type="checkbox" formControlName="away2in1">
                                     <span class="slider"></span>
                                 </label>
                             </div>
@@ -145,7 +145,7 @@
                             </div>
                             <div>
                                 <label class="switch">
-                                    <input type="checkbox">
+                                    <input type="checkbox" formControlName="away3in1">
                                     <span class="slider"></span>
                                 </label>
                             </div>

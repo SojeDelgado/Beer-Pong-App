@@ -1,0 +1,37 @@
+<h1>Bracket</h1>
+<div class="bracket disable-image">
+    @for (roundMatches of rounds(); track $index; let roundIdx = $index) {
+    <div class="column" [ngClass]="getRoundClass(roundIdx)">
+
+        @for (match of roundMatches; track match.matchId) {
+        <div class="match" [class.winner-top]="match.homeScore > match.awayScore"
+            [class.winner-bottom]="match.awayScore > match.homeScore" (click)="openUpdateModal(match)">
+
+
+            @if (selectedMatch === match) {
+            <div (click)="$event.stopPropagation()">
+                <app-match-update [match]="match" (close)="selectedMatch = null" [tournamentId]="singleEliminationId()" />
+            </div>
+            }
+
+            <div class="match-top team">
+                <span class="name">{{ match.home?.nickname || '' }}</span>
+                <span class="score">{{ match.homeScore }}</span>
+            </div>
+
+            <div class="match-bottom team">
+                <span class="name">{{ match.away?.nickname || '' }}</span>
+                <span class="score">{{ match.awayScore }}</span>
+            </div>
+
+        </div>
+        }
+    </div>
+    }
+</div>
+
+<!-- <main class="bracket-container">
+    @for (match of matches(); track $index) {
+        <app-match-update [match]="match" />
+    }
+</main> -->

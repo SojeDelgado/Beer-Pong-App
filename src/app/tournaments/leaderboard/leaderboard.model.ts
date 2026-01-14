@@ -14,8 +14,8 @@ export interface Leaderboard {
 }
 
 export interface Results {
-  home: Player,
-  away: Player,
+  home: Player | null,
+  away: Player | null,
   homeScore: number, 
   awayScore: number
 }

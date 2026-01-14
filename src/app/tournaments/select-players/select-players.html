@@ -1,7 +1,7 @@
-<h3 class="title">Escoge los jugadores</h3>
 <div class="container">
   <form [formGroup]="playersForm" (ngSubmit)="OnSubmit()">
     <div class="selector-container">
+      <h2>Escoge los jugadores</h2>
 
       @for (player of allPlayers(); track player.id) {
       <input type="checkbox" [id]="player.id" [value]="player.id" (change)="onCheckChange($event)"

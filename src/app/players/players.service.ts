@@ -33,13 +33,8 @@ export class PlayersService {
   }
 
   private setupSocketListeners() {
-    this.socket.on('playerAdded', (newPlayer: any) => {
-      const normalizedPlayer = {
-        ...newPlayer,
-        id: newPlayer.id || newPlayer._id
-      };
-
-      this.playersSignal.update(current => [...current, normalizedPlayer]);
+    this.socket.on('playerAdded', (newPlayer: Player) => {
+      this.playersSignal.update(current => [...current, newPlayer]);
     });
   }
 
@@ -60,6 +55,10 @@ export class PlayersService {
 
   async deletePlayer(playerId: string) {
     return;
+  }
+
+  ngOnDestroy() {
+    this.socket.disconnect();
   }
 
 }

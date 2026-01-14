@@ -1,7 +1,7 @@
 @if(players().length === 0 ){
-<app-select-players (selectedPlayers)="onSelectedPlayers($event)" />
+    <app-select-players (selectedPlayers)="onSelectedPlayers($event)" />
 }
 
 @if (matchups.length !== 0) {
-<app-round-robin-form [matchups]="matchups" />
+    <app-round-robin-form [matchups]="matchups" />
 }

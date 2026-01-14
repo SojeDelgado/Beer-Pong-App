@@ -1,0 +1,160 @@
+<dialog #dialog>
+    <form [formGroup]="singleEliminationMatchForm" (ngSubmit)="onSubmit()">
+        <div class="form">
+            <div class="close" (click)="handleClose()">
+                <span class="material-symbols-outlined icon">
+                    close
+                </span>
+            </div>
+            <div class="section">
+                <div class="label">
+                    <h1>{{ match().home.nickname}}</h1>
+                </div>
+
+                <div class="row">
+                    <div class="label">
+                        <span class="material-symbols-outlined">
+                            sports_bar
+                        </span>
+                        <label for="homeScore">Vasos</label>
+                    </div>
+                    <div>
+                        <input type="number" inputmode="numeric" id="homeScore" name="homeScore"
+                            formControlName="homeScore">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="label">
+                        <span class="material-symbols-outlined">
+                            change_history
+                        </span>
+                        <label for="homeIsla">Isla</label>
+                    </div>
+                    <div>
+                        <label class="switch">
+                            <input type="checkbox" formControlName="homeIsla">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="label">
+                        <span class="material-symbols-outlined">
+                            counter_2
+                        </span>
+                        <label for="islaP2">2 en 1</label>
+                    </div>
+
+                    <div>
+                        <label class="switch">
+                            <input type="checkbox" formControlName="home2in1">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="label">
+                        <span class="material-symbols-outlined">
+                            counter_3
+                        </span>
+                        <label for="home3in1">3 en 1</label>
+                    </div>
+
+                    <div>
+                        <label class="switch">
+                            <input type="checkbox" formControlName="home3in1">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Away -->
+
+            <div class="section">
+                <div class="label">
+                    <h1>{{ match().away.nickname}}</h1>
+                </div>
+
+                <div class="row">
+                    <div class="label">
+                        <span class="material-symbols-outlined">
+                            sports_bar
+                        </span>
+                        <label for="awayScore">Vasos</label>
+                    </div>
+
+                    <div>
+                        <input type="number" inputmode="numeric" id="awayScore" name="awayScore"
+                            formControlName="awayScore">
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="label">
+                        <span class="material-symbols-outlined">
+                            change_history
+                        </span>
+                        <label for="awayIsla">Isla</label>
+                    </div>
+                    <div>
+                        <label class="switch">
+                            <input type="checkbox" formControlName="awayIsla">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="label">
+                        <span class="material-symbols-outlined">
+                            counter_2
+                        </span>
+                        <label for="awayIsla">2 en 1</label>
+                    </div>
+
+                    <div>
+                        <label class="switch">
+                            <input type="checkbox" formControlName="away2in1">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="label">
+                        <span class="material-symbols-outlined">
+                            counter_3
+                        </span>
+                        <label for="away3in1">3 en 1</label>
+                    </div>
+
+                    <div>
+                        <label class="switch">
+                            <input type="checkbox" formControlName="away3in1">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <div>
+                <button type="button" (click)="handleClose()">Cancelar</button>
+            </div>
+            <div>
+                <button type="submit"
+                    [disabled]="singleEliminationMatchForm.invalid || singleEliminationMatchForm.value.homeScore === singleEliminationMatchForm.value.awayScore">
+                    Guardar
+                </button>
+            </div>
+        </div>
+    </form>
+</dialog>

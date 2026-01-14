@@ -1,0 +1,24 @@
+header {
+    display: flex;
+    margin: 1rem;
+    padding: 1rem;
+    background-color: var(--bg-dark);
+    color: var(--text-muted);
+    box-shadow: var(--shadow-s);
+    border-radius: 12px;
+    border: var(--border-card);
+    transition: all 0.2s ease;
+}
+
+header:hover {
+    cursor: pointer;
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-l);
+    background: var(--gradient-hover);
+    color: var(--color);
+    border-top: solid 1px var(--highlight);
+}
+
+h4 {
+    margin: 0;
+}

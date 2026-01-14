@@ -63,12 +63,16 @@ export class RoundRobinForm implements OnInit {
 
   private createMatchFormGroup(matchup: MatchUp): FormGroup {
     return this.fb.group({
-      home: [matchup.home.id],
-      away: [matchup.away.id],
+      home: [matchup.home?.id],
+      away: [matchup.away?.id],
       homeScore: ["", [Validators.required, Validators.min(0), Validators.max(10)]],
       awayScore: ["", [Validators.required, Validators.min(0), Validators.max(10)]],
       homeIsla: [false],
-      awayIsla: [false]
+      awayIsla: [false],
+      home2in1: [false],
+      away2in1: [false],
+      home3in1: [false],
+      away3in1: [false],
     });
   }
 

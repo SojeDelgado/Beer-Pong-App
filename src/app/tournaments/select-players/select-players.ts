@@ -50,6 +50,5 @@ export class SelectPlayers {
 
   OnSubmit() {
     this.selectedPlayers.emit(this.players.value);
-    console.log(this.players.value);
   }
 }

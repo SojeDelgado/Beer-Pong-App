@@ -1,0 +1,15 @@
+main {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 80vh;
+    margin: 1rem auto;
+}
+
+div {
+    flex: 1 1 auto;
+}
+
+.button {
+    display: flex;
+    justify-content: center;
+}

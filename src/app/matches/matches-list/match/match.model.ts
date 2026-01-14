@@ -37,17 +37,27 @@ export interface NewMatch {
 
 }
 
-export interface TournamentMatch {
-    tournamentId: string,
-    playerId1: string,
-    player1Nickname: string
+export interface SingleEliminationMatch {
+    id: string,
 
-    playerId2: string,
-    player2Nickname: string,
+    home: Player,
+    away: Player,
 
-    scoreP1: number,
-    scoreP2: number,
+    homeScore: number,
+    awayScore: number,
 
-    winner: string,
+    homeIsla: boolean,
+    awayIsla: boolean,
 
+    home2in1: boolean,
+    away2in1: boolean,
+
+    home3in1: boolean,
+    away3in1: boolean,
+
+    date: Date
+
+    matchId: number,
+    nextMatchId: number | null,
+    round: number
 }
