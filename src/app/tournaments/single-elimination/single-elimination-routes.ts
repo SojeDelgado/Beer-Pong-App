@@ -18,7 +18,7 @@ export const routes: Routes = [
         component: NewSingleElimination
     },
     {
-        path: ':singleEliminationId',
+        path: ':singleEliminationId/matches',
         component: Bracket
     }
 

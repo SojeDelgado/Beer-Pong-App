@@ -1,38 +1,39 @@
 import { inject, Injectable, signal } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
-import { Observable } from "rxjs";
+import { BehaviorSubject, Observable, switchMap } from "rxjs";
 import { TournamentData } from "../round-robin/tournament-data.model";
 import { MatchUp } from "../matchup.model";
-import { toSignal } from "@angular/core/rxjs-interop";
 import { NewTournamentSingleElimination, UpdateTournamentMatch } from "../tournament.model";
 import { SingleEliminationMatch } from "../../matches/matches-list/match/match.model";
-// Sockets
-import { io } from 'socket.io-client';
+import { UpdateTournamentDto } from "../models/update-tournament-model";
 
 
 @Injectable({
     providedIn: 'root',
 })
 export class SingleEliminationService {
-    private socket = io(environment.apiurl);
     private tournamentUrl = `${environment.apiurl}/tournaments`;
 
     private httpClient = inject(HttpClient);
 
     private singleEliminationsSignal = signal<TournamentData[]>([]);
     singleEliminations = this.singleEliminationsSignal.asReadonly();
-
-
     type = "SingleElimination";
 
+    // Variable para saber si algun match se actualizo y notificar.
+    private refresh$ = new BehaviorSubject<void>(undefined);
 
-    constructor() {
-        this.loadInitialSingleEliminations();
-        this.setupSocketListeners();
+    // metodo para notificar que hubo un cambio.
+    notifyUpdate() {
+        this.refresh$.next();
     }
 
-    private loadInitialSingleEliminations() {
+    constructor() {
+        this.loadTournaments();
+    }
+
+    private loadTournaments() {
         const type = this.type;
         let params = { type };
         this.httpClient.get<TournamentData[]>(`${this.tournamentUrl}`, { params }).subscribe(data => {
@@ -40,18 +41,11 @@ export class SingleEliminationService {
         });
     }
 
-    private setupSocketListeners() {
-        this.socket.on('tournamentAdded', (newMatch: any) => {
-            const normalizedMatch = {
-                ...newMatch,
-                id: newMatch.id || newMatch._id
-            };
-            this.singleEliminationsSignal.update(current => [...current, normalizedMatch]);
-        });
-    }
-
     getMatchesById(id: string): Observable<SingleEliminationMatch[]> {
-        return this.httpClient.get<SingleEliminationMatch[]>(`${this.tournamentUrl}/${id}`);
+        // return this.httpClient.get<SingleEliminationMatch[]>(`${this.tournamentUrl}/${id}`);
+        return this.refresh$.pipe(
+            switchMap(() => this.httpClient.get<SingleEliminationMatch[]>(`${this.tournamentUrl}/${id}`))
+        );
     }
 
     generateMatchups(playersIds: string[]): Observable<MatchUp[]> {
@@ -61,11 +55,42 @@ export class SingleEliminationService {
         )
     }
 
-    createTournamentWithMatchups(tournament: NewTournamentSingleElimination): Observable<string> {
-        return this.httpClient.post<string>(`${this.tournamentUrl}/create-tournament-with-matchups`, tournament);
+    createTournamentWithMatchups(tournament: NewTournamentSingleElimination) {
+        return this.httpClient.post<string>(`${this.tournamentUrl}`, tournament)
+            .subscribe({
+                next: () => {
+                    this.loadTournaments();
+                },
+                error: (err) => {
+                    console.log(err);
+                }
+            })
     }
 
-    updateTournamentMatch(updateTournamentMatch: UpdateTournamentMatch): Observable<string> {
+    updateTournamentMatch(updateTournamentMatch: UpdateTournamentMatch) {
         return this.httpClient.post<string>(`${this.tournamentUrl}/update-matches`, updateTournamentMatch);
+    }
+
+    getTournamentStatus(tournamentId: string) {
+        return this.refresh$.pipe(
+            switchMap(() =>
+                this.httpClient.get(`${this.tournamentUrl}/${tournamentId}/status`)
+            )
+        )
+    }
+
+    update(tournamentId: string, body: UpdateTournamentDto) {
+        return this.refresh$.pipe(
+            switchMap(() =>
+                this.httpClient.patch(`${this.tournamentUrl}/${tournamentId}`, body)
+            )
+        ).subscribe({
+            next: () => {
+                this.notifyUpdate();
+            },
+            error: (err) => {
+                console.log(err);
+            }
+        })
     }
 }

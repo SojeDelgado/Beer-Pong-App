@@ -5,6 +5,7 @@ import { switchMap } from 'rxjs';
 import { MatchUpdate } from "../new-single-elimination/match-update/match-update";
 import { SingleEliminationMatch } from '../../../matches/matches-list/match/match.model';
 import { NgClass } from '@angular/common';
+import { TournamentStatus } from '../../models/update-tournament-model';
 
 @Component({
   selector: 'app-bracket',
@@ -15,6 +16,12 @@ import { NgClass } from '@angular/common';
 export class Bracket {
   singleEliminationId = input.required<string>();
   singleEliminationService = inject(SingleEliminationService);
+
+  status = toSignal<any>(
+    toObservable(this.singleEliminationId).pipe(
+      switchMap(id => this.singleEliminationService.getTournamentStatus(id))
+    )
+  );
 
   matches = toSignal(
     toObservable(this.singleEliminationId).pipe(
@@ -53,4 +60,30 @@ export class Bracket {
     const classes = ['one', 'two', 'three', 'four', 'five'];
     return classes[index] || 'one';
   }
+
+  onSubmit() {
+
+    const winner = this.matches()[0].homeScore > this.matches()[0].awayScore
+      ? this.matches()[0].home.id : this.matches()[0].away.id;
+
+    this.singleEliminationService.update(this.singleEliminationId(), 
+    {
+      winner: winner,
+      status: TournamentStatus.FINALIZADO
+    })
+  }
+
+  closeOnBackdrop(event: MouseEvent, dialog: HTMLDialogElement) {
+    const rect = dialog.getBoundingClientRect();
+    const isInDialog = (
+        event.clientX >= rect.left &&
+        event.clientX <= rect.right &&
+        event.clientY >= rect.top &&
+        event.clientY <= rect.bottom
+    );
+
+    if (!isInDialog) {
+        dialog.close();
+    }
+}
 }

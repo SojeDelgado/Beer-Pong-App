@@ -3,6 +3,38 @@ h2 {
   width: 100%;
 }
 
+.tournament-form {
+  max-width: 80vh;
+  margin: 1rem auto;
+  background-color: var(--bg-light);
+  padding: 2rem;
+  border: var(--border-card);
+  box-shadow: var(--shadow-l);
+  border-radius: 12px;
+}
+
+.tournament {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 3rem;
+}
+
+.tournament-data {
+  display: flex;
+  flex-direction: column;
+}
+
+.tournament-data label {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--text-muted);
+}
+
+.tournament-data input {
+  background-color: var(--bg-dark);
+}
+
 .container {
   display: flex;
   justify-content: center;
@@ -14,12 +46,12 @@ h2 {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  
+
   padding: 2rem;
   gap: 1rem;
 
   border-radius: 12px;
-  
+
   background-color: var(--bg-light);
   color: var(--text);
   box-shadow: var(--shadow-l);
@@ -33,7 +65,7 @@ h2 {
   border: var(--border-card);
   border-radius: 10px;
   box-shadow: var(--shadow-s);
-  
+
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   position: relative;
@@ -46,13 +78,13 @@ h2 {
   border-color: var(--highlight);
 }
 
-.hidden-checkbox:checked + .player-card-content {
+.hidden-checkbox:checked+.player-card-content {
   border: var(--border-secondary-card);
   background: var(--gradient-hover);
   box-shadow: var(--shadow-l);
 }
 
-.hidden-checkbox:checked + .player-card-content .selection-indicator {
+.hidden-checkbox:checked+.player-card-content .selection-indicator {
   background: var(--text-secondary);
   box-shadow: 0 0 10px var(--text-secondary);
 }

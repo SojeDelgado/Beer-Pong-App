@@ -26,7 +26,6 @@ export interface NewTournamentSingleElimination {
 
 export interface UpdateTournamentMatch {
     tournamentId: string,
-    id: string;
     home: string,
     away: string,
     homeScore: number,

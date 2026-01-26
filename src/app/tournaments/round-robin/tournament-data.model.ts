@@ -3,5 +3,5 @@ export interface TournamentData {
     name: string
     place: string,
     type: string,
-    date: Date,
+    createdAt: Date,
 }

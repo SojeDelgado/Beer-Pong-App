@@ -1,6 +1,8 @@
 import { Component, inject, output } from '@angular/core';
 import { PlayersService } from '../../players/players.service';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+// Routing
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-select-players',
@@ -8,16 +10,21 @@ import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Va
   templateUrl: './select-players.html',
   styleUrl: './select-players.css',
 })
+
 export class SelectPlayers {
+  // Routing
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  
   private playersService = inject(PlayersService);
-  allPlayers = this.playersService.players;
-
   private formBuilder = inject(FormBuilder);
-
-  selectedPlayers = output<string[]>();
-
+  allPlayers = this.playersService.players;
+  selectedPlayers = output<outputTournamentData>();
 
   playersForm = new FormGroup({
+    name: new FormControl('', { validators: Validators.required }),
+    place: new FormControl('', { validators: Validators.required }),
+
     players: new FormArray<FormControl<any>>([], {
       validators: [Validators.required],
     }),
@@ -49,6 +56,20 @@ export class SelectPlayers {
   }
 
   OnSubmit() {
-    this.selectedPlayers.emit(this.players.value);
+    const { name, place, players } = this.playersForm.value
+
+    this.selectedPlayers.emit({
+      name: name ?? "",
+      place: place ?? "",
+      players: players ?? []
+    });
+
+    this.router.navigate(['..'], {relativeTo: this.route});
   }
+}
+
+export interface outputTournamentData {
+  name: string,
+  place: string,
+  players: string[]
 }

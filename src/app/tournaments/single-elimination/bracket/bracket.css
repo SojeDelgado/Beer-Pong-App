@@ -1,12 +1,65 @@
+dialog {
+  min-width: 30rem;
+  z-index: 2;
+  overflow: hidden;
+  background-color: var(--bg);
+  color: var(--text);
+  border: var(--border-card);
+  border-radius: 12px;
+  pointer-events: auto;
+  box-shadow: var(--shadow-l);
+}
+
+dialog::backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  pointer-events: auto;
+}
+
+dialog h2 {
+  font-weight: bold;
+  font-size: 1.8rem;
+}
+
+.dialog-buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.close {
+  display: flex;
+  margin-bottom: -1rem;
+  flex: 1 0 100%;
+  justify-content: end;
+}
+
+dialog .title{
+  margin-top: 1.2rem;
+}
+
+dialog .text {
+  margin: 2.3rem 2.5rem 1.5rem 0.5rem;
+}
+
+h1 {
+  text-align: center;
+}
+
 .bracket {
   padding: 40px;
   margin: 5px;
 }
+
 .bracket {
   display: flex;
   flex-direction: row;
   position: relative;
 }
+
 .column {
   display: flex;
   flex-direction: column;
@@ -14,21 +67,32 @@
   justify-content: space-around;
   align-content: center;
 }
+
 .match {
   position: relative;
   display: flex;
   flex-direction: column;
-  min-width: 240px;
-  max-width: 240px;
+  min-width: 14rem;
+  max-width: 18rem;
   height: 62px;
   margin: 12px 24px 12px 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
+
+.match:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-l);
+}
+
 .match .match-top {
   border-radius: 2px 2px 0 0;
 }
+
 .match .match-bottom {
   border-radius: 0 0 2px 2px;
 }
+
 .match .team {
   display: flex;
   align-items: center;
@@ -38,18 +102,60 @@
   box-shadow: var(--shadow-s);
   position: relative;
 }
+
+.match .team .name {
+  max-width: 4rem;
+  min-width: 4rem;
+  white-space: nowrap;
+  /* Evita que el texto salte de línea */
+  overflow: hidden;
+  /* Esconde lo que se salga del recuadro */
+  /* text-overflow: ellipsis; */
+  /* Agrega los "..." automáticamente si el texto es muy largo */
+  display: block;
+  /* Necesario para que el overflow funcione correctamente */
+  max-width: 140px;
+  /* Ajusta este valor según cuánto espacio quieras dejar para el score/badges */
+}
+
 .match .team span {
   padding-left: 8px;
 }
+
 .match .team span:last-child {
   padding-right: 8px;
 }
+
 .match .team .score {
   margin-left: auto;
 }
+
+.badge-container {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.match .team .badge {
+  padding: 2px 6px;
+  margin: 0.3rem;
+
+  font-weight: 700;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+
+  border: var(--border-card);
+  border-radius: 4px;
+
+  box-shadow: var(--shadow-s);
+  background-color: var(--bg);
+  color: var(--text-secondary);
+}
+
 .match .team:first-child {
   margin-bottom: -1px;
 }
+
 .match-lines {
   display: block;
   position: absolute;
@@ -58,64 +164,82 @@
   margin-top: 0px;
   right: -1px;
 }
+
 .match-lines .line {
   background: var(--text-secondary);
   position: absolute;
 }
+
 .match-lines .line.one {
   height: 1px;
   width: 12px;
 }
+
 .match-lines .line.two {
   height: 44px;
   width: 1px;
   left: 11px;
 }
+
 .match-lines.alt {
   left: -12px;
 }
+
 .match:nth-child(even) .match-lines .line.two {
   transform: translate(0, -100%);
 }
+
 .column:first-child .match-lines.alt {
   display: none;
 }
+
 .column:last-child .match-lines {
   display: none;
 }
+
 .column:last-child .match-lines.alt {
   display: block;
 }
+
 .column:nth-child(2) .match-lines .line.two {
   height: 88px;
 }
+
 .column:nth-child(3) .match-lines .line.two {
   height: 175px;
 }
+
 .column:nth-child(4) .match-lines .line.two {
   height: 262px;
 }
+
 .column:nth-child(5) .match-lines .line.two {
   height: 349px;
 }
+
 .disable-image .image,
 .disable-seed .seed,
 .disable-name .name,
 .disable-score .score {
   display: none !important;
 }
+
 .disable-borders {
   border-width: 0px !important;
 }
+
 .disable-borders .team {
   border-width: 0px !important;
 }
+
 .disable-seperator .match-top {
   border-bottom: 0px !important;
 }
+
 .disable-seperator .match-bottom {
   border-top: 0px !important;
 }
+
 .disable-seperator .team:first-child {
   margin-bottom: 0px;
 }
@@ -150,4 +274,67 @@
 
 .match .score {
   font-size: 14px;
+}
+
+.end-button {
+  display: flex;
+  justify-content: center;
+}
+
+.winner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 3rem;
+  gap: 0.5rem;
+  animation: fadeIn 0.8s ease-out;
+}
+
+.winner-label {
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.2rem;
+  color: var(--text-muted);
+}
+
+.winner-card {
+  padding: 1.5rem 4rem;
+  background: var(--bg-light);
+  border: 2px solid var(--text-secondary);
+  border-radius: 8px;
+  box-shadow: var(--shadow-l);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Un sutil reflejo superior para dar profundidad */
+.winner-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--border-light);
+}
+
+.winner-name {
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--text);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

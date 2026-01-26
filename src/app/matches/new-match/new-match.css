@@ -28,9 +28,6 @@ h2 {
 
   padding-bottom: 2rem;
   gap: 2rem;
-  border: var(--border-card);
-  border-radius: 10px;
-  box-shadow: var(--shadow-l);
 
 }
 

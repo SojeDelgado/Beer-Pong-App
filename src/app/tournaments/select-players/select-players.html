@@ -1,5 +1,29 @@
 <div class="container">
   <form [formGroup]="playersForm" (ngSubmit)="OnSubmit()">
+
+    <div class="tournament-form">
+      <h2>Formulario del torneo</h2>
+      <div class="tournament">
+        <div class="tournament-data">
+          <div>
+            <label>Nombre</label>
+          </div>
+          <div>
+            <input type="text" formControlName="name">
+          </div>
+        </div>
+  
+        <div class="tournament-data">
+          <div>
+            <label>Lugar </label>
+          </div>
+          <div>
+            <input type="text" formControlName="place">
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="selector-container">
       <h2>Escoge los jugadores</h2>
 

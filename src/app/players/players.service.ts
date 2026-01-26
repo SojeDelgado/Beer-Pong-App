@@ -1,19 +1,16 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { Player } from './players-list/player-item/player.model';
-// RXJS
-import { Observable } from 'rxjs';
 // Http
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-// Sockets
-import { io } from 'socket.io-client';
+// RXJS
+import { Observable } from 'rxjs';
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class PlayersService {
-  private socket = io(environment.apiurl);
   private playersUrl = `${environment.apiurl}/players`;
 
   private httpClient = inject(HttpClient)
@@ -22,26 +19,19 @@ export class PlayersService {
   players = this.playersSignal.asReadonly();
 
   constructor() {
-    this.loadInitialPlayers();
-    this.setupSocketListeners();
+    this.loadPlayers();
   }
 
-  private loadInitialPlayers() {
+  private loadPlayers() {
     this.httpClient.get<Player[]>(this.playersUrl).subscribe(data => {
       this.playersSignal.set(data);
     });
   }
 
-  private setupSocketListeners() {
-    this.socket.on('playerAdded', (newPlayer: Player) => {
-      this.playersSignal.update(current => [...current, newPlayer]);
-    });
-  }
-
   async addPlayer(nickname: string) {
     return this.httpClient.post(this.playersUrl, { nickname }).subscribe({
-      next: (response) => {
-        console.log(response);
+      next: () => {
+        this.loadPlayers();
       },
       error: (err) => {
         console.error(err);
@@ -56,9 +46,4 @@ export class PlayersService {
   async deletePlayer(playerId: string) {
     return;
   }
-
-  ngOnDestroy() {
-    this.socket.disconnect();
-  }
-
 }
