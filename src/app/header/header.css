@@ -1,11 +1,17 @@
 header {
-  padding: 2rem
+  padding: 2rem;
+  background-color: var(--bg);
+  height: 100%;
+}
+
+.bg {
+  background-color: var(--bg);
 }
 
 .horizontal-rule {
   margin: 1rem -1rem 3rem -1rem;
   height: 1px;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: var(--border-light);
 }
 
 h1 {
@@ -27,14 +33,15 @@ h1 {
 
 a {
   text-decoration: none;
-  color: white;
+  color: var(--text)
 }
 
 .header {
   margin: 0;
   padding: 0;
-  font-size: 15px;
-  color: rgba(255, 255, 255, 0.5);
+  font-size: .95rem;
+  font-weight: 300;
+  color: var(--text-muted)
 }
 
 #content {
@@ -50,29 +57,29 @@ a {
   gap: 1rem;
   padding: 0.5rem;
   transition: all .1s;
-  border: 1px solid rgb(255, 255, 255, 0);
-  color: rgba(255, 255, 255, 0.5);
+  border: var(--no-line);
+  color: var(--text-muted);
 }
 
 #content>div.item span {
-  color: rgb(255, 255, 255, 0.5);
+  color: var(--text-muted)
 }
 
 #content>div.item.selected span,
-#content>div.item:hover span{
-  color: rgb(255, 255, 255);
+#content>div.item:hover span {
+  color: var(--text);
 }
 
 #content>div.item:hover,
 #content>div.item:active,
 #content>div.item.selected {
   cursor: pointer;
-  color: #895cce;
-  font-weight: 500;
-  background-color: rgb(61, 59, 59);
-  border: 1px solid rgb(255, 255, 255, 0.2);
+  color: var(--text-secondary);
+  font-weight: bold;
+  background-color: var(--bg-light);
+  border: var(--no-line);
   border-radius: 5px;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.8);
+  box-shadow: var(--shadow-l);
 }
 
 #content>div .material-symbols-outlined {
@@ -88,7 +95,7 @@ a {
   justify-content: space-between;
   gap: 1rem;
   padding: 0.5rem;
-  border: 1px solid rgba(255, 255, 255, 0);
+  border: var(--no-line);
   cursor: pointer;
   transition: all 0.2s;
 }
@@ -123,8 +130,7 @@ a {
   padding-left: 2rem;
   font-size: 15px;
   gap: 0.5em;
-  color: rgba(255, 255, 255, 0.6);
-
+  color: var(--text-muted);
   max-height: 0;
   overflow: hidden;
   transition: max-height 0.3s ease-out, padding-top 0.3s ease-out, padding-bottom 0.3s ease-out;
@@ -142,27 +148,27 @@ a {
   padding: 0.5rem 0.5rem;
   cursor: pointer;
   transition: all .1s;
-  border: 1px solid rgb(255, 255, 255, 0);
+  border: var(--no-line);
   border-radius: 5px;
 }
 
 
 .dropdown-content>div span {
-  color: rgb(255, 255, 255, 0.5);
+  color: var(--text-muted);
 }
 
 .dropdown-content>div:hover span,
 .dropdown-content>div.selected span {
-  color: white;
+  color: var(--text);
 }
 
 
 .dropdown-content>div:hover,
 .dropdown-content>div.selected {
-  color: #895cce;
+  color: var(--text-secondary);
   font-weight: 500;
-  background-color: rgb(61, 59, 59);
-  border: 1px solid rgb(255, 255, 255, 0.2);
+  background-color: var(--bg-light);
+  border: var(--border-card);
   border-radius: 5px;
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.8);
+  box-shadow: var(--shadow);
 }

@@ -1,191 +1,77 @@
-.backdrop {
-  background-color: rgba(0, 0, 0, 0.9);
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  box-shadow: 2px 2px 5px rgba(255, 255, 255, 1);
-}
-
-dialog {
-  width: 100%;
-  max-width: 40rem;
-  background-color: #433352;
-  border-radius: 6px;
-  border: none;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
-  overflow: hidden;
-  padding: 1rem;
-  top: 5rem;
+h1 {
+  color: var(--text);
+  font-weight: 400;
+  margin: 0;
+  text-align: center;
 }
 
 h2 {
-  margin: 0;
-  margin-bottom: 1rem;
-  color: #d0c2e1;
+  text-align: center;
+  font-weight: 400;
 }
 
-label {
-  display: block;
-  font-weight: bold;
-  font-size: 0.85rem;
-  color: #ab9ac0;
-  text-align: start;
-  padding-left: 2.2rem;
+.h1{
+  color: var(--text);
+  font-size: 1.95rem;
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
+}
+
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+
+  padding-bottom: 2rem;
+  gap: 2rem;
+
+}
+
+.close {
+  display: flex;
+  margin-bottom: -1rem;
+  flex: 1 0 100%;
+  justify-content: end;
+}
+.icon {
+  position: static;
+  margin: 0.5rem;
+  margin: 0.2rem;
 }
 
 .section {
-  display: grid;
-  height: 30px;
-  grid-template-columns: 10% 1fr 10% 5% 10% 1fr 10%;  
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  border: var(--border-card);
+  border-top: solid 1px var(--highlight);
+  border-radius: 6px;
+  background: var(--bg);
+  box-shadow: var(--shadow-l);
+  gap: 1rem;
 }
 
-.isla {
-  height: 25px;
-  width: 25px;
-  color: #ab9ac0;
-  margin: 0;
-  padding: 0;
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 2rem;  
 }
 
-input[type="checkbox"] {
-  position: absolute;
-  cursor: pointer;
-  height: 25px;
-  width: 25px;
-  margin: 0;
-  padding: 0;
-}
-
-p {
-  text-align: center;
-  margin: 0;
-  padding: 0;
-}
-
-input,
-select,
-textarea {
-  cursor: pointer;
-  max-width: 100%;
-  padding: 0.15rem 0.25rem;
-  border-radius: 4px;
-  border: 1px solid #ab9ac0;
-  background-color: #d0c2e1;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 1);
-}
-
-p input[type="number"] {
-  text-decoration: none;
-  text-align: center;
-  margin-top: 15px;
-  max-width: 2rem;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+.label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
 }
 
 .actions {
-  margin: 1rem 0 0;
   display: flex;
-  justify-content: flex-end;
-  gap: 0.25rem;
-}
-
-button {
-  font: inherit;
-  cursor: pointer;
-  border: none;
-  padding: 0.35rem 1.25rem;
-  border-radius: 4px;
-  background-color: transparent;
-}
-
-button[type="button"] {
-  color: #bdadcf;
-}
-
-button[type="button"]:hover,
-button[type="button"]:active {
-  color: #d0c2e1;
-}
-
-button[type="submit"] {
-  background-color: #9c73ca;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
-}
-
-button[type="submit"]:hover,
-button[type="submit"]:active {
-  background-color: #895cce;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
-}
-
-/* Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes fadeOut {
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
-}
-
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9) translateY(-10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-@keyframes scaleOut {
-  from {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-
-  to {
-    opacity: 0;
-    transform: scale(0.9) translateY(-10px);
-  }
-}
-
-.backdrop {
-  animation: fadeIn 0.3s ease forwards;
-}
-
-dialog {
-  animation: scaleIn 0.3s ease forwards;
-}
-
-:host(.closing) .backdrop {
-  animation: fadeOut 0.3s ease forwards;
-}
-
-:host(.closing) dialog {
-  animation: scaleOut 0.3s ease forwards;
+  flex-direction: row;
+  justify-content: center;
+  margin: 2rem 0 2rem 0;
 }

@@ -1,0 +1,31 @@
+form {
+    max-width: 80vh;
+    margin: 1rem auto;
+    background-color: var(--bg-light);
+    padding: 2rem;
+    border: var(--border-card);
+    box-shadow: var(--shadow-l);
+    border-radius: 12px;
+}
+
+.tournament {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 3rem;
+}
+
+.tournament-data {
+    display: flex;
+    flex-direction: column;
+}
+
+.tournament-data label {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--text-muted);
+}
+
+.tournament-data input {
+    background-color: var(--bg-dark);
+}

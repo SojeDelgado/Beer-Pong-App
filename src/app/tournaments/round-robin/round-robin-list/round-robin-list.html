@@ -1,7 +1,21 @@
-<ul>
-    @for (rr of rrTournaments(); track $index) {
-        <li>
-            <app-round-robin-item [roundRobin]="rr" routerLinkActive="selected"/>
-        </li>
-    }
-</ul>
+@if (roundRobins().length !== 0) {
+
+    <main>
+        @for (rr of roundRobins(); track $index) {
+            <div>
+                <app-round-robin-item [roundRobin]="rr" routerLinkActive="selected"/>
+            </div>
+        }
+    </main>
+
+} @else {
+    <div class="content">
+        <h2>No hay torneos</h2>
+    </div>
+}
+
+
+
+<div class="content">
+    <button type="button" [routerLink]="['../new-round-robin']"> Nuevo Torneo </button>
+</div>

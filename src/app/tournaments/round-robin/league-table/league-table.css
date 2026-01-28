@@ -1,0 +1,101 @@
+.parent {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  max-width: 80vh;
+  margin: 1rem auto;
+  justify-content: center;
+}
+
+section {
+  flex: 0 0 auto;
+  min-width: 20rem;
+}
+
+.round {
+  background: var(--bg);
+  border: var(--border-light-card);
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  box-shadow: var(--shadow-l);
+}
+
+.round h3 {
+  margin: 0 0 8px 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.matches-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.matches-table tr {
+  border-bottom: 1px solid var(--border-light);
+}
+
+.matches-table tr:last-child {
+  border-bottom: none;
+}
+
+.matches-table tr:hover {
+  background: var(--bg-light);
+  cursor: pointer;
+}
+
+
+.matches-table td {
+  padding: 8px 4px;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.matches-table .home,
+.away {
+  display: flex;
+  max-width: 6rem;
+}
+
+.away {
+  text-align: end;
+}
+
+.matches-table .vs {
+  width: 10%;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+}
+
+.score {
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.badge-container {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.badge {
+  padding: 2px 6px;
+  margin: 0.1rem;
+
+  font-weight: 700;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+
+  border: var(--border-card);
+  border-radius: 4px;
+
+  box-shadow: var(--shadow-s);
+  background-color: var(--bg);
+  color: var(--text-secondary);
+}

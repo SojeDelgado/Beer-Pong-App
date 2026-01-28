@@ -1,0 +1,7 @@
+<header [routerLink]="['/single-elimination', singleElimination().id, 'matches']">
+        <div>
+            <h4>{{singleElimination().name}}</h4>
+            <span> {{ singleElimination().place }} </span> |
+            <span> {{ singleElimination().createdAt | date: 'd/M/yy' }} {{ singleElimination().createdAt | date: 'shortTime'}}</span>
+        </div>
+</header>

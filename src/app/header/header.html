@@ -24,7 +24,7 @@
             <span class="material-symbols-outlined">
                 compare_arrows
             </span>
-            Matches
+            Partidos
         </div>
 
         <div class="dropdown item" (click)="toggleDropdown()" [class.open]="dropdownOpen">
@@ -37,27 +37,16 @@
         </div>
 
         <div class="dropdown-content" [class.open]="dropdownOpen">
-            
-            <div class="dropdown-item" [routerLink]="['tournaments/round-robin']" routerLinkActive="selected">
+
+            <div class="dropdown-item" [routerLink]="['round-robin']" routerLinkActive="selected">
                 <span class="material-symbols-outlined">leaderboard</span>
                 Clasificación
             </div>
-            <div class="dropdown-item">
+            <div class="dropdown-item" [routerLink]="['single-elimination']" >
                 <span class="material-symbols-outlined">upcoming</span>
-                Proximamente
+                Eliminación Directa
             </div>
         </div>
 
     </div>
 </header>
-<!-- <div class="links">
-        <div>
-            <a [routerLink]="['players']" routerLinkActive="selected">Players</a>
-        </div>
-        <div>
-            <a [routerLink]="['matches']" routerLinkActive="selected">Matches</a>
-        </div>
-        <div>
-            <a [routerLink]="['tournaments']" routerLinkActive="selected">Tournaments</a>
-        </div>
-    </div> -->

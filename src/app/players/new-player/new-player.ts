@@ -14,12 +14,17 @@ export class NewPlayer {
   playerForm = new FormGroup({
     nickname: new FormControl('', { 
       validators: [Validators.required], 
-    }),
+    })
   });
 
   onSubmit() {
     if(this.playerForm.valid){
-      this.playerService.addPlayer(this.playerForm.value.nickname?.toString() ?? "");
+      const formValue = this.playerForm.value;
+      const nickname = formValue.nickname??"";
+
+      console.log("nickname", nickname);
+
+      this.playerService.addPlayer(nickname);
       this.playerForm.reset();
     }
   }

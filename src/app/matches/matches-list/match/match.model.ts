@@ -1,34 +1,63 @@
-import { Timestamp } from "firebase/firestore"
+import { Player } from "../../../players/players-list/player-item/player.model"
 
 export interface Match {
-    playerId1: string,
-    player1Nickname: string
+    home: Player,
+    away: Player,
 
-    playerId2: string,
-    player2Nickname: string,
+    homeScore: number,
+    awayScore: number,
 
-    scoreP1: number,
-    scoreP2: number,
+    homeIsla: boolean,
+    awayIsla: boolean,
 
-    islaP1: boolean,
-    islaP2: boolean,
+    home2in1: boolean,
+    away2in1: boolean,
 
-    winner: string,
+    home3in1: boolean,
+    away3in1: boolean,
 
-    date: Timestamp,
+    date: Date
 }
 
-export interface TournamentMatch {
-    tournamentId: string,
-    playerId1: string,
-    player1Nickname: string
+export interface NewMatch {
+    home: string,
+    away: string,
 
-    playerId2: string,
-    player2Nickname: string,
+    homeScore: number,
+    awayScore: number,
 
-    scoreP1: number,
-    scoreP2: number,
+    homeIsla: boolean,
+    awayIsla: boolean,
 
-    winner: string,
+    home2in1: boolean,
+    away2in1: boolean,
 
+    home3in1: boolean,
+    away3in1: boolean,
+
+}
+
+export interface SingleEliminationMatch {
+    id: string,
+
+    home: Player,
+    away: Player,
+
+    homeScore: number,
+    awayScore: number,
+
+    homeIsla: boolean,
+    awayIsla: boolean,
+
+    home2in1: boolean,
+    away2in1: boolean,
+
+    home3in1: boolean,
+    away3in1: boolean,
+
+    date: Date
+
+    matchId: number,
+    nextMatchId: number | null,
+    round: number
 }

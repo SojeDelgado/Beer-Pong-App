@@ -1,11 +1,15 @@
 import { Routes } from '@angular/router';
 
 import { routes as playerRoutes } from './players/players.routes';
-import { routes as tournamentRoutes } from './tournaments/tournaments.routes';
+import { routes as matchesRoutes } from './matches/matches.routes';
+import { routes as roundRobinRoutes } from './tournaments/round-robin/round-robin-routes';
+import { routes as singleEliminationRoutes } from './tournaments/single-elimination/single-elimination-routes';
 import { Homepage } from './homepage/homepage';
-import { Matches } from './matches/matches';
 import { PlayersComponent } from './players/players.component';
-import { Tournaments } from './tournaments/tournaments';
+import { MatchesComponent } from './matches/matchesComponent';
+import { RoundRobinComponent } from './tournaments/round-robin/round-robin';
+import { SingleElimination } from './tournaments/single-elimination/single-elimination';
+
 
 export const routes: Routes = [
     {
@@ -19,11 +23,17 @@ export const routes: Routes = [
     },
     {
         path: 'matches',
-        component: Matches
+        component: MatchesComponent,
+        children: matchesRoutes
     },
     {
-        path: 'tournaments',
-        component: Tournaments,
-        children: tournamentRoutes
+        path: 'round-robin',
+        component: RoundRobinComponent,
+        children: roundRobinRoutes
+    },
+    {
+        path: 'single-elimination',
+        component: SingleElimination,
+        children: singleEliminationRoutes
     }
 ];

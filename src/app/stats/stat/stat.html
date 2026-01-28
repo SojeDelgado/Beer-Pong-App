@@ -1,13 +1,3 @@
-<!-- <article>
-    <p> Favor: {{ stat().puntos_favor_totales }} </p>
-    <p> Contra: {{ stat().puntos_contra_totales }} </p>
-
-    <p> Jugadas: {{ stat().partidas_jugadas }} </p>
-    <p> Ganadas: {{ stat().partidas_ganadas }} </p>
-    <p> Perdidas: {{ stat().partidas_perdidas }} </p>
-    <p> Islas: {{ stat().isla }} </p>
-</article> -->
-
 <div class="stats">
     <div class="stats-item">
         @if (stat().puntos_favor_totales) {
@@ -19,7 +9,7 @@
             0
         </p>
         }
-        <span>Puntos <span style="color: lightgreen;">totales</span></span>
+        <span>Puntos <span style="color: var(--green)">totales</span></span>
     </div>
 
     <div class="stats-item">
@@ -32,13 +22,13 @@
             0
         </p>
         }
-        <span>Puntos en <span style="color: lightcoral;">contra</span></span>
+        <span>Puntos en <span style="color: var(--red)">contra</span></span>
     </div>
 
     <div class="stats-item">
-        @if (stat().isla) {
+        @if (stat().islas) {
         <p>
-            {{ stat().isla }}
+            {{ stat().islas }}
         </p>
         } @else {
         <p>

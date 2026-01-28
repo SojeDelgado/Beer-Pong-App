@@ -1,47 +1,49 @@
-import { inject, Injectable, Injector, runInInjectionContext } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { Player } from './players-list/player-item/player.model';
+// Http
+import { environment } from '../../environments/environment';
+import { HttpClient } from '@angular/common/http';
 // RXJS
 import { Observable } from 'rxjs';
-// Firebase
-import { Firestore, collectionData, collection, addDoc, doc, docData, deleteDoc } from '@angular/fire/firestore';
 
 
 @Injectable({
   providedIn: 'root',
 })
 export class PlayersService {
-  private firestore = inject(Firestore);
-  private injector = inject(Injector);
+  private playersUrl = `${environment.apiurl}/players`;
 
-  players$ = collectionData(
-    collection(this.firestore, "players"),
-    { idField: 'id' }
-  ) as Observable<Player[]>;
+  private httpClient = inject(HttpClient)
 
-  async addPlayer(nickname: string) {
-    try {
-      const docRef = addDoc(collection(this.firestore, "players"), {
-        nickname: nickname,
-      });
-      console.log("Document written with ID: ", (await docRef).id);
-    } catch (e) {
-      console.error("Error adding player: ", e);
-    }
+  private playersSignal = signal<Player[]>([]);
+  players = this.playersSignal.asReadonly();
+
+  constructor() {
+    this.loadPlayers();
   }
 
-  async deletePlayer(playerId: string) {
-    try {
-      const playerDocRef = doc(this.firestore, `players/${playerId}`);
-      await deleteDoc(playerDocRef);
-    } catch (e) {
-      console.error("Error deleting player", e);
-    }
+  private loadPlayers() {
+    this.httpClient.get<Player[]>(this.playersUrl).subscribe(data => {
+      this.playersSignal.set(data);
+    });
+  }
+
+  async addPlayer(nickname: string) {
+    return this.httpClient.post(this.playersUrl, { nickname }).subscribe({
+      next: () => {
+        this.loadPlayers();
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
   }
 
   getPlayerById(id: string): Observable<Player> {
-    return runInInjectionContext( this.injector, () => {
-      const playerRef = doc(this.firestore, `players/${id}`);
-      return docData(playerRef, { idField: 'id' }) as Observable<Player>;
-    })
+    return this.httpClient.get<Player>(`${this.playersUrl}/${id}`);
+  }
+
+  async deletePlayer(playerId: string) {
+    return;
   }
 }

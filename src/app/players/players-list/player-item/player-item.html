@@ -1,7 +1,5 @@
-<header>
-    <div [routerLink]="['/players', player().id ,'stats']" routerLinkActive="selected">
-        <a>
-            <span> {{ player().nickname }} </span>
-        </a>
-    </div>
-</header>
+<div [routerLink]="['/players', player().id ,'stats']" routerLinkActive="selected">
+    <a>
+        <span> {{ player().nickname }} </span>
+    </a>
+</div>

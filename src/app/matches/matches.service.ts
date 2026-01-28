@@ -1,40 +1,40 @@
-import { inject, Injectable } from "@angular/core";
-import { Match } from "./matches-list/match/match.model";
+import { inject, Injectable, OnInit, signal } from "@angular/core";
+import { Match, NewMatch } from "./matches-list/match/match.model";
+import { environment } from "../../environments/environment";
+import { HttpClient } from "@angular/common/http";
 
-// 
-import { addDoc, collection, collectionData, Firestore } from "@angular/fire/firestore";
-import { Observable } from "rxjs";
-import { toSignal } from "@angular/core/rxjs-interop";
 
 @Injectable({
     providedIn: 'root',
 })
 export class MatchesService {
-    private firestore = inject(Firestore);
-    matches = toSignal<Match[]>(this.getAllMatches());
+    private httpClient = inject(HttpClient);
+    private matchesUrl = `${environment.apiurl}/matches`;
 
-    getAllMatches(): Observable<Match[]> {
-        const matchesRef = collection(this.firestore, 'matches');
-        return collectionData(matchesRef, { idField: 'id' }) as Observable<Match[]>;
+    private matchesSignal = signal<Match[]>([]);
+    matches = this.matchesSignal.asReadonly();
+
+    constructor() {
+        this.loadMatches();
     }
 
-    addMatch(match: Match) {
-        try {
-            addDoc(
-                collection(this.firestore, 'matches'), {
-                playerId1: match.playerId1,
-                player1Nickname: match.player1Nickname,
-                playerId2: match.playerId2,
-                player2Nickname: match.player2Nickname,
-                scoreP1: match.scoreP1,
-                scoreP2: match.scoreP2,
-                islaP1: match.islaP1,
-                islaP2: match.islaP2,
-                winner: match.winner,
-                date: new Date()
-            });
-        } catch (err) {
-            console.log("Error adding match", err);
-        }
+    loadMatches() {
+        this.httpClient.get<Match[]>(this.matchesUrl)
+        .subscribe(
+            matches => {
+                this.matchesSignal.set(matches);
+            }
+        )
+    }
+
+    addMatch(match: NewMatch) {
+        return this.httpClient.post(this.matchesUrl, match).subscribe({
+            next: () => {
+                this.loadMatches();
+            },
+            error: (err) => {
+                console.log(err);
+            }
+        });
     }
 }

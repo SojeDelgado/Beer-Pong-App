@@ -1,14 +1,52 @@
-<h3>Players</h3>
+<div class="container">
+  <form [formGroup]="playersForm" (ngSubmit)="OnSubmit()">
 
-<form [formGroup]="playersForm">
-  @for (player of allPlayers(); track $index) {
-  <div class="player-item">
-    <input type="checkbox" [id]="player.id" [value]="player.id" (change)="onCheckChange($event)" />
-    <label [for]="player.id">{{ player.nickname }}</label>
-  </div>
-  }
+    <div class="tournament-form">
+      <h2>Formulario del torneo</h2>
+      <div class="tournament">
+        <div class="tournament-data">
+          <div>
+            <label>Nombre</label>
+          </div>
+          <div>
+            <input type="text" formControlName="name">
+          </div>
+        </div>
+  
+        <div class="tournament-data">
+          <div>
+            <label>Lugar </label>
+          </div>
+          <div>
+            <input type="text" formControlName="place">
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <div>
-    <button (click)="OnSubmit()">Aceptar</button>
-  </div>
-</form>
+    <div class="selector-container">
+      <h2>Escoge los jugadores</h2>
+
+      @for (player of allPlayers(); track player.id) {
+      <input type="checkbox" [id]="player.id" [value]="player.id" (change)="onCheckChange($event)"
+        class="hidden-checkbox" />
+      <label [for]="player.id" class="player-card-content">
+        <div class="avatar">
+          {{ player.nickname.substring(0, 1).toUpperCase() }}
+        </div>
+        <div class="info">
+          <span class="nickname">{{ player.nickname }}</span>
+        </div>
+        <div class="selection-indicator"></div>
+      </label>
+      }
+
+
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn-primary" [disabled]="playersForm.invalid">
+        Aceptar Selección
+      </button>
+    </div>
+  </form>
+</div>

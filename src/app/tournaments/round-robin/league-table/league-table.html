@@ -1,0 +1,53 @@
+<div class="parent">
+  @for (round of rounds(); track round.round) {
+  <section class="round">
+    <h3>Ronda {{ round.round }}</h3>
+
+    <table class="matches-table">
+      @for (match of round.matches; track $index) {
+
+      <tr (click)="openUpdateModal(match)">
+        <td class="home">{{ match.home.nickname }}</td>
+
+        <td>
+          <div class="badge-container">
+            @if (match.homeIsla) {
+            <span class="badge">Isla</span>
+            }
+            @if (match.home2in1) {
+            <span class="badge">2en1</span>
+            }
+            @if (match.home3in1) {
+            <span class="badge">3en1</span>
+            }
+          </div>
+        </td>
+        <td>{{ match.homeScore }}</td>
+
+        <td class="vs">VS</td>
+        <td>{{ match.awayScore }}</td>
+        <td>
+          <div class="badge-container">
+            @if (match.awayIsla) {
+            <span class="badge">Isla</span>
+            }
+            @if (match.away2in1) {
+            <span class="badge">2en1</span>
+            }
+            @if (match.away3in1) {
+            <span class="badge">3en1</span>
+            }
+          </div>
+        </td>
+        <td class="away">{{ match.away.nickname }}</td>
+
+      </tr>
+      @if (selectedMatch === match && status()?.status !== "Finalizado") {
+      <app-match-update [match]="match" (close)="selectedMatch = null" [tournamentId]="tournamentId()"
+        (submitUpdate)="onMatchSubmit($event)" />
+      }
+      }
+    </table>
+  </section>
+  }
+</div>

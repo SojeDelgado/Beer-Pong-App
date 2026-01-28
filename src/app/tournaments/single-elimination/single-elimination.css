@@ -1,0 +1,13 @@
+main {
+    max-width: 80vh;
+    margin: 1rem auto;
+}
+
+h2 {
+    text-align: center;
+}
+
+div {
+    display: flex;
+    justify-content: center;
+}

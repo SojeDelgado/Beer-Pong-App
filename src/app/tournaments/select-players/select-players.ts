@@ -1,7 +1,8 @@
 import { Component, inject, output } from '@angular/core';
 import { PlayersService } from '../../players/players.service';
 import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { toSignal } from '@angular/core/rxjs-interop';
+// Routing
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-select-players',
@@ -9,14 +10,21 @@ import { toSignal } from '@angular/core/rxjs-interop';
   templateUrl: './select-players.html',
   styleUrl: './select-players.css',
 })
-export class SelectPlayers {
-  private playersService = inject(PlayersService);
-  allPlayers = toSignal(this.playersService.players$);
-  private formBuilder = inject(FormBuilder);
-  selectedPlayers = output<{ id: string; nickname: string }[]>();
 
+export class SelectPlayers {
+  // Routing
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  // Service
+  private playersService = inject(PlayersService);
+  private formBuilder = inject(FormBuilder);
+  allPlayers = this.playersService.players;
+  selectedPlayers = output<inputTournamentData>();
 
   playersForm = new FormGroup({
+    name: new FormControl('', { validators: Validators.required }),
+    place: new FormControl('', { validators: Validators.required }),
+
     players: new FormArray<FormControl<any>>([], {
       validators: [Validators.required],
     }),
@@ -26,11 +34,8 @@ export class SelectPlayers {
     return this.playersForm.get('players') as FormArray;
   }
 
-  addPlayer(player: {
-    id?: string,
-    nickname?: string
-  }) {
-    this.players.push(this.formBuilder.control(player))
+  addPlayer(playerId: string) {
+    this.players.push(this.formBuilder.control(playerId))
   }
 
   removePlayer(index: number) {
@@ -40,22 +45,31 @@ export class SelectPlayers {
   onCheckChange(event: Event) {
     const input = event.target as HTMLInputElement;
     const playerId = input.value;
-    const player = this.allPlayers()?.find(p => p.id === playerId);
 
     if (input.checked) {
-      this.addPlayer({
-        id: player?.id, nickname: player?.nickname
-      });
+      this.addPlayer(playerId);
 
     } else {
-      const index = this.players.controls
-        .findIndex(ctrl => ctrl.value === player?.id);
-
+      const index = this.players.controls.findIndex(ctrl => ctrl.value === playerId);
       this.removePlayer(index);
     }
   }
 
   OnSubmit() {
-    this.selectedPlayers.emit(this.players.value);
+    const { name, place, players } = this.playersForm.value
+
+    this.selectedPlayers.emit({
+      name: name ?? "",
+      place: place ?? "",
+      players: players ?? []
+    });
+
+    this.router.navigate(['..'], {relativeTo: this.route});
   }
+}
+
+export interface inputTournamentData {
+  name: string,
+  place: string,
+  players: string[]
 }

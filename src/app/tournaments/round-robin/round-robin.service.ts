@@ -1,40 +1,81 @@
-import { inject, Injectable, Injector, runInInjectionContext } from "@angular/core";
-import { collection, collectionData, Firestore, query, where } from '@angular/fire/firestore';
-import { Observable } from "rxjs";
-import { RoundRobin } from "./round-robin.model";
-import { Match } from "../../matches/matches-list/match/match.model";
-import { Tournament, TournamentsService } from "../tournament.service";
+import { inject, Injectable, signal } from "@angular/core";
+import { BehaviorSubject, Observable, switchMap } from "rxjs";
+import { HttpClient } from "@angular/common/http";
+import { environment } from "../../../environments/environment";
+import { MatchUp } from "../matchup.model";
+import { NewInputTournament, UpdateTournamentMatch } from "../tournament.model";
+import { TournamentData } from "./tournament-data.model";
+import { RoundRobinMatchesInterface } from "./models/round-robin-matches-model";
 
 @Injectable({
     providedIn: 'root',
 })
 export class RoundRobinService {
-    private firestore = inject(Firestore);
-    private injector = inject(Injector);
-    private tournamentService = inject(TournamentsService);
+    private httpClient = inject(HttpClient);
+    private tournamentUrl = `${environment.apiurl}/tournaments`;
 
-    roundRobins$ = collectionData(
-        query(
-            collection(this.firestore, "tournaments"),
-            where('type', '==', 'ROUND_ROBIN')
-        ),
-        { idField: 'id' }
-    ) as Observable<RoundRobin[]>;
+    private roundRobinSignal = signal<TournamentData[]>([]);
+    roundRobins = this.roundRobinSignal.asReadonly();
+    type = "RoundRobin";
 
+    // Variable para saber si algun match se actualizo y notificar.
+    private refresh$ = new BehaviorSubject<void>(undefined);
 
-    async saveTournamentAndMatches(tournamentData: Tournament, matchesData: Match[]): Promise<void> {
-        try {
-            const tournamentId = await this.tournamentService.createTournament(tournamentData);
-            this.tournamentService.addTournamentMatches(tournamentId, matchesData);
-        } catch (error) {
-            console.error("Error en la creacion del torneo", error);
-        }
+    notifyUpdate() {
+        this.refresh$.next();
     }
 
-    getMatchesForTournament(tournamentId: string): Observable<Match[]> {
-        return runInInjectionContext(this.injector, () => {
-            const matchesCollection = collection(this.firestore, `tournaments/${tournamentId}/matches`)
-            return collectionData(matchesCollection, { idField: 'id' }) as Observable<Match[]>;
+    constructor() {
+        this.loadTournaments();
+    }
+
+    private loadTournaments() {
+        const type = this.type;
+        let params = { type };
+        this.httpClient.get<TournamentData[]>(`${this.tournamentUrl}`, { params }).subscribe(data => {
+            this.roundRobinSignal.set(data);
+        });
+    }
+
+    getMatchesById(id: string): Observable<RoundRobinMatchesInterface[]> {
+        // return this.httpClient.get<RoundRobinMatchesInterface[]>(`${this.tournamentUrl}/${id}`)
+        return this.refresh$.pipe(
+            switchMap(() => this.httpClient.get<RoundRobinMatchesInterface[]>(`${this.tournamentUrl}/${id}`)
+            )
+        )
+    }
+
+    generateMatchups(playersIds: string[]): Observable<MatchUp[]> {
+        return this.httpClient.post<MatchUp[]>(
+            `${this.tournamentUrl}/generate-matchups`,
+            { playersIds: playersIds, type: this.type }
+        )
+    }
+
+    createTournament(tournament: NewInputTournament) {
+        return this.httpClient.post(this.tournamentUrl, tournament).subscribe({
+            next: (response) => {
+                this.loadTournaments();
+            },
+            error: (err) => {
+                console.error(err);
+            }
+        });
+    }
+
+    updateTournamentMatch(updateTournamentMatch: UpdateTournamentMatch) {
+        return this.httpClient.post(`${this.tournamentUrl}/update-match`, updateTournamentMatch).subscribe({
+            next: () => {
+                this.notifyUpdate();
+            }
         })
+    }
+
+    getTournamentStatus(tournamentId: string) {
+        return this.refresh$.pipe(
+            switchMap(() =>
+                this.httpClient.get(`${this.tournamentUrl}/${tournamentId}/status`)
+            )
+        )
     }
 }

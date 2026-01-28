@@ -3,9 +3,7 @@
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(2, auto);
   row-gap: 2rem;
-
   text-align: center;
-
   animation: appear 1s;
 }
 
@@ -13,8 +11,8 @@
   padding: 0.5rem;
 }
 
-.stats-item:not(:nth-child(3n)){
-  border-right: 1px solid rgb(255, 255, 255, 0.1);
+.stats-item:not(:nth-child(3n)) {
+  border-right: var(--border-light-card);
 
 }
 
@@ -26,5 +24,24 @@
 
 .stats-item span {
   font-size: 15px;
-  color: rgb(255, 255, 255, 0.5);
+  color: var(--text-muted);
+}
+
+@media (max-width:390px) {
+  .stats {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns:
+      1fr 1fr;
+
+  }
+
+  .stats-item:not(:nth-child(3n)) {
+    border-right: none;
+  }
+
+  .stats-item:nth-child(odd) {
+    border-right: var(--border-light-card);
+  }
+
 }

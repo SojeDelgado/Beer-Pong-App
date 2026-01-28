@@ -1,14 +1,14 @@
-import { Component, input, signal } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { RoundRobin } from '../../round-robin.model';
-import { RouterLink, RouterLinkActive } from "@angular/router";
+import { TournamentData } from '../../tournament-data.model';
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-round-robin-item',
-  imports: [DatePipe, RouterLink, RouterLinkActive],
+  imports: [DatePipe, RouterLink],
   templateUrl: './round-robin-item.html',
   styleUrl: './round-robin-item.css',
 })
 export class RoundRobinItem {
-  roundRobin = input.required<RoundRobin>();
+  roundRobin = input.required<TournamentData>();
 }

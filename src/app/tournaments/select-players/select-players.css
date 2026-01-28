@@ -1,0 +1,132 @@
+h2 {
+  display: flex;
+  width: 100%;
+}
+
+.tournament-form {
+  max-width: 80vh;
+  margin: 1rem auto;
+  background-color: var(--bg-light);
+  padding: 2rem;
+  border: var(--border-card);
+  box-shadow: var(--shadow-l);
+  border-radius: 12px;
+}
+
+.tournament {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 3rem;
+}
+
+.tournament-data {
+  display: flex;
+  flex-direction: column;
+}
+
+.tournament-data label {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--text-muted);
+}
+
+.tournament-data input {
+  background-color: var(--bg-dark);
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  margin: 1rem auto;
+  max-width: 80vh;
+}
+
+.selector-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  padding: 2rem;
+  gap: 1rem;
+
+  border-radius: 12px;
+
+  background-color: var(--bg-light);
+  color: var(--text);
+  box-shadow: var(--shadow-l);
+}
+
+.player-card-content {
+  flex: 0 0 auto;
+  min-width: 8rem;
+  padding: 1rem;
+  background-color: var(--bg-dark);
+  border: var(--border-card);
+  border-radius: 10px;
+  box-shadow: var(--shadow-s);
+
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  position: relative;
+}
+
+.player-card-content:hover {
+  background: var(--gradient-hover);
+  box-shadow: var(--shadow-m);
+  transform: translateY(-2px);
+  border-color: var(--highlight);
+}
+
+.hidden-checkbox:checked+.player-card-content {
+  border: var(--border-secondary-card);
+  background: var(--gradient-hover);
+  box-shadow: var(--shadow-l);
+}
+
+.hidden-checkbox:checked+.player-card-content .selection-indicator {
+  background: var(--text-secondary);
+  box-shadow: 0 0 10px var(--text-secondary);
+}
+
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  background: var(--bg-dark);
+  border: var(--border-light-card);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  font-weight: bold;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+}
+
+.nickname {
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.selection-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border);
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  transition: all 0.3s ease;
+}
+
+
+.form-actions {
+  display: flex;
+  justify-content: center;
+
+}

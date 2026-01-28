@@ -1,7 +1,6 @@
 import { Component, computed, inject } from '@angular/core';
 import { PlayersService } from '../players.service';
 import { PlayerItem } from "./player-item/player-item";
-import { toSignal } from '@angular/core/rxjs-interop';
 
 
 @Component({
@@ -12,5 +11,5 @@ import { toSignal } from '@angular/core/rxjs-interop';
 })
 export class PlayersList {
   playersService = inject(PlayersService);
-  players = toSignal(this.playersService.players$);
+  players = computed(() => this.playersService.players());
 }
