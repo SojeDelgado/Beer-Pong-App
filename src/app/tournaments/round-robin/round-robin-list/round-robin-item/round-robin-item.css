@@ -1,43 +1,24 @@
-div {
-  color: var(--text-muted);
-  margin-bottom: 0.5rem;
-  border-radius: 6px;
-  border: var(--no-line);
-  border-radius: 6px;
-  animation: appear 2s;
-}
-
-h3 {
-  cursor: pointer;
-}
-
-a {
+header {
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.35rem 0.5rem;
-  border: none;
-  font: inherit;
-  cursor: pointer;
-  width: 100%;
-  min-width: 10rem;
-  text-align: left;
-  text-decoration: none;
-}
-
-div:hover,
-div.selected {
-  color: var(--text);
-  background-color: var(--gradient);
+  margin: 1rem;
+  padding: 1rem;
+  background-color: var(--bg-dark);
+  color: var(--text-muted);
+  box-shadow: var(--shadow-s);
+  border-radius: 12px;
   border: var(--border-card);
-  border-radius: 6px;
-  transform: scale(1.03);
-  box-shadow: var(--shadow);
+  transition: all 0.2s ease;
 }
 
-span {
+header:hover {
+  cursor: pointer;
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-l);
+  background: var(--gradient-hover);
+  color: var(--color);
+  border-top: solid 1px var(--highlight);
+}
+
+h4 {
   margin: 0;
-  padding: 0;
-  font-size: 0.8rem;
-  font-weight: normal;
 }

@@ -1,5 +1,5 @@
 <dialog #dialog>
-    <form [formGroup]="singleEliminationMatchForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="matchForm" (ngSubmit)="onSubmit()">
         <div class="form">
             <div class="close" (click)="handleClose()">
                 <span class="material-symbols-outlined icon">
@@ -151,7 +151,7 @@
             </div>
             <div>
                 <button type="submit"
-                    [disabled]="singleEliminationMatchForm.invalid || singleEliminationMatchForm.value.homeScore === singleEliminationMatchForm.value.awayScore">
+                    [disabled]="matchForm.invalid || matchForm.value.homeScore === matchForm.value.awayScore">
                     Guardar
                 </button>
             </div>

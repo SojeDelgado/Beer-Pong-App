@@ -1,8 +1,16 @@
-h2 {
-    margin: 1rem;
-    font-size: 1.25rem;
+main {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 80vh;
+    margin: 1rem auto;
 }
 
-ul {
-    list-style: none;
+div {
+    flex: 1 1 auto;
+}
+
+
+.content {
+    display: flex;
+    justify-content: center;
 }

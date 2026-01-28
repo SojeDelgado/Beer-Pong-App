@@ -1,10 +1,17 @@
-<main>
-    @for (se of singleEliminations(); track $index) {
-        <div>
-            <app-single-elimination-item [singleElimination]="se" routerLinkActive="selected" />
-        </div>
-    }
-</main>
+@if (singleEliminations().length !== 0) {
+    <main>
+        @for (se of singleEliminations(); track $index) {
+            <div>
+                <app-single-elimination-item [singleElimination]="se" routerLinkActive="selected" />
+            </div>
+        }
+    </main>
+} @else {
+    <div class="content">
+        <h2>No hay torneos</h2>
+    </div>
+}
+
 
 <div class="button">
     <button type="button" [routerLink]="['../new-single-elimination']"> Nuevo Torneo </button>

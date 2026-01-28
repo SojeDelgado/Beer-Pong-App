@@ -17,7 +17,7 @@ export interface NewTournament {
 
 // Esta interface servira para crear el torneo y los matches vacios de single elimination
 // Para asi posteriormente editarlos.
-export interface NewTournamentSingleElimination {
+export interface NewInputTournament {
     name: string,
     type: string,
     place: string,
@@ -26,8 +26,8 @@ export interface NewTournamentSingleElimination {
 
 export interface UpdateTournamentMatch {
     tournamentId: string,
-    home: string,
-    away: string,
+    home?: string,
+    away?: string,
     homeScore: number,
     awayScore: number,
     homeIsla: boolean,

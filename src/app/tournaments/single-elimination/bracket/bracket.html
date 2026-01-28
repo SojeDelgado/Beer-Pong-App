@@ -1,27 +1,3 @@
-<dialog #finishDialog (click)="closeOnBackdrop($event, finishDialog)">
-    <div class="close" (click)="finishDialog.close()">
-        <span class="material-symbols-outlined icon">
-            close
-        </span>
-    </div>
-
-    <div class="title">
-        <h2>¿Terminar el partido?</h2>
-    </div>
-
-    <div>
-    </div>
-
-    <div class="text">
-        <span>Si terminas el partido no lo podras modificar mas tarde</span>
-    </div>
-
-    <div class="dialog-buttons">
-        <button type="submit" (click)="finishDialog.close()">Cancelar</button>
-        <button type="submit" (click)="onSubmit()" (click)="finishDialog.close()">Aceptar</button>
-    </div>
-</dialog>
-
 <div class="bracket disable-image">
     @for (roundMatches of rounds(); track $index; let roundIdx = $index) {
     <div class="column" [ngClass]="getRoundClass(roundIdx)">
@@ -29,11 +5,14 @@
         <div class="match" [class.winner-top]="match.homeScore > match.awayScore"
             [class.winner-bottom]="match.awayScore > match.homeScore" (click)="openUpdateModal(match)">
 
-
             @if (selectedMatch === match && status()?.status !== "Finalizado") {
             <div (click)="$event.stopPropagation()">
-                <app-match-update [match]="match" (close)="selectedMatch = null"
-                    [tournamentId]="singleEliminationId()" />
+                <app-match-update 
+                [match]="match" 
+                (close)="selectedMatch = null"
+                [tournamentId]="tournamentId()" 
+                (submitUpdate)="onSingleSubmit($event)"
+                    />
             </div>
             }
 
@@ -95,21 +74,3 @@
     </div>
     }
 </div>
-@if (status()?.status === "Completado") {
-<div class="end-button">
-    <button type="submit" (click)="finishDialog.showModal()">
-        Terminar torneo
-    </button>
-</div>
-}
-
-@if (status()?.status === "Finalizado") {
-<div class="winner-container">
-    <span class="winner-label">Ganador</span>
-    <div class="winner-card">
-        <h1 class="winner-name">
-            {{ matches()[0]?.home?.nickname }}
-        </h1>
-    </div>
-</div>
-}

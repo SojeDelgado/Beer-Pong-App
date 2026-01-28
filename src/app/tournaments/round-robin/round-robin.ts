@@ -1,12 +1,10 @@
-import { Component, inject, signal } from '@angular/core';
-import { RouterOutlet, RouterLinkWithHref } from '@angular/router';
-import { MatchUp } from '../matchup.model';
-import { RoundRobinService } from './round-robin.service';
+import { Component } from '@angular/core';
+import { RouterOutlet } from '@angular/router';
 
 
 @Component({
   selector: 'app-round-robin',
-  imports: [RouterOutlet, RouterLinkWithHref],
+  imports: [RouterOutlet],
   templateUrl: './round-robin.html',
   styleUrl: './round-robin.css',
 })

@@ -1,6 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { SingleEliminationService } from '../single-elimination.service';
-import { outputTournamentData, SelectPlayers } from "../../select-players/select-players";
+import { inputTournamentData, SelectPlayers } from "../../select-players/select-players";
 import { ɵInternalFormsSharedModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
@@ -12,10 +12,8 @@ import { ɵInternalFormsSharedModule, ReactiveFormsModule } from '@angular/forms
 export class NewSingleElimination {
   private singleEliminationService = inject(SingleEliminationService);
   players = signal<string[]>([]);
-  tournamentId = signal<string>("");
 
-
-  onSelectedPlayers(tournamentData: outputTournamentData) {
+  onSelectedPlayers(tournamentData: inputTournamentData) {
     this.players.set(tournamentData.players);
 
     this.singleEliminationService.createTournamentWithMatchups({

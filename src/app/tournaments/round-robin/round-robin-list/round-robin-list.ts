@@ -1,10 +1,11 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { RoundRobinService } from '../round-robin.service';
 import { RoundRobinItem } from "./round-robin-item/round-robin-item";
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-round-robin-list',
-  imports: [RoundRobinItem],
+  imports: [RoundRobinItem, RouterLink],
   templateUrl: './round-robin-list.html',
   styleUrl: './round-robin-list.css',
 })

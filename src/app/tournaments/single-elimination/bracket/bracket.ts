@@ -1,11 +1,9 @@
-import { Component, computed, inject, input } from '@angular/core';
-import { SingleEliminationService } from '../single-elimination.service';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { switchMap } from 'rxjs';
+import { Component, computed, input, output } from '@angular/core';
 import { MatchUpdate } from "../new-single-elimination/match-update/match-update";
 import { SingleEliminationMatch } from '../../../matches/matches-list/match/match.model';
 import { NgClass } from '@angular/common';
-import { TournamentStatus } from '../../models/update-tournament-model';
+import { UpdateTournamentMatch } from '../../models/update-tournament-matches-model';
+
 
 @Component({
   selector: 'app-bracket',
@@ -14,22 +12,15 @@ import { TournamentStatus } from '../../models/update-tournament-model';
   styleUrl: './bracket.css',
 })
 export class Bracket {
-  singleEliminationId = input.required<string>();
-  singleEliminationService = inject(SingleEliminationService);
+  // inputs
+  tournamentId = input.required<string>();
+  matches = input.required<SingleEliminationMatch[]>();
+  status = input.required<any>();
+  // output
+  submitUpdate = output<UpdateTournamentMatch>();
 
-  status = toSignal<any>(
-    toObservable(this.singleEliminationId).pipe(
-      switchMap(id => this.singleEliminationService.getTournamentStatus(id))
-    )
-  );
-
-  matches = toSignal(
-    toObservable(this.singleEliminationId).pipe(
-      switchMap(id => this.singleEliminationService.getMatchesById(id))
-    ),
-    { initialValue: [] as [] }
-  );
-
+  // variables para la funcionalidad del bracket
+  selectedMatch: SingleEliminationMatch | null = null;
   rounds = computed(() => {
     const groups = this.matches().reduce((acc, match) => {
       if (!acc[match.round]) acc[match.round] = [];
@@ -42,8 +33,6 @@ export class Bracket {
       .sort((a, b) => a - b)
       .map(round => groups[round]);
   });
-
-  selectedMatch: SingleEliminationMatch | null = null;
 
   openUpdateModal(match: SingleEliminationMatch) {
     const isReady = !!(match.home?.nickname && match.away?.nickname);
@@ -61,29 +50,8 @@ export class Bracket {
     return classes[index] || 'one';
   }
 
-  onSubmit() {
-
-    const winner = this.matches()[0].homeScore > this.matches()[0].awayScore
-      ? this.matches()[0].home.id : this.matches()[0].away.id;
-
-    this.singleEliminationService.update(this.singleEliminationId(), 
-    {
-      winner: winner,
-      status: TournamentStatus.FINALIZADO
-    })
+  onSingleSubmit(formData: UpdateTournamentMatch){
+    this.submitUpdate.emit(formData);
   }
 
-  closeOnBackdrop(event: MouseEvent, dialog: HTMLDialogElement) {
-    const rect = dialog.getBoundingClientRect();
-    const isInDialog = (
-        event.clientX >= rect.left &&
-        event.clientX <= rect.right &&
-        event.clientY >= rect.top &&
-        event.clientY <= rect.bottom
-    );
-
-    if (!isInDialog) {
-        dialog.close();
-    }
-}
 }

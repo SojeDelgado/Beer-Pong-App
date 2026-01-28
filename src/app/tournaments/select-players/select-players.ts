@@ -15,11 +15,11 @@ export class SelectPlayers {
   // Routing
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  
+  // Service
   private playersService = inject(PlayersService);
   private formBuilder = inject(FormBuilder);
   allPlayers = this.playersService.players;
-  selectedPlayers = output<outputTournamentData>();
+  selectedPlayers = output<inputTournamentData>();
 
   playersForm = new FormGroup({
     name: new FormControl('', { validators: Validators.required }),
@@ -68,7 +68,7 @@ export class SelectPlayers {
   }
 }
 
-export interface outputTournamentData {
+export interface inputTournamentData {
   name: string,
   place: string,
   players: string[]

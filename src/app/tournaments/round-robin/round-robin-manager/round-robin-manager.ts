@@ -1,0 +1,48 @@
+import { Component, EnvironmentInjector, inject, input, OnInit, runInInjectionContext, Signal } from '@angular/core';
+import { RoundRobinService } from '../round-robin.service';
+import { LeagueTable } from "../league-table/league-table";
+import { RoundRobinMatchesInterface } from '../models/round-robin-matches-model';
+import { toObservable, toSignal } from '@angular/core/rxjs-interop';
+import { switchMap } from 'rxjs';
+
+@Component({
+  selector: 'app-round-robin-manager',
+  imports: [LeagueTable],
+  templateUrl: './round-robin-manager.html',
+  styleUrl: './round-robin-manager.css',
+})
+
+// Este mismo problema esta dentro de SingleEliminationBracketManager
+// Y otra solucion es propuesta en el otro componente
+// Al parecer la otra es mejor que esta, ya que esta es como un "parche".
+
+
+export class RoundRobinManager {
+  injector = inject(EnvironmentInjector);
+  
+  roundRobinId = input.required<string>(); // this is a router input
+  rrService = inject(RoundRobinService);
+
+  matches = toSignal(
+    toObservable(this.roundRobinId).pipe(
+      switchMap(id => this.rrService.getMatchesById(id))
+    ), {initialValue: [] = []}
+  )
+
+  status = toSignal(
+    toObservable(this.roundRobinId).pipe(
+      switchMap(id => this.rrService.getTournamentStatus(id))
+    )
+  )
+
+  // ngOnInit(): void {
+  //   // Ejecutar runInInjection para inicializar el input dentro de ngOnInit y pasarlo a toSignal y hacerlo una signal
+  //   // Ref: https://github.com/angular/angular/issues/50947
+  //   runInInjectionContext( this.injector, () => {
+  //     this.matches = toSignal(this.rrService.getMatchesById(this.roundRobinId()));
+  //     this.status = toSignal(this.rrService.getTournamentStatus(this.roundRobinId()));
+  //     }
+  //   )
+  // }
+
+}

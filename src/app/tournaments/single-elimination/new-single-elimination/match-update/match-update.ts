@@ -1,24 +1,23 @@
 import { AfterViewInit, Component, ElementRef, inject, input, output, viewChild, effect } from '@angular/core';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { SingleEliminationMatch } from '../../../../matches/matches-list/match/match.model';
-import { SingleEliminationService } from '../../single-elimination.service';
+import { UpdateTournamentMatch } from '../../../models/update-tournament-matches-model';
 
 @Component({
   selector: 'app-match-update',
-  standalone: true, // Asegúrate de que sea standalone si usas imports directos
-  imports: [ReactiveFormsModule], // Quité el internalModule, con ReactiveFormsModule suele bastar
+  standalone: true,
+  imports: [ReactiveFormsModule],
   templateUrl: './match-update.html',
   styleUrl: './match-update.css',
 })
 export class MatchUpdate implements AfterViewInit {
   tournamentId = input.required<string>();
-  match = input.required<SingleEliminationMatch>();
+  match = input.required<any>();
   close = output<void>();
+  submitUpdate = output<UpdateTournamentMatch>();
 
-  private singleEliminationService = inject(SingleEliminationService);
   private dialogEl = viewChild.required<ElementRef<HTMLDialogElement>>('dialog');
 
-  singleEliminationMatchForm = new FormGroup({
+  matchForm = new FormGroup({
     homeScore: new FormControl(0, { validators: [Validators.required, Validators.min(0), Validators.max(10)], nonNullable: true }),
     awayScore: new FormControl(0, { validators: [Validators.required, Validators.min(0), Validators.max(10)], nonNullable: true }),
     homeIsla: new FormControl(false, { nonNullable: true }),
@@ -36,7 +35,7 @@ export class MatchUpdate implements AfterViewInit {
      */
     effect(() => {
       const m = this.match();
-      this.singleEliminationMatchForm.patchValue({
+      this.matchForm.patchValue({
         homeScore: m.homeScore,
         awayScore: m.awayScore,
         homeIsla: m.homeIsla,
@@ -66,25 +65,33 @@ export class MatchUpdate implements AfterViewInit {
   }
 
   onSubmit() {
-    if (this.singleEliminationMatchForm.invalid) return;
+    if (this.matchForm.invalid) return;
 
-    // Usamos getRawValue() porque definimos los controles como nonNullable
-    const formValues = this.singleEliminationMatchForm.getRawValue();
+    const formValues = this.matchForm.getRawValue();
 
-    this.singleEliminationService.updateTournamentMatch({
+
+    this.submitUpdate.emit({
       ...formValues,
-      tournamentId: this.tournamentId(),
-      home: this.match().home.id,
-      away: this.match().away.id,
       matchId: this.match().matchId,
       nextMatchId: this.match().nextMatchId,
-    }).subscribe({
-      next: () => {
-        // Notificamos al servicio para que el componente Bracket refresque sus datos
-        this.singleEliminationService.notifyUpdate();
-        this.handleClose();
-      },
-      error: (err) => console.error('Error actualizando match:', err)
-    });
+      homeId: this.match().home.id,
+      awayId: this.match().away.id
+    })
+
+    // this.singleEliminationService.updateTournamentMatch({
+    //   ...formValues,
+    //   tournamentId: this.tournamentId(),
+    //   home: this.match().home.id,
+    //   away: this.match().away.id,
+    //   matchId: this.match().matchId,
+    //   nextMatchId: this.match().nextMatchId,
+    // }).subscribe({
+    //   next: () => {
+    //     this.singleEliminationService.notifyUpdate();
+    //     this.handleClose();
+    //   },
+    //   error: (err) => console.error('Error actualizando match:', err)
+    // });
+    this.handleClose();
   }
 }

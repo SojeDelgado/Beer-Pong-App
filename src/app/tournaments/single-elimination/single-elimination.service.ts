@@ -4,7 +4,7 @@ import { environment } from "../../../environments/environment";
 import { BehaviorSubject, Observable, switchMap } from "rxjs";
 import { TournamentData } from "../round-robin/tournament-data.model";
 import { MatchUp } from "../matchup.model";
-import { NewTournamentSingleElimination, UpdateTournamentMatch } from "../tournament.model";
+import { NewInputTournament, UpdateTournamentMatch } from "../tournament.model";
 import { SingleEliminationMatch } from "../../matches/matches-list/match/match.model";
 import { UpdateTournamentDto } from "../models/update-tournament-model";
 
@@ -55,7 +55,7 @@ export class SingleEliminationService {
         )
     }
 
-    createTournamentWithMatchups(tournament: NewTournamentSingleElimination) {
+    createTournamentWithMatchups(tournament: NewInputTournament) {
         return this.httpClient.post<string>(`${this.tournamentUrl}`, tournament)
             .subscribe({
                 next: () => {
@@ -68,7 +68,12 @@ export class SingleEliminationService {
     }
 
     updateTournamentMatch(updateTournamentMatch: UpdateTournamentMatch) {
-        return this.httpClient.post<string>(`${this.tournamentUrl}/update-matches`, updateTournamentMatch);
+        return this.httpClient.post<string>(`${this.tournamentUrl}/update-se-matches`, updateTournamentMatch).subscribe({
+            next: () => {
+                this.notifyUpdate();
+            },
+            error: (err) => console.error('Error actualizando match:', err)
+        })
     }
 
     getTournamentStatus(tournamentId: string) {

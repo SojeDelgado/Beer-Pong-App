@@ -1,0 +1,45 @@
+<dialog #finishDialog (click)="closeOnBackdrop($event, finishDialog)">
+    <div class="close" (click)="finishDialog.close()">
+        <span class="material-symbols-outlined icon">
+            close
+        </span>
+    </div>
+
+    <div class="title">
+        <h2>¿Terminar el partido?</h2>
+    </div>
+
+    <div>
+    </div>
+
+    <div class="text">
+        <span>Si terminas el partido no lo podras modificar mas tarde</span>
+    </div>
+
+    <div class="dialog-buttons">
+        <button type="submit" (click)="finishDialog.close()">Cancelar</button>
+        <button type="submit" (click)="handleTournamentFinish()" (click)="finishDialog.close()">Aceptar</button>
+    </div>
+</dialog>
+
+<app-bracket [tournamentId]="singleEliminationId()" [matches]="matches()" [status]="status()"
+    (submitUpdate)="handleSingleSubmit($event)" />
+
+@if (status()?.status === "Completado") {
+<div class="end-button">
+    <button type="submit" (click)="finishDialog.showModal()">
+        Terminar torneo
+    </button>
+</div>
+}
+
+@if (status()?.status === "Finalizado") {
+<div class="winner-container">
+    <span class="winner-label">Ganador</span>
+    <div class="winner-card">
+        <h1 class="winner-name">
+            {{ matches()[0]?.home?.nickname }}
+        </h1>
+    </div>
+</div>
+}
