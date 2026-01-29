@@ -3,17 +3,17 @@ import { HttpClient } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
 import { BehaviorSubject, Observable, switchMap } from "rxjs";
 import { TournamentData } from "../round-robin/tournament-data.model";
-import { MatchUp } from "../matchup.model";
 import { NewInputTournament, UpdateTournamentMatch } from "../tournament.model";
 import { SingleEliminationMatch } from "../../matches/matches-list/match/match.model";
 import { UpdateTournamentDto } from "../models/update-tournament-model";
+import { SingleEliminationData } from "./models/single-elimination-data.model";
 
 
 @Injectable({
     providedIn: 'root',
 })
 export class SingleEliminationService {
-    private tournamentUrl = `${environment.apiurl}/tournaments`;
+    private singleEliminationUrl = `${environment.apiurl}/single-elimination`;
 
     private httpClient = inject(HttpClient);
 
@@ -34,29 +34,24 @@ export class SingleEliminationService {
     }
 
     private loadTournaments() {
-        const type = this.type;
-        let params = { type };
-        this.httpClient.get<TournamentData[]>(`${this.tournamentUrl}`, { params }).subscribe(data => {
+        this.httpClient.get<SingleEliminationData[]>(`${this.singleEliminationUrl}`).subscribe(data => {
             this.singleEliminationsSignal.set(data);
         });
     }
 
+    // ToDO:
+    // Rehacer todos los metodos con las interfaces creadas o en common, o en la carpeta models de single-elimination.
+
+
     getMatchesById(id: string): Observable<SingleEliminationMatch[]> {
-        // return this.httpClient.get<SingleEliminationMatch[]>(`${this.tournamentUrl}/${id}`);
+        // return this.httpClient.get<SingleEliminationMatch[]>(`${this.singleEliminationUrl}/${id}`);
         return this.refresh$.pipe(
-            switchMap(() => this.httpClient.get<SingleEliminationMatch[]>(`${this.tournamentUrl}/${id}`))
+            switchMap(() => this.httpClient.get<SingleEliminationMatch[]>(`${this.singleEliminationUrl}/${id}`))
         );
     }
 
-    generateMatchups(playersIds: string[]): Observable<MatchUp[]> {
-        return this.httpClient.post<MatchUp[]>(
-            `${this.tournamentUrl}/generate-matchups`,
-            { playersIds: playersIds, type: this.type }
-        )
-    }
-
     createTournamentWithMatchups(tournament: NewInputTournament) {
-        return this.httpClient.post<string>(`${this.tournamentUrl}`, tournament)
+        return this.httpClient.post<string>(`${this.singleEliminationUrl}`, tournament)
             .subscribe({
                 next: () => {
                     this.loadTournaments();
@@ -68,7 +63,7 @@ export class SingleEliminationService {
     }
 
     updateTournamentMatch(updateTournamentMatch: UpdateTournamentMatch) {
-        return this.httpClient.post<string>(`${this.tournamentUrl}/update-se-matches`, updateTournamentMatch).subscribe({
+        return this.httpClient.post<string>(`${this.singleEliminationUrl}/update-se-matches`, updateTournamentMatch).subscribe({
             next: () => {
                 this.notifyUpdate();
             },
@@ -79,7 +74,7 @@ export class SingleEliminationService {
     getTournamentStatus(tournamentId: string) {
         return this.refresh$.pipe(
             switchMap(() =>
-                this.httpClient.get(`${this.tournamentUrl}/${tournamentId}/status`)
+                this.httpClient.get(`${this.singleEliminationUrl}/${tournamentId}/status`)
             )
         )
     }
@@ -87,7 +82,7 @@ export class SingleEliminationService {
     update(tournamentId: string, body: UpdateTournamentDto) {
         return this.refresh$.pipe(
             switchMap(() =>
-                this.httpClient.patch(`${this.tournamentUrl}/${tournamentId}`, body)
+                this.httpClient.patch(`${this.singleEliminationUrl}/${tournamentId}`, body)
             )
         ).subscribe({
             next: () => {

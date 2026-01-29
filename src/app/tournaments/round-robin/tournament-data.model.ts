@@ -2,6 +2,7 @@ export interface TournamentData {
     id: string,
     name: string
     place: string,
-    type: string,
+    status: string
+    type?: string,
     createdAt: Date,
 }
