@@ -1,7 +1,49 @@
-<header [routerLink]="['/round-robin', roundRobin().id, 'matches']">
+<div class="box" [routerLink]="['/round-robin', roundRobin().id, 'matches']">
+    <div class="row">
+        <div class="tittle">
+            <h3>{{roundRobin().name}}</h3>
+        </div>
+        <div class="status {{roundRobin().status.toLowerCase()}}">
+            <span>
+                {{roundRobin().status}}
+            </span>
+        </div>
+    </div>
+
+    <div class="text">
+        <p> {{ roundRobin().place }} </p>
+    </div>
+
+    <div class="content">
+        <div class="row text">
+            <div>
+                <p>Creado</p>
+                <span>{{ roundRobin().createdAt | date: 'MMMM d, y' }} <small>{{ roundRobin().createdAt |
+                        date: 'shortTime'}}</small> </span>
+            </div>
+            @if(roundRobin().finishedAt){
+            <div>
+                <p>Finalizado</p>
+                <span>{{ roundRobin().finishedAt | date: 'MMMM d, y' }} <small>{{ roundRobin().finishedAt |
+                        date: 'shortTime'}}</small> </span>
+            </div>
+
+            }
+        </div>
+
+        @if (roundRobin().winner) {
+            <div class="winner">
+                <p>Ganador</p>
+                <span>{{roundRobin().winner?.nickname}}</span>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- <header [routerLink]="['/round-robin', roundRobin().id, 'matches']">
     <div>
         <h4>{{ roundRobin().name }}</h4>
         <span> {{ roundRobin().place }} </span>
         <span> {{ roundRobin().createdAt | date: 'd/M/yy' }} {{ roundRobin().createdAt | date: 'shortTime'}}</span>
     </div>
-</header>
+</header> -->

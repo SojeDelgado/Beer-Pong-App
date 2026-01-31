@@ -1,18 +1,19 @@
 import { inject, Injectable, signal } from "@angular/core";
 import { BehaviorSubject, Observable, switchMap } from "rxjs";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
-import { MatchUp } from "../matchup.model";
-import { NewInputTournament, UpdateTournamentMatch } from "../tournament.model";
-import { TournamentData } from "./tournament-data.model";
-import { RoundRobinMatchesInterface } from "./models/round-robin-matches-model";
+import { NewInputTournament } from "../tournament.model";
+import { RoundRobinMatch } from "./models/round-robin-matches-model";
+import { TournamentData } from "../../common/models/single-elimination-data.model";
+import { UpdateTournamentMatch } from "../../common/models/update-tournament-match.model";
+import { NewTournament } from "../../common/models/new-tournament.model";
 
 @Injectable({
     providedIn: 'root',
 })
 export class RoundRobinService {
     private httpClient = inject(HttpClient);
-    private tournamentUrl = `${environment.apiurl}/tournaments`;
+    private tournamentUrl = `${environment.apiurl}/round-robin`;
 
     private roundRobinSignal = signal<TournamentData[]>([]);
     roundRobins = this.roundRobinSignal.asReadonly();
@@ -30,31 +31,39 @@ export class RoundRobinService {
     }
 
     private loadTournaments() {
-        const type = this.type;
-        let params = { type };
-        this.httpClient.get<TournamentData[]>(`${this.tournamentUrl}`, { params }).subscribe(data => {
+        this.httpClient.get<TournamentData[]>(`${this.tournamentUrl}`).subscribe(data => {
             this.roundRobinSignal.set(data);
-        });
+    });
     }
 
-    getMatchesById(id: string): Observable<RoundRobinMatchesInterface[]> {
+    getRoundRobinById(id: string, fields?: string) {
+        return this.refresh$.pipe(
+            switchMap(() => {
+                // Configuramos los parámetros de búsqueda
+                let params = new HttpParams();
+                if (fields) {
+                    params = params.set('fields', fields);
+                }
+
+                return this.httpClient.get<any>(
+                    `${this.tournamentUrl}/${id}`,
+                    { params }
+                );
+            })
+        )
+    }
+
+    getRoundRobinMatches(id: string): Observable<RoundRobinMatch[]> {
         // return this.httpClient.get<RoundRobinMatchesInterface[]>(`${this.tournamentUrl}/${id}`)
         return this.refresh$.pipe(
-            switchMap(() => this.httpClient.get<RoundRobinMatchesInterface[]>(`${this.tournamentUrl}/${id}`)
+            switchMap(() => this.httpClient.get<RoundRobinMatch[]>(`${this.tournamentUrl}/${id}/rrMatches`)
             )
         )
     }
 
-    generateMatchups(playersIds: string[]): Observable<MatchUp[]> {
-        return this.httpClient.post<MatchUp[]>(
-            `${this.tournamentUrl}/generate-matchups`,
-            { playersIds: playersIds, type: this.type }
-        )
-    }
-
-    createTournament(tournament: NewInputTournament) {
+    create(tournament: NewTournament) {
         return this.httpClient.post(this.tournamentUrl, tournament).subscribe({
-            next: (response) => {
+            next: () => {
                 this.loadTournaments();
             },
             error: (err) => {
@@ -63,19 +72,12 @@ export class RoundRobinService {
         });
     }
 
-    updateTournamentMatch(updateTournamentMatch: UpdateTournamentMatch) {
-        return this.httpClient.post(`${this.tournamentUrl}/update-match`, updateTournamentMatch).subscribe({
+    updateRoundRobinMatch(id: string, matchId: number, updateTournamentMatch: UpdateTournamentMatch) {
+        return this.httpClient.patch(`${this.tournamentUrl}/${id}/rrMatches/${matchId}`, updateTournamentMatch)
+        .subscribe({
             next: () => {
                 this.notifyUpdate();
             }
         })
-    }
-
-    getTournamentStatus(tournamentId: string) {
-        return this.refresh$.pipe(
-            switchMap(() =>
-                this.httpClient.get(`${this.tournamentUrl}/${tournamentId}/status`)
-            )
-        )
     }
 }

@@ -1,52 +1,98 @@
 .leaderboard-container {
-  max-width: 800px;
+  max-width: 80vh;
   margin: 0 auto;
-  font-family: sans-serif;
+
+  padding-bottom: 1.75rem;
 }
 
 table {
   width: 100%;
-  border-collapse: collapse;
-  box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+  border-radius: 10px;
+  border-spacing: 0;
+  border-collapse: separate;
+  border: var(--border-card);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background-color: var(--bg-light);
 }
 
-th, td {
+
+table>thead>tr:not(:last-child)>th,
+table>thead>tr:not(:last-child)>td,
+table>tbody>tr:not(:last-child)>th,
+table>tbody>tr:not(:last-child)>td,
+table>tfoot>tr:not(:last-child)>th,
+table>tfoot>tr:not(:last-child)>td,
+table>tr:not(:last-child)>td,
+table>tr:not(:last-child)>th,
+table>thead:not(:last-child),
+table>tbody:not(:last-child),
+table>tfoot:not(:last-child) {
+  border-bottom: var(--border-card);
+}
+
+th,
+td {
   padding: 12px 15px;
   text-align: center;
-  border-bottom: 1px solid #ddd;
+}
+
+tr:last-child td,
+tr:last-child th {
+  border-bottom: none;
 }
 
 th {
-  background-color: #333;
-  color: white;
+  background-color: var(--bg-dark);
+  color: var(--text-secondary);
 }
 
+tbody tr:hover {
+  background-color: var(--bg);
+}
+
+
 .player-name {
-  font-weight: bold;
   text-align: left;
 }
 
 .wins {
-  color: #28a745;
-  font-weight: bold;
+  color: var(--green);
 }
 
 .losses {
-  color: lightcoral;
+  color: var(--red);
   font-weight: bold;
 }
 
 .top-one {
-  background-color: #fffbe6;
-  color: black;
-  border-left: 5px solid gold;
+  background: linear-gradient(90deg, 
+    hsla(264, 54%, 58%, 0.15) 0%, 
+    transparent 100%);
 }
 
-.positive { color: green; }
-.negative { color: red; }
+.leaderboard-table tbody tr.top-one:hover {
+  background: linear-gradient(90deg,
+      hsla(264, 54%, 58%, 0.2) 0%,
+      var(--bg-light) 100%);
+}
+
+.top-one .player-name {
+  color: var(--text-secondary);
+  font-weight: bold;
+
+}
+
+.positive {
+  color: var(--green);
+}
+
+.negative {
+  color: var(--red);
+}
 
 .empty-msg {
   padding: 20px;
-  color: #666;
+  color: var(--text-muted);
   font-style: italic;
 }

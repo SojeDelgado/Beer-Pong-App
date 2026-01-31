@@ -1,7 +1,41 @@
-<header [routerLink]="['/single-elimination', singleElimination().id, 'matches']">
-        <div>
-            <h4>{{singleElimination().name}}</h4>
-            <span> {{ singleElimination().place }} </span> |
-            <span> {{ singleElimination().createdAt | date: 'd/M/yy' }} {{ singleElimination().createdAt | date: 'shortTime'}}</span>
+<div class="box" [routerLink]="['/single-elimination', singleElimination().id, 'matches']">
+    <div class="row">
+        <div class="tittle">
+            <h3>{{singleElimination().name}}</h3>
         </div>
-</header>
+        <div class="status {{singleElimination().status.toLowerCase()}}">
+            <span>
+                {{singleElimination().status}}
+            </span>
+        </div>
+    </div>
+
+    <div class="text">
+        <p> {{ singleElimination().place }} </p>
+    </div>
+
+    <div class="content">
+        <div class="row text">
+            <div>
+                <p>Creado</p>
+                <span>{{ singleElimination().createdAt | date: 'MMMM d, y' }} <small>{{ singleElimination().createdAt |
+                        date: 'shortTime'}}</small> </span>
+            </div>
+            @if(singleElimination().finishedAt){
+            <div>
+                <p>Finalizado</p>
+                <span>{{ singleElimination().finishedAt | date: 'MMMM d, y' }} <small>{{ singleElimination().finishedAt |
+                        date: 'shortTime'}}</small> </span>
+            </div>
+
+            }
+        </div>
+
+        @if (singleElimination().winner) {
+            <div class="winner">
+                <p>Ganador</p>
+                <span>{{singleElimination().winner?.nickname}}</span>
+            </div>
+        }
+    </div>
+</div>

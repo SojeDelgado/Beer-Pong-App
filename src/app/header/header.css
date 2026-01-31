@@ -1,6 +1,6 @@
 header {
   padding: 2rem;
-  background-color: var(--bg);
+  background-color: var(--bg-light);
   height: 100%;
 }
 
@@ -76,7 +76,7 @@ a {
   cursor: pointer;
   color: var(--text-secondary);
   font-weight: bold;
-  background-color: var(--bg-light);
+  background-color: var(--bg);
   border: var(--no-line);
   border-radius: 5px;
   box-shadow: var(--shadow-l);
@@ -167,7 +167,7 @@ a {
 .dropdown-content>div.selected {
   color: var(--text-secondary);
   font-weight: 500;
-  background-color: var(--bg-light);
+  background-color: var(--bg);
   border: var(--border-card);
   border-radius: 5px;
   box-shadow: var(--shadow);

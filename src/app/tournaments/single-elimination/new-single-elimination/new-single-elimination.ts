@@ -16,11 +16,13 @@ export class NewSingleElimination {
   onSelectedPlayers(tournamentData: inputTournamentData) {
     this.players.set(tournamentData.players);
 
-    this.singleEliminationService.createTournamentWithMatchups({
+    // ToDo: Aleatorizar tournamentData.players
+    
+
+    this.singleEliminationService.createSingleElimination({
       name: tournamentData.name,
       place: tournamentData.place,
-      type: this.singleEliminationService.type,
-      playersIds: tournamentData.players
+      playerIds: tournamentData.players
     });
   }
 }
