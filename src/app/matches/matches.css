@@ -1,3 +1,7 @@
+main{
+    user-select: none;
+}
+
 h2 {
     text-align: center;
 }
