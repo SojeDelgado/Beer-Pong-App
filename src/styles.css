@@ -108,7 +108,7 @@ body {
   font-weight: 300;
   font-style: normal;
 
-  background: var(--bg-light);
+  background: var(--bg);
   color: var(--text);
   margin: 0;
   padding: 0;
@@ -130,6 +130,8 @@ button {
   border: var(--border-card);
   border-radius: 4px;
   background-color: transparent;
+
+  user-select: none;
 }
 
 button[type="submit"]:disabled,
@@ -266,6 +268,8 @@ input:checked+.slider:before {
 .icon {
   padding: 0.5rem;
   border-radius: 50%;
+
+  user-select: none;
 }
 
 .icon {

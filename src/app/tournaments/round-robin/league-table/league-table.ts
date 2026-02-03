@@ -1,5 +1,5 @@
 import { Component, computed, inject, input } from '@angular/core';
-import { RoundRobinMatchesInterface } from '../models/round-robin-matches-model';
+import { RoundRobinMatch } from '../models/round-robin-matches-model';
 import { MatchUpdate } from "../../single-elimination/new-single-elimination/match-update/match-update";
 import { UpdateTournamentMatch } from '../../models/update-tournament-matches-model';
 import { RoundRobinService } from '../round-robin.service';
@@ -15,10 +15,10 @@ export class LeagueTable {
   rrService = inject(RoundRobinService);
   // inputs
   tournamentId = input.required<string>();
-  matches = input.required<RoundRobinMatchesInterface[]>();
-  status = input.required<any>();
+  matches = input.required<RoundRobinMatch[]>();
+  fields = input.required<any>();
 
-  selectedMatch: RoundRobinMatchesInterface | null = null;
+  selectedMatch: RoundRobinMatch | null = null;
   rounds = computed(() => {
     const map = new Map<number, any[]>();
 
@@ -35,16 +35,17 @@ export class LeagueTable {
     }));
   });
 
-  openUpdateModal(match: RoundRobinMatchesInterface) {
-      const isReady = !!(match.home?.nickname && match.away?.nickname);
-      if (isReady) {
-        this.selectedMatch = match;
-      }
+  openUpdateModal(match: RoundRobinMatch) {
+    const isReady = !!(match.home?.nickname && match.away?.nickname);
+    if (isReady) {
+      this.selectedMatch = match;
     }
+  }
 
-    onMatchSubmit(formData: UpdateTournamentMatch){
-      this.rrService.updateTournamentMatch({
-        tournamentId: this.tournamentId(),
+  onMatchSubmit(formData: UpdateTournamentMatch) {
+    this.rrService.updateRoundRobinMatch(
+      this.tournamentId(), formData.matchId,
+        {
         homeScore: formData.homeScore,
         awayScore: formData.awayScore,
         homeIsla: formData.homeIsla,
@@ -53,9 +54,7 @@ export class LeagueTable {
         away2in1: formData.away2in1,
         home3in1: formData.home3in1,
         away3in1: formData.away3in1,
-        matchId: formData.matchId,
-        nextMatchId: null
       })
-    }
+  }
 
 }

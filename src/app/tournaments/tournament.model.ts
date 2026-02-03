@@ -19,7 +19,6 @@ export interface NewTournament {
 // Para asi posteriormente editarlos.
 export interface NewInputTournament {
     name: string,
-    type: string,
     place: string,
     playersIds: string[],
 }

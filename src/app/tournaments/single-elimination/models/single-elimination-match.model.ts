@@ -1,8 +1,13 @@
 import { Player } from "../../../players/players-list/player-item/player.model";
 
-export interface RoundRobinMatch {
+export interface SingleEliminationMatch {
     home: Player,
     away: Player,
+
+    matchId: number,
+    nextMatchId?: number,
+    round: number
+
     homeScore: number,
     awayScore: number,
 
@@ -15,6 +20,4 @@ export interface RoundRobinMatch {
     home3in1: boolean,
     away3in1: boolean,
 
-    round: number
-    isFinished: boolean
 }

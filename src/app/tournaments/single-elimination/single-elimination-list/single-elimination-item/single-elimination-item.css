@@ -1,24 +1,74 @@
-header {
+.box {
     display: flex;
+    flex-direction: column;
+
+    min-width: 30rem;
+
     margin: 1rem;
-    padding: 1rem;
-    background-color: var(--bg-dark);
-    color: var(--text-muted);
+    padding: 1rem 1.25rem 1rem 1.25rem;
+
+    background-color: var(--bg-light);
+
     box-shadow: var(--shadow-s);
     border-radius: 12px;
     border: var(--border-card);
+
     transition: all 0.2s ease;
 }
 
-header:hover {
+.box:hover {
     cursor: pointer;
     transform: translateY(-4px);
     box-shadow: var(--shadow-l);
     background: var(--gradient-hover);
-    color: var(--color);
     border-top: solid 1px var(--highlight);
 }
 
-h4 {
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tittle h3 {
     margin: 0;
+}
+
+.status {
+    padding: 0.25rem .75rem 0.25rem .75rem;
+    border: var(--border-card);
+    border-radius: 0.25rem;
+    background-color: var(--bg-light);
+
+    box-shadow: var(--shadow-s);
+}
+
+.status.completado {
+    color: var(--green);
+    border-color: var(--green);
+}
+
+.status.finalizado {
+    color: var(--red);
+    border-color: var(--red);
+}
+
+.text p{
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.content {
+    margin-top: 1rem;
+    
+}
+
+.winner span{
+    color: var(--text-secondary);
+    font-weight: bold;
+}
+
+.winner p{
+    margin: 1rem 0 0 0;
+    color: var(--text-muted);
 }

@@ -1,8 +1,8 @@
 import { Component, computed, input, output } from '@angular/core';
 import { MatchUpdate } from "../new-single-elimination/match-update/match-update";
-import { SingleEliminationMatch } from '../../../matches/matches-list/match/match.model';
 import { NgClass } from '@angular/common';
 import { UpdateTournamentMatch } from '../../models/update-tournament-matches-model';
+import { SingleEliminationMatch } from '../models/single-elimination-match.model';
 
 
 @Component({
@@ -15,7 +15,7 @@ export class Bracket {
   // inputs
   tournamentId = input.required<string>();
   matches = input.required<SingleEliminationMatch[]>();
-  status = input.required<any>();
+  fields = input.required<any>();
   // output
   submitUpdate = output<UpdateTournamentMatch>();
 

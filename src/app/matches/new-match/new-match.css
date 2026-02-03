@@ -1,8 +1,7 @@
 h1 {
-  color: var(--text);
+  color: var(--text-muted);
   font-weight: 400;
   margin: 0;
-  text-align: center;
 }
 
 h2 {
@@ -25,22 +24,9 @@ h2 {
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: center;
-
   padding-bottom: 2rem;
   gap: 2rem;
 
-}
-
-.close {
-  display: flex;
-  margin-bottom: -1rem;
-  flex: 1 0 100%;
-  justify-content: end;
-}
-.icon {
-  position: static;
-  margin: 0.5rem;
-  margin: 0.2rem;
 }
 
 .section {
@@ -50,7 +36,7 @@ h2 {
   border: var(--border-card);
   border-top: solid 1px var(--highlight);
   border-radius: 6px;
-  background: var(--bg);
+  background: var(--bg-light);
   box-shadow: var(--shadow-l);
   gap: 1rem;
 }

@@ -14,11 +14,10 @@ export class NewRoundRobin {
 
   onSelectedPlayers(tournamentData: inputTournamentData) {
     this.players.set(tournamentData.players);
-    this.roundRobinService.createTournament({
+    this.roundRobinService.create({
       name: tournamentData.name,
       place: tournamentData.place,
-      type: this.roundRobinService.type,
-      playersIds: tournamentData.players
+      playerIds: tournamentData.players
     })
   }
 

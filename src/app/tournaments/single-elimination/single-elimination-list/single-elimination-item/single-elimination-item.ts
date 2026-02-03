@@ -1,7 +1,7 @@
 import { Component, input } from '@angular/core';
-import { TournamentData } from '../../../round-robin/tournament-data.model';
 import { DatePipe } from '@angular/common';
-import { RouterLink, RouterLinkActive } from "@angular/router";
+import { RouterLink } from "@angular/router";
+import { TournamentData } from '../../../../common/models/single-elimination-data.model';
 
 
 @Component({

@@ -36,28 +36,3 @@ export interface NewMatch {
     away3in1: boolean,
 
 }
-
-export interface SingleEliminationMatch {
-    id: string,
-
-    home: Player,
-    away: Player,
-
-    homeScore: number,
-    awayScore: number,
-
-    homeIsla: boolean,
-    awayIsla: boolean,
-
-    home2in1: boolean,
-    away2in1: boolean,
-
-    home3in1: boolean,
-    away3in1: boolean,
-
-    date: Date
-
-    matchId: number,
-    nextMatchId: number | null,
-    round: number
-}

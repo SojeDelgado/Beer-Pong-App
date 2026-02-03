@@ -1,5 +1,53 @@
+<dialog #finishDialog (click)="closeOnBackdrop($event, finishDialog)">
+    <div class="close" (click)="finishDialog.close()">
+        <span class="material-symbols-outlined icon">
+            close
+        </span>
+    </div>
+
+    <div class="title">
+        <h2>¿Terminar clasificación?</h2>
+    </div>
+
+    
+    <div>
+    </div>
+    
+    <div class="text">
+        <span>Si cierras la clasificación no la podras modificar mas tarde</span>
+    </div>
+    
+    <div>
+        <div class="form">
+            <div>
+                <label>Numero de finalistas</label>
+            </div>
+            <div>
+                <input type="number">
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="dialog-buttons">
+        <button type="submit" (click)="finishDialog.close()">Cancelar</button>
+        <button type="submit" (click)="handleTournamentFinish()" (click)="finishDialog.close()">Aceptar</button>
+    </div>
+</dialog>
+
+<app-leaderboard [results]="matches()" />
+
 <app-league-table 
     [tournamentId]="roundRobinId()"
     [matches]="matches()"
-    [status]="status()"
+    [fields]="fields()"
 />
+
+@if (fields()?.status === "Clasificacion Completada") {
+<div class="end-button">
+    <button type="submit" (click)="finishDialog.showModal()">
+        JUGAR FINALES
+    </button>
+</div>
+}
