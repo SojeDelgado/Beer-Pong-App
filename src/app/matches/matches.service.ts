@@ -14,28 +14,33 @@ export class MatchesService {
     private matchesUrl = `${environment.apiurl}/matches`;
 
     private matchesSignal = signal<Match[]>([]);
-    matches = this.matchesSignal.asReadonly();
-    pagination = signal<PaginationMeta>({
-        total: 1,
+    private paginationSignal = signal<PaginationMeta>({
+        total: 0,
         page: 1,
         lastPage: 1
     })
+
+    matches = this.matchesSignal.asReadonly();
+    pagination = this.paginationSignal.asReadonly();
 
     constructor() {
         this.loadMatches();
     }
 
-    loadMatches(page: number = 1, limit: number = 6) {
-
+    loadMatches(
+        page: number = 1, limit: number = 10,
+        dateFilter: string = 'Recientes'
+    ) {
         const params = new HttpParams()
             .set('page', page)
-            .set('limit', limit);
+            .set('limit', limit)
+            .set('dateFilter', dateFilter);
 
         this.httpClient.get<PaginatedMatch>(this.matchesUrl, { params })
             .subscribe(
                 response => {
                     this.matchesSignal.set(response.data);
-                    this.pagination.set(response.meta);
+                    this.paginationSignal.set(response.meta);
                 }
             )
     }

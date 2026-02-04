@@ -7,13 +7,31 @@
   user-select: none;
 }
 
+.options {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.options .total {
+  font-weight: 600;
+}
+
+.total .material-symbols-outlined {
+  font-size: 1.4rem;
+}
+
+.options small {
+  color: var(--text-muted);
+}
+
 .dropdown {
   position: relative;
   display: flex;
   align-items: center;
   gap: .25rem;
   background-color: var(--bg-light);
-  padding: .25rem .75rem;
+  padding: .0rem .75rem;
   box-shadow: var(--shadow-s);
   border-radius: .5rem;
   cursor: pointer;
@@ -31,7 +49,7 @@
 
 .dropdown .select>i {
   font-size: 13px;
-  
+
   cursor: pointer;
   transition: all .2s ease-in-out;
   float: right;
@@ -74,7 +92,7 @@
 }
 
 .dropdown .dropdown-menu {
-  display: block; 
+  display: block;
   position: absolute;
   top: 100%;
   left: 0;
@@ -91,6 +109,7 @@
   list-style: none;
   padding: 0;
 }
+
 .dropdown .dropdown-menu li {
   padding: 10px;
   transition: all .2s ease-in-out;
@@ -113,6 +132,18 @@
 .dropdown .text {
   color: var(--text-muted);
   font-weight: 400;
+}
+
+.total {
+  display: flex;
+  align-items: center;
+  gap: .25rem;
+  padding: .25rem .75rem;
+  border-radius: 6px;
+  box-shadow: var(--shadow-s);
+
+
+  background-color: var(--bg-light);
 }
 
 .pagination {
