@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, inject, signal } from '@angular/core';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { MatchesService } from '../matches.service';
 import { MatchComponent } from "./match/match.component";
 import { ActivatedRoute, Router } from '@angular/router';
@@ -19,7 +19,9 @@ export class MatchesList {
 
   currentPage = signal(0);
   limit = signal(10);
+  dateFilter = signal('Reciente');
 
+  isDropdownLimitOpen = signal(false);
   isDropdownOpen = signal(false);
 
   // Puedo ver la documentacion en:
@@ -29,9 +31,11 @@ export class MatchesList {
     this.route.queryParams.subscribe(params => {
       const page = Number(params['page']) || 1;
       const limit = Number(params['limit']) || 10;
+      const dateFilter = params['dateFilter'] || 'Recientes';
       this.currentPage.set(page);
       this.limit.set(limit)
-      this.matchesService.loadMatches(page, limit);
+      this.dateFilter.set(dateFilter);
+      this.matchesService.loadMatches(page, limit, dateFilter);
     });
   }
 
@@ -65,7 +69,14 @@ export class MatchesList {
     });
   }
 
-  toggleDropdown() {
-    this.isDropdownOpen.update(v => !v);
+  filter(dateFilter: string) {
+    this.router.navigate([], {
+      queryParams: { dateFilter },
+      queryParamsHandling: 'merge'
+    });
+  }
+
+  toggleDropdown(dropdown: WritableSignal<boolean>) {
+    dropdown.update(v => !v);
   }
 }
