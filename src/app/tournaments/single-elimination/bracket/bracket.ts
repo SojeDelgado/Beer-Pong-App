@@ -13,7 +13,6 @@ import { SingleEliminationMatch } from '../models/single-elimination-match.model
 })
 export class Bracket {
   // inputs
-  tournamentId = input.required<string>();
   matches = input.required<SingleEliminationMatch[]>();
   fields = input.required<any>();
   // output

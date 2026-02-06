@@ -1,7 +1,113 @@
+<div class="filter-row">
+    <div class="options">
+        <div #dropdownRef2 class="dropdown" [class.active]="isDropdownLimitOpen()" (click)="toggleDropdown(isDropdownLimitOpen)">
+            <div class="select">
+                <span class="text">Ver: </span> <span>{{ limit() }}</span>
+                <i class="fa fa-chevron-left"></i>
+            </div>
+            <div>
+                <span class="material-symbols-outlined">
+                    arrow_left
+                </span>
+            </div>
+            
+            @if (isDropdownLimitOpen()) {
+                <ul class="dropdown-menu">
+                    @for (option of [5, 10, 15, 20]; track option) {
+                        <li (click)="changeLimit(option)">{{ option }}</li>
+                    }
+                </ul>
+            }
+        </div>
+        
+        <div #dropdownRef class="dropdown" [class.active]="isDropdownOpen()" (click)="toggleDropdown(isDropdownOpen)">
+            <div class="select">
+                <span class="text">{{ dateFilter() }}</span>
+                <i class="fa fa-chevron-left"></i>
+            </div>
+            <div>
+                <span class="material-symbols-outlined">
+                    arrow_left
+                </span>
+            </div>
+            
+            @if (isDropdownOpen()) {
+                <ul class="dropdown-menu">
+                    @for (option of ["Recientes", "Antiguos"]; track option) {
+                        <li (click)="filter(option)" >{{ option }}</li>
+                    }
+                </ul>
+            }
+        </div>
+
+        <div class="total">
+            <span>{{ pagination().total }}</span>
+            <span class="material-symbols-outlined">
+                trophy
+            </span>
+        </div>
+        
+    </div>
+        
+        <div class="pagination">
+        @if (currentPage() !== 1) {
+            <button class="action-page btn-wrapper" (click)="prevPage()">
+                <span class="material-symbols-outlined">
+                    arrow_left
+                </span>
+            </button>
+        }
+
+        @if(currentPage()-1 > 1){ 
+            <div class="btn-wrapper action-page" (click)="goToPage(1)">
+                1
+            </div>
+        }
+
+        @if(currentPage()-3>=1){ 
+            <div class="ellipsis">···</div>
+        }
+
+        @if ( currentPage()-1 >= 1) {
+            <div class="btn-wrapper action-page" (click)="goToPage(currentPage() - 1)">
+                {{ currentPage() - 1}} 
+            </div>
+        }
+
+        <div class="current-page btn-wrapper">
+            {{ currentPage() }}
+        </div>
+
+        @if ( currentPage()+1 <= pagination().lastPage) { 
+            <div class="btn-wrapper action-page" (click)="goToPage(currentPage() + 1)">
+                {{ currentPage() + 1}} 
+            </div>
+        }
+        
+        @if(currentPage()+3<=pagination().lastPage){ 
+            <div class="ellipsis">···</div>
+        }
+
+        @if(currentPage()+1 < pagination().lastPage){ 
+            <div class="btn-wrapper action-page" (click)="goToPage(pagination().lastPage)">
+                {{ pagination().lastPage }}
+            </div>
+        }
+
+        @if (currentPage() !== pagination().lastPage) {
+        <button class="action-page btn-wrapper" (click)="nextPage()">
+            <span class="material-symbols-outlined">
+                arrow_right
+            </span>
+        </button>
+        }
+    </div>
+</div>
+
 @if (singleEliminations().length !== 0) {
     <main>
         @for (se of singleEliminations(); track $index) {
-            <div>
+            <div class="content">
                 <app-single-elimination-item [singleElimination]="se" routerLinkActive="selected" />
             </div>
         }

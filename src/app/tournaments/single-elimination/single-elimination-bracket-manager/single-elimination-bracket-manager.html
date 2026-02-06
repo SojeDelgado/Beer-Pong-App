@@ -22,7 +22,7 @@
     </div>
 </dialog>
 
-<app-bracket [tournamentId]="singleEliminationId()" [matches]="matches()" [fields]="fields()"
+<app-bracket [matches]="matches()" [fields]="fields()"
     (submitUpdate)="handleSingleSubmit($event)" />
 
 @if (fields()?.status === "Completado") {

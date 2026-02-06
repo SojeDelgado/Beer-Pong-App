@@ -10,7 +10,7 @@ import { UpdateTournamentMatch } from '../../../models/update-tournament-matches
   styleUrl: './match-update.css',
 })
 export class MatchUpdate implements AfterViewInit {
-  tournamentId = input.required<string>();
+  
   match = input.required<any>();
   close = output<void>();
   submitUpdate = output<UpdateTournamentMatch>();
@@ -78,20 +78,6 @@ export class MatchUpdate implements AfterViewInit {
       awayId: this.match().away.id
     })
 
-    // this.singleEliminationService.updateTournamentMatch({
-    //   ...formValues,
-    //   tournamentId: this.tournamentId(),
-    //   home: this.match().home.id,
-    //   away: this.match().away.id,
-    //   matchId: this.match().matchId,
-    //   nextMatchId: this.match().nextMatchId,
-    // }).subscribe({
-    //   next: () => {
-    //     this.singleEliminationService.notifyUpdate();
-    //     this.handleClose();
-    //   },
-    //   error: (err) => console.error('Error actualizando match:', err)
-    // });
     this.handleClose();
   }
 }

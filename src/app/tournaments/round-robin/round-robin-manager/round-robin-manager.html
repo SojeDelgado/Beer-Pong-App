@@ -1,5 +1,5 @@
-<dialog #finishDialog (click)="closeOnBackdrop($event, finishDialog)">
-    <div class="close" (click)="finishDialog.close()">
+<dialog #clasificationDialog (click)="closeOnBackdrop($event, clasificationDialog)">
+    <div class="close" (click)="clasificationDialog.close()">
         <span class="material-symbols-outlined icon">
             close
         </span>
@@ -9,26 +9,47 @@
         <h2>¿Terminar clasificación?</h2>
     </div>
 
-    
-    <div>
-    </div>
-    
     <div class="text">
         <span>Si cierras la clasificación no la podras modificar mas tarde</span>
     </div>
-    
-    <div>
-        <div class="form">
-            <div>
-                <label>Numero de finalistas</label>
-            </div>
-            <div>
-                <input type="number">
+
+    <form [formGroup]="playersForm">
+        <div>
+            <div class="form">
+                <div>
+                    <label for="totalFinalist">Numero de finalistas</label>
+                </div>
+                <span>Max: {{fields()?.totalPlayers}} </span>
+                <div>
+                    <input type="number" formControlName="totalFinalist">
+                </div>
             </div>
         </div>
+
+        <br>
+
+        <div class="dialog-buttons">
+            <button type="submit" (click)="clasificationDialog.close()">Cancelar</button>
+            <button type="submit" (click)="handleClasificationFinish()" [disabled]="playersForm.invalid"
+                (click)="clasificationDialog.close()">Aceptar</button>
+        </div>
+    </form>
+</dialog>
+
+<dialog #finishDialog (click)="closeOnBackdrop($event, finishDialog)">
+    <div class="close" (click)="finishDialog.close()">
+        <span class="material-symbols-outlined icon">
+            close
+        </span>
     </div>
 
-    <br>
+    <div class="title">
+        <h2>¿Terminar Torneo?</h2>
+    </div>
+
+    <div class="text">
+        <span>Si cierras la clasificación no la podras modificar mas tarde</span>
+    </div>
 
     <div class="dialog-buttons">
         <button type="submit" (click)="finishDialog.close()">Cancelar</button>
@@ -38,16 +59,38 @@
 
 <app-leaderboard [results]="matches()" />
 
-<app-league-table 
-    [tournamentId]="roundRobinId()"
-    [matches]="matches()"
-    [fields]="fields()"
-/>
+<app-league-table [tournamentId]="roundRobinId()" [matches]="matches()" [fields]="fields()" />
 
 @if (fields()?.status === "Clasificacion Completada") {
 <div class="end-button">
-    <button type="submit" (click)="finishDialog.showModal()">
+    <button type="submit" (click)="clasificationDialog.showModal()">
         JUGAR FINALES
     </button>
+</div>
+}
+
+
+@if( fields()?.status !== 'Pendiente' || fields()?.status === 'Completado' ) {
+<div class="end-button">
+    <app-bracket [matches]="seMatches() " [fields]="fields()" (submitUpdate)="handleSingleSubmit($event)" />
+</div>
+}
+
+@if (fields()?.status === "Completado") {
+<div class="end-button">
+    <button type="submit" (click)="finishDialog.showModal()">
+        Terminar torneo
+    </button>
+</div>
+}
+
+@if (fields()?.winner) {
+<div class="winner-container">
+    <span class="winner-label">Ganador</span>
+    <div class="winner-card">
+        <h1 class="winner-name">
+            {{ fields().winner.nickname }}
+        </h1>
+    </div>
 </div>
 }

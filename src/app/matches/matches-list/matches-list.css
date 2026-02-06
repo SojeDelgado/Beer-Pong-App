@@ -203,10 +203,6 @@ app-match {
   max-width: 100%;
 }
 
-.horizontal-rule {
-  background-color: var(--border-light);
-}
-
 /* Animacion */
 @keyframes dropdownFadeIn {
   to {
