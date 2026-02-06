@@ -43,7 +43,7 @@
 
       </tr>
       @if (selectedMatch === match && fields()?.status !== "Finalizado") {
-      <app-match-update [match]="match" (close)="selectedMatch = null" [tournamentId]="tournamentId()"
+      <app-match-update [match]="match" (close)="selectedMatch = null"
         (submitUpdate)="onMatchSubmit($event)" />
       }
       }

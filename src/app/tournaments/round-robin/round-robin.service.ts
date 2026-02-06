@@ -4,9 +4,11 @@ import { HttpClient, HttpParams } from "@angular/common/http";
 import { environment } from "../../../environments/environment";
 import { NewInputTournament } from "../tournament.model";
 import { RoundRobinMatch } from "./models/round-robin-matches-model";
+import { SingleEliminationMatch } from "../single-elimination/models/single-elimination-match.model";
 import { TournamentData } from "../../common/models/single-elimination-data.model";
 import { UpdateTournamentMatch } from "../../common/models/update-tournament-match.model";
 import { NewTournament } from "../../common/models/new-tournament.model";
+import { UpdateTournament } from "../../common/models/update-tournament.model";
 
 @Injectable({
     providedIn: 'root',
@@ -33,7 +35,7 @@ export class RoundRobinService {
     private loadTournaments() {
         this.httpClient.get<TournamentData[]>(`${this.tournamentUrl}`).subscribe(data => {
             this.roundRobinSignal.set(data);
-    });
+        });
     }
 
     getRoundRobinById(id: string, fields?: string) {
@@ -61,6 +63,15 @@ export class RoundRobinService {
         )
     }
 
+    getSingleEliminationMatches(id: string): Observable<SingleEliminationMatch[]> {
+        return this.refresh$.pipe(
+            switchMap(() => this.httpClient.get<SingleEliminationMatch[]>(`${this.tournamentUrl}/${id}/seMatches`)
+            )
+        )
+    }
+
+
+
     create(tournament: NewTournament) {
         return this.httpClient.post(this.tournamentUrl, tournament).subscribe({
             next: () => {
@@ -74,10 +85,45 @@ export class RoundRobinService {
 
     updateRoundRobinMatch(id: string, matchId: number, updateTournamentMatch: UpdateTournamentMatch) {
         return this.httpClient.patch(`${this.tournamentUrl}/${id}/rrMatches/${matchId}`, updateTournamentMatch)
+            .subscribe({
+                next: () => {
+                    this.notifyUpdate();
+                }
+            })
+    }
+
+    updateSingleEliminationMatch(id: string, matchId: number, updateTournamentMatch: UpdateTournamentMatch) {
+        return this.httpClient.patch(`${this.tournamentUrl}/${id}/seMatches/${matchId}`, updateTournamentMatch)
+            .subscribe({
+                next: () => {
+                    this.notifyUpdate();
+                },
+                error: (err) => console.error('Error actualizando match:', err)
+            });
+    }
+
+    update(id: string, body: UpdateTournament) {
+        return this.httpClient.patch(`${this.tournamentUrl}/${id}`, body)
+            .subscribe({
+                next: () => {
+                    this.notifyUpdate();
+                    this.loadTournaments();
+                },
+                error: (err) => {
+                    console.log(err);
+                }
+            })
+    }
+
+    promotePlayers(id: string, playersCount: number) {
+        return this.httpClient.post(`${this.tournamentUrl}/${id}/actions/promote-to-elimination`,
+            { players_count: playersCount }
+        )
         .subscribe({
             next: () => {
                 this.notifyUpdate();
-            }
-        })
+            },
+            error: (err) => console.error('Error promoviendo a los jugadores:', err)
+        });
     }
 }

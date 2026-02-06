@@ -1,7 +1,3 @@
-main{
-    user-select: none;
-}
-
 h2 {
     text-align: center;
 }
@@ -89,4 +85,5 @@ main {
     max-width: 50rem;
     margin: 2.5rem auto;
     border-radius: 10px;
+    user-select: none;
 }

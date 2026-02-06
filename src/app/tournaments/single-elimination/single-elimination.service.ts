@@ -7,6 +7,8 @@ import { TournamentData } from "../../common/models/single-elimination-data.mode
 import { SingleEliminationMatch } from "./models/single-elimination-match.model";
 import { NewTournament } from "../../common/models/new-tournament.model";
 import { UpdateTournamentMatch } from "../../common/models/update-tournament-match.model";
+import { PaginatedTournament } from "../models/paginated-tournament.interface";
+import { PaginationMeta } from "../../common/models/pagination-meta.interface";
 
 
 @Injectable({
@@ -18,8 +20,13 @@ export class SingleEliminationService {
     private httpClient = inject(HttpClient);
 
     private singleEliminationsSignal = signal<TournamentData[]>([]);
+    private paginationSignal = signal<PaginationMeta>({
+        total: 0,
+        page: 1,
+        lastPage: 1
+    })
     singleEliminations = this.singleEliminationsSignal.asReadonly();
-    type = "SingleElimination";
+    pagination = this.paginationSignal.asReadonly();
 
     // Variable para saber si algun match se actualizo y notificar.
     private refresh$ = new BehaviorSubject<void>(undefined);
@@ -33,10 +40,21 @@ export class SingleEliminationService {
         this.loadTournaments();
     }
 
-    private loadTournaments() {
-        this.httpClient.get<TournamentData[]>(`${this.singleEliminationUrl}`).subscribe(data => {
-            this.singleEliminationsSignal.set(data);
-        });
+    loadTournaments(
+        page: number = 1, limit: number = 10,
+        dateFilter: string = 'Recientes'
+    ) {
+        const params = new HttpParams()
+            .set('page', page)
+            .set('limit', limit)
+            .set('dateFilter', dateFilter);
+
+        this.httpClient.get<PaginatedTournament>(this.singleEliminationUrl, { params })
+            .subscribe(
+                response => {
+                    this.singleEliminationsSignal.set(response.data);
+                    this.paginationSignal.set(response.meta);
+                });
     }
 
     // ToDO:
