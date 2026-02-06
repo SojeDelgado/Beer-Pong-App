@@ -126,4 +126,15 @@ export class RoundRobinService {
             error: (err) => console.error('Error promoviendo a los jugadores:', err)
         });
     }
+
+    finishTournament(id: string) {
+        return this.httpClient.post(`${this.tournamentUrl}/${id}/finish-tournament`, null)
+            .subscribe({
+                next: () => {
+                    this.notifyUpdate();
+                    this.loadTournaments();
+                },
+                error: (err) => console.error('Error actualizando match:', err)
+            })
+    }
 }

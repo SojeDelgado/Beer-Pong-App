@@ -3,7 +3,6 @@ import { SingleEliminationService } from '../single-elimination.service';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { switchMap } from 'rxjs';
 import { Bracket } from "../bracket/bracket";
-import { TournamentStatus } from '../../../common/models/update-tournament.model';
 import { UpdateTournamentMatch } from '../../models/update-tournament-matches-model';
 
 @Component({
@@ -55,18 +54,7 @@ export class SingleEliminationBracketManager implements OnInit{
   }
 
   handleTournamentFinish() {
-    const finalMatch = this.matches()[0];
-    const winnerId = finalMatch.homeScore > finalMatch.awayScore
-      ? finalMatch.home.id
-      : finalMatch.away.id;
-
-    this.singleEliminationService.update(
-      this.singleEliminationId(), 
-    {
-      winner: winnerId,
-      status: TournamentStatus.FINALIZADO,
-      finishedAt: new Date()
-    })
+    this.singleEliminationService.finishTournament(this.singleEliminationId())
   }
 
   closeOnBackdrop(event: MouseEvent, dialog: HTMLDialogElement) {

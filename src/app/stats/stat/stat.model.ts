@@ -10,7 +10,13 @@ export interface Stat {
     partidas_ganadas: number,
     partidas_perdidas: number,
 
-    islas: boolean,
+    torneos_jugados: number,
+    torneos_ganados: number,
+    torneos_perdidos: number,
+
+    islas: number,
+    s2in1: number,
+    s3in1: number
 }
 
 export interface UpdateStat{
