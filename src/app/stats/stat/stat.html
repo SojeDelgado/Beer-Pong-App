@@ -26,16 +26,16 @@
     </div>
 
     <div class="stats-item">
-        @if (stat().islas) {
+        @if (stat().puntos_favor_totales && stat().puntos_contra_totales) {
         <p>
-            {{ stat().islas }}
+            {{ stat().puntos_favor_totales -  stat().puntos_contra_totales}}
         </p>
         } @else {
         <p>
             0
         </p>
         }
-        <span>Islas</span>
+        <span>Diferencia</span>
     </div>
 
     <div class="stats-item">
@@ -76,4 +76,85 @@
         }
         <span>Total de partidos</span>
     </div>
+
+    <div class="stats-item">
+        @if (stat().torneos_ganados) {
+        <p>
+            {{ stat().torneos_ganados }}
+        </p>
+        } @else {
+        <p>
+            0
+        </p>
+        }
+        <span>Torneos ganados</span>
+    </div>
+
+    <div class="stats-item">
+        @if (stat().torneos_perdidos) {
+        <p>
+            {{ stat().torneos_perdidos }}
+        </p>
+        } @else {
+        <p>
+            0
+        </p>
+        }
+        <span>Torneos Perdidos</span>
+    </div>
+
+
+    <div class="stats-item">
+        @if (stat().torneos_jugados) {
+        <p>
+            {{ stat().torneos_jugados }}
+        </p>
+        } @else {
+        <p>
+            0
+        </p>
+        }
+        <span>Total de Torneos</span>
+    </div>
+
+    <div class="stats-item">
+        @if (stat().islas) {
+        <p>
+            {{ stat().islas }}
+        </p>
+        } @else {
+        <p>
+            0
+        </p>
+        }
+        <span>Islas</span>
+    </div>
+
+    <div class="stats-item">
+        @if (stat().s2in1) {
+        <p>
+            {{ stat().s2in1 }}
+        </p>
+        } @else {
+        <p>
+            0
+        </p>
+        }
+        <span>2 en 1</span>
+    </div>
+
+    <div class="stats-item">
+        @if (stat().s3in1) {
+        <p>
+            {{ stat().s3in1 }}
+        </p>
+        } @else {
+        <p>
+            0
+        </p>
+        }
+        <span>3 en 1</span>
+    </div>
+
+
 </div>

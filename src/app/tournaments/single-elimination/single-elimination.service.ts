@@ -108,6 +108,17 @@ export class SingleEliminationService {
             });
     }
 
+    finishTournament(id: string) {
+        return this.httpClient.post(`${this.singleEliminationUrl}/${id}/finish-tournament`, null)
+            .subscribe({
+                next: () => {
+                    this.notifyUpdate();
+                    this.loadTournaments();
+                },
+                error: (err) => console.error('Error actualizando match:', err)
+            })
+    }
+
     update(id: string, body: UpdateTournament) {
         return this.httpClient.patch(`${this.singleEliminationUrl}/${id}`, body)
             .subscribe({

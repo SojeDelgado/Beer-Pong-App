@@ -104,23 +104,11 @@ export class RoundRobinManager {
   handleClasificationFinish() {
     const { totalFinalist } = this.playersForm.value
     console.log("Clasificacion terminada");
-    this.rrService.promotePlayers( this.roundRobinId() , totalFinalist!);
+    this.rrService.promotePlayers(this.roundRobinId(), totalFinalist!);
   }
 
   handleTournamentFinish() {
-    const finalMatch = this.seMatches()[0];
-    const winnerId = finalMatch.homeScore > finalMatch.awayScore
-      ? finalMatch.home.id
-      : finalMatch.away.id;
-
-    this.rrService.update(
-      this.roundRobinId(),
-      {
-        winner: winnerId,
-        status: TournamentStatus.FINALIZADO,
-        finishedAt: new Date()
-      }
-    )
+    this.rrService.finishTournament(this.roundRobinId())
   }
 
   closeOnBackdrop(event: MouseEvent, dialog: HTMLDialogElement) {
