@@ -1,52 +1,32 @@
 import { inject, Injectable, OnInit, Signal, signal } from "@angular/core";
-import { Match, NewMatch } from "./matches-list/match/match.model";
+import { NewMatch } from "./matches-list/match/match.model";
 import { environment } from "../../environments/environment";
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { PaginatedMatch } from "./models/paginated-match.interface";
 import { PaginationMeta } from "../common/models/pagination-meta.interface";
+import { MatchesResponse } from "./models/matches-response.interface";
+import { Observable } from "rxjs";
 
 
 @Injectable({
     providedIn: 'root',
 })
 export class MatchesService {
-    private httpClient = inject(HttpClient);
+    private http = inject(HttpClient);
     private matchesUrl = `${environment.apiurl}/matches`;
 
-    private matchesSignal = signal<Match[]>([]);
-    private paginationSignal = signal<PaginationMeta>({
-        total: 0,
-        page: 1,
-        lastPage: 1
-    })
-
-    matches = this.matchesSignal.asReadonly();
-    pagination = this.paginationSignal.asReadonly();
-
-    constructor() {
-        this.loadMatches();
-    }
-
     loadMatches(
-        page: number = 1, limit: number = 10,
-        dateFilter: string = 'Recientes'
-    ) {
+        page: number = 1, limit: number = 10, dateFilter: string = 'Recientes'
+    ): Observable<MatchesResponse> {
         const params = new HttpParams()
             .set('page', page)
             .set('limit', limit)
             .set('dateFilter', dateFilter);
 
-        this.httpClient.get<PaginatedMatch>(this.matchesUrl, { params })
-            .subscribe(
-                response => {
-                    this.matchesSignal.set(response.data);
-                    this.paginationSignal.set(response.meta);
-                }
-            )
+        return this.http.get<MatchesResponse>(this.matchesUrl, { params })
     }
 
     addMatch(match: NewMatch) {
-        return this.httpClient.post(this.matchesUrl, match).subscribe({
+        return this.http.post(this.matchesUrl, match).subscribe({
             next: () => {
                 this.loadMatches();
             },
