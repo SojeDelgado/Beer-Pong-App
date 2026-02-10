@@ -51,7 +51,10 @@ export class NewMatch {
         away2in1: away2in1 ?? false,
         home3in1: home3in1 ?? false,
         away3in1: away3in1 ?? false,
+      }).subscribe({
+        next: () => this.matchesService.notifyChange()
       })
+
       this.matchForm.reset();
       this.router.navigate(['matches']);
     }

@@ -1,10 +1,13 @@
-import { inject, Injectable, OnInit, Signal, signal } from "@angular/core";
-import { NewMatch } from "./matches-list/match/match.model";
+// Global Variables
 import { environment } from "../../environments/environment";
+// Angular
+import { inject, Injectable, signal } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { PaginationMeta } from "../common/models/pagination-meta.interface";
-import { MatchesResponse } from "./models/matches-response.interface";
+// RXJS
 import { Observable } from "rxjs";
+// Matches
+import { NewMatch } from "./matches-list/match/match.model";
+import { MatchesResponse } from "./models/matches-response.interface";
 
 
 @Injectable({
@@ -14,7 +17,10 @@ export class MatchesService {
     private http = inject(HttpClient);
     private matchesUrl = `${environment.apiurl}/matches`;
 
-    loadMatches(
+    // Variable para notificar cambios en rxResource
+    refreshTrigger = signal(0);
+
+    loadMatchesData(
         page: number = 1, limit: number = 10, dateFilter: string = 'Recientes'
     ): Observable<MatchesResponse> {
         const params = new HttpParams()
@@ -26,13 +32,11 @@ export class MatchesService {
     }
 
     addMatch(match: NewMatch) {
-        return this.http.post(this.matchesUrl, match).subscribe({
-            next: () => {
-                this.loadMatches();
-            },
-            error: (err) => {
-                console.log(err);
-            }
-        });
+        return this.http.post(this.matchesUrl, match);
+    }
+
+    // Metodo para notificar el cambio.
+    notifyChange(){
+        this.refreshTrigger.update( v=> v + 1);
     }
 }
