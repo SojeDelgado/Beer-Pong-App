@@ -1,5 +1,5 @@
 // Angular
-import { Component, computed, inject, signal, WritableSignal } from '@angular/core';
+import { Component, computed, effect, inject, signal, WritableSignal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 // RxJS
@@ -29,7 +29,7 @@ export class MatchesList {
   // also request was renamed to params:
   // link to resource: https://www.youtube.com/watch?v=_KyCmpMlVTc&list=LL&index=2
 
-  readonly matchesResponse = rxResource({
+  readonly matchesResource = rxResource({
     params: () => ({
       page: this.currentPage(),
       limit: this.limit(),
@@ -45,10 +45,20 @@ export class MatchesList {
     }
   });
 
-  readonly matches = computed(() => this.matchesResponse.value().data as Match[]);
-  pagination = computed(() => this.matchesResponse.value().meta as PaginationMeta);
+  readonly matches = computed(() => {
+    if (!this.matchesResource.hasValue()) return [] as Match[]; // Si hay error, devuelve array vacío
+    return this.matchesResource.value().data;
+  });
+
+  pagination = computed(() => {
+    if (this.matchesResource.error()) return { total: 0, page: 1, lastPage: 1 } as PaginationMeta;
+    return this.matchesResource.value().meta
+  });
   // ToDo: Implement error message
-  // error = computed(() => this.matchesResponse.error() as HttpErrorResponse);
+  error = this.matchesResource.error;
+  isLoading = this.matchesResource.isLoading;
+
+  private errEff = effect(() => console.log("Error:", this.error() as HttpErrorResponse));
 
   isDropdownLimitOpen = signal(false);
   isDropdownOpen = signal(false);
