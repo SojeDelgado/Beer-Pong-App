@@ -1,11 +1,14 @@
 // Angular
 import { Component, computed, inject, signal, WritableSignal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 // RxJS
 import { rxResource } from '@angular/core/rxjs-interop';
 // Matches
 import { MatchesService } from '../matches.service';
 import { MatchComponent } from "./match/match.component";
+import { Match } from './match/match.model';
+import { PaginationMeta } from '../../common/models/pagination-meta.interface';
 
 @Component({
   selector: 'app-matches-list',
@@ -30,22 +33,22 @@ export class MatchesList {
     params: () => ({
       page: this.currentPage(),
       limit: this.limit(),
-      dateFilter: this.dateFilter()
+      dateFilter: this.dateFilter(),
+      // Variable para recibir actualizaciones desde otro componente
+      refresh: this.matchesService.refreshTrigger()
     }),
-    stream: ({ params }) => this.matchesService.loadMatches(
+    stream: ({ params }) => this.matchesService.loadMatchesData(
       params.page, params.limit, params.dateFilter,
     ),
     defaultValue: {
-      data: [], meta: {
-        total: 0,
-        page: 1,
-        lastPage: 1
-      }
+      data: [], meta: { total: 0, page: 1, lastPage: 1 }
     }
   });
 
-  readonly matches = computed(() => this.matchesResponse.value().data);
-  pagination = computed(() => this.matchesResponse.value().meta);
+  readonly matches = computed(() => this.matchesResponse.value().data as Match[]);
+  pagination = computed(() => this.matchesResponse.value().meta as PaginationMeta);
+  // ToDo: Implement error message
+  // error = computed(() => this.matchesResponse.error() as HttpErrorResponse);
 
   isDropdownLimitOpen = signal(false);
   isDropdownOpen = signal(false);
@@ -54,13 +57,9 @@ export class MatchesList {
   // https://v20.angular.dev/guide/routing/read-route-state#query-parameters
   constructor() {
     this.route.queryParams.subscribe(params => {
-      const page = Number(params['page']) || 1;
-      const limit = Number(params['limit']) || 10;
-      const dateFilter = params['dateFilter'] || 'Recientes';
-      this.currentPage.set(page);
-      this.limit.set(limit)
-      this.dateFilter.set(dateFilter);
-      this.matchesService.loadMatches(page, limit, dateFilter);
+      this.currentPage.set(Number(params['page']) || 1);
+      this.limit.set(Number(params['limit']) || 10);
+      this.dateFilter.set(params['dateFilter'] || 'Recientes');
     });
   }
 
@@ -78,7 +77,7 @@ export class MatchesList {
     this.currentPage.update(page => page + 1);
     this.router.navigate([], {
       queryParams: { page: this.currentPage() },
-      queryParamsHandling: 'merge' // Preserve other query parameters
+      queryParamsHandling: 'merge'
     })
   }
 
@@ -86,7 +85,7 @@ export class MatchesList {
     this.currentPage.update(() => page);
     this.router.navigate([], {
       queryParams: { page: this.currentPage() },
-      queryParamsHandling: 'merge' // Preserve other query parameters
+      queryParamsHandling: 'merge'
     })
   }
 
