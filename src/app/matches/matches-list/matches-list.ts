@@ -45,23 +45,15 @@ export class MatchesList {
     }
   });
 
-  readonly matches = computed(() => {
-    if (!this.matchesResource.hasValue()) return [] as Match[]; // Si hay error, devuelve array vacío
-    return this.matchesResource.value().data;
-  });
-
-  pagination = computed(() => {
-    if (this.matchesResource.error()) return { total: 0, page: 1, lastPage: 1 } as PaginationMeta;
-    return this.matchesResource.value().meta
-  });
+  readonly matches = computed(() => this.matchesResource.value().data ?? [] as Match[]);
+  pagination = computed(() => this.matchesResource.value().meta ?? {} as PaginationMeta);
   // ToDo: Implement error message
-  error = this.matchesResource.error;
-  isLoading = this.matchesResource.isLoading;
-
-  private errEff = effect(() => console.log("Error:", this.error() as HttpErrorResponse));
+  error = computed(() => this.matchesResource.error() as HttpErrorResponse);
 
   isDropdownLimitOpen = signal(false);
   isDropdownOpen = signal(false);
+
+  private errEff = effect(() => console.error("Error:", this.error().message))
 
   // Query parameters docs:
   // https://v20.angular.dev/guide/routing/read-route-state#query-parameters
@@ -71,6 +63,7 @@ export class MatchesList {
       this.limit.set(Number(params['limit']) || 10);
       this.dateFilter.set(params['dateFilter'] || 'Recientes');
     });
+
   }
 
   prevPage() {
