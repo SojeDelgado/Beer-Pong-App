@@ -1,5 +1,5 @@
 // Angular
-import { Component, computed, inject, signal, WritableSignal } from '@angular/core';
+import { Component, computed, effect, inject, signal, WritableSignal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 // RxJS
@@ -9,6 +9,7 @@ import { MatchesService } from '../matches.service';
 import { MatchComponent } from "./match/match.component";
 import { Match } from './match/match.model';
 import { PaginationMeta } from '../../common/models/pagination-meta.interface';
+import { setErrorMessage } from '../../error-message';
 
 @Component({
   selector: 'app-matches-list',
@@ -29,7 +30,7 @@ export class MatchesList {
   // also request was renamed to params:
   // link to resource: https://www.youtube.com/watch?v=_KyCmpMlVTc&list=LL&index=2
 
-  readonly matchesResponse = rxResource({
+  readonly matchesResource = rxResource({
     params: () => ({
       page: this.currentPage(),
       limit: this.limit(),
@@ -39,16 +40,26 @@ export class MatchesList {
     }),
     stream: ({ params }) => this.matchesService.loadMatchesData(
       params.page, params.limit, params.dateFilter,
-    ),
-    defaultValue: {
-      data: [], meta: { total: 0, page: 1, lastPage: 1 }
-    }
+    )
   });
 
-  readonly matches = computed(() => this.matchesResponse.value().data as Match[]);
-  pagination = computed(() => this.matchesResponse.value().meta as PaginationMeta);
-  // ToDo: Implement error message
-  // error = computed(() => this.matchesResponse.error() as HttpErrorResponse);
+  readonly matches = computed(() => {
+    if (!this.matchesResource.hasValue) return [] as Match[]
+    return this.matchesResource.value()!.data
+  });
+
+  // Manejo de esta manera la paginacion para que se sigan mostrando las opciones de filtrado aunque haya errores
+  // Y no rompa con la estetica del programa.
+  pagination = computed(() => {
+    if (this.matchesResource.error() || !this.matchesResource.hasValue()) {
+      return { total: 0, page: 1, lastPage: 1 } as PaginationMeta;
+    }
+    return this.matchesResource.value().meta;
+  });
+
+  isLoading = this.matchesResource.isLoading;
+  error = computed(() => this.matchesResource.error() as HttpErrorResponse);
+  errorMessage = computed(() => setErrorMessage(this.error(), 'partidos'));
 
   isDropdownLimitOpen = signal(false);
   isDropdownOpen = signal(false);
@@ -61,6 +72,7 @@ export class MatchesList {
       this.limit.set(Number(params['limit']) || 10);
       this.dateFilter.set(params['dateFilter'] || 'Recientes');
     });
+
   }
 
   prevPage() {

@@ -1,5 +1,6 @@
 .filter-row {
   display: flex;
+  width: 80vh;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;

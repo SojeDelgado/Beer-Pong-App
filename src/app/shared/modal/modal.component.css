@@ -1,0 +1,31 @@
+dialog {
+  min-width: 30rem;
+  padding: 0;
+  z-index: 2;
+  border-radius: 8px;
+  overflow: hidden;
+  border: var(--border-card);
+  box-shadow: var(--shadow-l);
+  animation: slide-down-fade-in 0.3s ease-out forwards;
+}
+
+dialog::backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+@keyframes slide-down-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-3rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

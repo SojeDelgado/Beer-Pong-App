@@ -17,7 +17,7 @@ export class MatchesService {
     private http = inject(HttpClient);
     private matchesUrl = `${environment.apiurl}/matches`;
 
-    // Variable para notificar cambios en rxResource
+    // Variable para recibir cambios en rxResource
     refreshTrigger = signal(0);
 
     loadMatchesData(

@@ -25,7 +25,7 @@
 <app-bracket [matches]="matches()" [fields]="fields()"
     (submitUpdate)="handleSingleSubmit($event)" />
 
-@if (fields()?.status === "Completado") {
+@if (fields().status === "Completado") {
 <div class="end-button">
     <button type="submit" (click)="finishDialog.showModal()">
         Terminar torneo
@@ -33,12 +33,12 @@
 </div>
 }
 
-@if (fields()?.winner) {
+@if (fields().winner) {
 <div class="winner-container">
     <span class="winner-label">Ganador</span>
     <div class="winner-card">
         <h1 class="winner-name">
-            {{ fields().winner.nickname }}
+            {{ fields().winner!.nickname }}
         </h1>
     </div>
 </div>
