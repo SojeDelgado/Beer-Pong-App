@@ -1,134 +1,97 @@
+// Global Variables
+import { environment } from "../../../environments/environment";
+// Angular
 import { inject, Injectable, signal } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { environment } from "../../../environments/environment";
-import { BehaviorSubject, Observable, switchMap } from "rxjs";
-import { UpdateTournament } from "../../common/models/update-tournament.model";
-import { TournamentData } from "../../common/models/single-elimination-data.model";
+// RxJS
+import { catchError, Observable, throwError } from "rxjs";
+// Interfaces
 import { SingleEliminationMatch } from "./models/single-elimination-match.model";
+import { SingleEliminationResponse } from "./models/single-elimination-response.interface";
+// Common
+import { UpdateTournament } from "../../common/models/update-tournament.model";
 import { NewTournament } from "../../common/models/new-tournament.model";
 import { UpdateTournamentMatch } from "../../common/models/update-tournament-match.model";
-import { PaginatedTournament } from "../models/paginated-tournament.interface";
-import { PaginationMeta } from "../../common/models/pagination-meta.interface";
+import { ErrorService } from "../../shared/error.service";
+import { TournamentFieldsResponse } from "./models/single-elimination-by-id-response";
 
 
 @Injectable({
     providedIn: 'root',
 })
 export class SingleEliminationService {
-    private singleEliminationUrl = `${environment.apiurl}/single-elimination`;
-
     private httpClient = inject(HttpClient);
+    private singleEliminationUrl = `${environment.apiurl}/single-elimination`;
+    private errorService = inject(ErrorService);
 
-    private singleEliminationsSignal = signal<TournamentData[]>([]);
-    private paginationSignal = signal<PaginationMeta>({
-        total: 0,
-        page: 1,
-        lastPage: 1
-    })
-    singleEliminations = this.singleEliminationsSignal.asReadonly();
-    pagination = this.paginationSignal.asReadonly();
+    // Variable para recibir cambios en rxResource
+    refreshTrigger = signal(0);
 
-    // Variable para saber si algun match se actualizo y notificar.
-    private refresh$ = new BehaviorSubject<void>(undefined);
-
-    // metodo para notificar que hubo un cambio.
-    notifyUpdate() {
-        this.refresh$.next();
-    }
-
-    constructor() {
-        this.loadTournaments();
-    }
-
-    loadTournaments(
+    loadTournamentsData(
         page: number = 1, limit: number = 10,
         dateFilter: string = 'Recientes'
-    ) {
+    ): Observable<SingleEliminationResponse> {
         const params = new HttpParams()
             .set('page', page)
             .set('limit', limit)
             .set('dateFilter', dateFilter);
 
-        this.httpClient.get<PaginatedTournament>(this.singleEliminationUrl, { params })
-            .subscribe(
-                response => {
-                    this.singleEliminationsSignal.set(response.data);
-                    this.paginationSignal.set(response.meta);
-                });
+        return this.httpClient
+        .get<SingleEliminationResponse>(this.singleEliminationUrl, { params });
     }
 
-    // ToDO:
-    // Rehacer todos los metodos con las interfaces creadas o en common, o en la carpeta models de single-elimination.
+    getSingleEliminationById(id: string, fields?: string): Observable<TournamentFieldsResponse> {
+        let params = new HttpParams();
+        if (fields) {
+            params = params.set('fields', fields);
+        }
 
-    getSingleEliminationById(id: string, fields?: string) {
-        return this.refresh$.pipe(
-            switchMap(() => {
-                // Configuramos los parámetros de búsqueda
-                let params = new HttpParams();
-                if (fields) {
-                    params = params.set('fields', fields);
-                }
+        return this.httpClient
+        .get<TournamentFieldsResponse>( `${this.singleEliminationUrl}/${id}`, { params } );
+    }
 
-                return this.httpClient.get<SingleEliminationMatch[]>(
-                    `${this.singleEliminationUrl}/${id}`,
-                    { params }
-                );
+    getMatchesById(id: string): Observable<SingleEliminationMatch[]> {
+        return this.httpClient.get<SingleEliminationMatch[]>(`${this.singleEliminationUrl}/${id}/matches`);
+    }
+
+    createSingleElimination(tournament: NewTournament) {
+        return this.httpClient.post(`${this.singleEliminationUrl}`, tournament)
+        .pipe(
+            catchError(() => {
+                this.errorService.showError('Fallo al crear un torneo.');
+                return throwError(() => new Error('Fallo al crear un torneo.'))
             })
         )
     }
 
-    getMatchesById(id: string): Observable<SingleEliminationMatch[]> {
-        return this.refresh$.pipe(
-            switchMap(() => this.httpClient.get<SingleEliminationMatch[]>(`${this.singleEliminationUrl}/${id}/matches`))
-        );
-    }
-
-
-    createSingleElimination(tournament: NewTournament) {
-        return this.httpClient.post(`${this.singleEliminationUrl}`, tournament)
-            .subscribe({
-                next: () => {
-                    this.loadTournaments();
-                },
-                error: (err) => {
-                    console.log(err);
-                    console.log("your request:", tournament);
-                }
-            })
-    }
-
     updateTournamentMatch(id: string, matchId: number, updateTournamentMatch: UpdateTournamentMatch) {
         return this.httpClient.patch(`${this.singleEliminationUrl}/${id}/matches/${matchId}`, updateTournamentMatch)
-            .subscribe({
-                next: () => {
-                    this.notifyUpdate();
-                    this.loadTournaments();
-                },
-                error: (err) => console.error('Error actualizando match:', err)
-            });
+        .pipe(
+            catchError((err) => {
+                this.errorService.showError(`Fallo al actualizar el partido`);
+                return throwError(() => new Error('Fallo al actualizar un torneo.'));
+            })
+        )
     }
 
     finishTournament(id: string) {
+        // Post null para que no se queje ts. (En el backend no pide un body).
         return this.httpClient.post(`${this.singleEliminationUrl}/${id}/finish-tournament`, null)
-            .subscribe({
-                next: () => {
-                    this.notifyUpdate();
-                    this.loadTournaments();
-                },
-                error: (err) => console.error('Error actualizando match:', err)
+        .pipe(
+            catchError((err) => {
+                this.errorService.showError(`Fallo al intentar terminar un torneo.`);
+                return throwError(() => new Error('Fallo al intentar terminar un torneo.'));
             })
+        )
     }
 
+    // No component is implementing this. At the moment.
     update(id: string, body: UpdateTournament) {
-        return this.httpClient.patch(`${this.singleEliminationUrl}/${id}`, body)
-            .subscribe({
-                next: () => {
-                    this.notifyUpdate();
-                    this.loadTournaments();
-                },
-                error: (err) => {
-                    console.log(err);
-                }
-            })
+        return this.httpClient.patch(`${this.singleEliminationUrl}/${id}`, body);
+    }
+
+    // Metodo para notificar el cambio.
+    notifyChange(){
+        this.refreshTrigger.update( v=> v + 1);
     }
 }

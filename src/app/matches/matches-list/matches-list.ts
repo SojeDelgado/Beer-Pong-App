@@ -9,6 +9,7 @@ import { MatchesService } from '../matches.service';
 import { MatchComponent } from "./match/match.component";
 import { Match } from './match/match.model';
 import { PaginationMeta } from '../../common/models/pagination-meta.interface';
+import { setErrorMessage } from '../../error-message';
 
 @Component({
   selector: 'app-matches-list',
@@ -39,21 +40,29 @@ export class MatchesList {
     }),
     stream: ({ params }) => this.matchesService.loadMatchesData(
       params.page, params.limit, params.dateFilter,
-    ),
-    defaultValue: {
-      data: [], meta: { total: 0, page: 1, lastPage: 1 }
-    }
+    )
   });
 
-  readonly matches = computed(() => this.matchesResource.value().data ?? [] as Match[]);
-  pagination = computed(() => this.matchesResource.value().meta ?? {} as PaginationMeta);
-  // ToDo: Implement error message
+  readonly matches = computed(() => {
+    if (!this.matchesResource.hasValue) return [] as Match[]
+    return this.matchesResource.value()!.data
+  });
+
+  // Manejo de esta manera la paginacion para que se sigan mostrando las opciones de filtrado aunque haya errores
+  // Y no rompa con la estetica del programa.
+  pagination = computed(() => {
+    if (this.matchesResource.error() || !this.matchesResource.hasValue()) {
+      return { total: 0, page: 1, lastPage: 1 } as PaginationMeta;
+    }
+    return this.matchesResource.value().meta;
+  });
+
+  isLoading = this.matchesResource.isLoading;
   error = computed(() => this.matchesResource.error() as HttpErrorResponse);
+  errorMessage = computed(() => setErrorMessage(this.error(), 'partidos'));
 
   isDropdownLimitOpen = signal(false);
   isDropdownOpen = signal(false);
-
-  private errEff = effect(() => console.error("Error:", this.error().message))
 
   // Query parameters docs:
   // https://v20.angular.dev/guide/routing/read-route-state#query-parameters

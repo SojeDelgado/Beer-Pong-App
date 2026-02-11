@@ -104,21 +104,34 @@
     </div>
 </div>
 
-@if (singleEliminations().length !== 0) {
-    <main>
-        @for (se of singleEliminations(); track $index) {
-            <div class="content">
-                <app-single-elimination-item [singleElimination]="se" routerLinkActive="selected" />
-            </div>
-        }
-    </main>
+@if(isLoading()){
+    <div class="loading-zone">
+        <div class="loader"></div>
+    </div>
+} @else if (error() ) {
+    <br>
+    <h2>Error</h2>
+    <div class="error">
+        {{ errorMessage() }}
+    </div>
 } @else {
-    <div class="content">
-        <h2>No hay torneos</h2>
+    @if (singleEliminations().length !== 0) {
+        <main>
+            @for (se of singleEliminations(); track $index) {
+                <div class="content">
+                    <app-single-elimination-item [singleElimination]="se" routerLinkActive="selected" />
+                </div>
+            }
+        </main>
+    } @else {
+        <div class="content">
+            <h2>No hay torneos</h2>
+        </div>
+    }
+
+    <div class="button">
+        <button type="button" [routerLink]="['../new-single-elimination']"> Nuevo Torneo </button>
     </div>
 }
 
 
-<div class="button">
-    <button type="button" [routerLink]="['../new-single-elimination']"> Nuevo Torneo </button>
-</div>

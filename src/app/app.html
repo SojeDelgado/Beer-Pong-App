@@ -1,3 +1,7 @@
+@if (error()) {
+    <app-error-modal title="Ha ocurrido un error" [message]="error()" />
+}
+
 <div class="layout">
     <aside class="sidenav" [ngClass]="{'open': isSidebarOpen}">
         <div class="btn-open" (click)="toggleSidebar()" [ngClass]="{'btn-close': !isSidebarOpen}" >

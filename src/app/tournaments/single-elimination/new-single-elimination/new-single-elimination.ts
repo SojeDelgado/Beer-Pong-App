@@ -23,6 +23,8 @@ export class NewSingleElimination {
       name: tournamentData.name,
       place: tournamentData.place,
       playerIds: tournamentData.players
-    });
+    }).subscribe({
+      next: () => this.singleEliminationService.notifyChange(),
+    })
   }
 }
