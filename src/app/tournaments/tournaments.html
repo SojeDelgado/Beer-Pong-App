@@ -1,0 +1,23 @@
+<br>
+<br>
+<main>
+    <div class="container" [routerLink]="['round-robin']" routerLinkActive="selected">
+        <span class="material-symbols-outlined">leaderboard</span>
+        Clasificación
+    </div>
+
+    <div class="container" [routerLink]="['single-elimination']" routerLinkActive="selected">
+        <span class="material-symbols-outlined">upcoming</span>
+        Eliminacion Directa
+    </div>
+
+    <div class="container" (click)="goToNew()">
+        <span class="material-symbols-outlined">add</span>
+        Nuevo Torneo
+    </div>
+
+</main>
+
+<div class="horizontal-rule"></div>
+
+<router-outlet />

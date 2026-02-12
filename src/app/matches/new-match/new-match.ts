@@ -19,8 +19,8 @@ export class NewMatch {
   matchForm = new FormGroup({
     player1: new FormControl<string>('', { validators: [Validators.required] }),
     player2: new FormControl<string>('', { validators: [Validators.required] }),
-    scoreP1: new FormControl('', { validators: [Validators.required, Validators.min(1), Validators.max(10)] }),
-    scoreP2: new FormControl('', { validators: [Validators.required, Validators.min(1), Validators.max(10)] }),
+    scoreP1: new FormControl('', { validators: [Validators.required, Validators.min(0), Validators.max(10)] }),
+    scoreP2: new FormControl('', { validators: [Validators.required, Validators.min(0), Validators.max(10)] }),
     islaP1: new FormControl(false),
     islaP2: new FormControl(false),
     home2in1: new FormControl(false),

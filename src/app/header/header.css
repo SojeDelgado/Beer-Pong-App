@@ -67,11 +67,6 @@ a {
   color: var(--text-muted)
 }
 
-#content>div.item.selected span,
-#content>div.item:hover span {
-  color: var(--text);
-}
-
 #content>div.item:hover,
 #content>div.item:active,
 #content>div.item.selected {
@@ -81,97 +76,17 @@ a {
   background-color: var(--bg);
   border: var(--no-line);
   border-radius: 5px;
-  box-shadow: var(--shadow-l);
+  box-shadow: var(--shadow-m);
+
+  
 }
 
-#content>div .material-symbols-outlined {
-  font-variation-settings:
-    'FILL' 0,
-    'wght' 400,
-    'GRAD' 0,
-    'opsz' 50
-}
-
-.dropdown {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.5rem;
-  border: var(--no-line);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.dropdown-item {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-
-}
-
-.dropdown .arrow {
-  opacity: 0;
-  transition: opacity 0.2s, transform 0.3s ease;
-  user-select: none;
-}
-
-
-.dropdown:hover .arrow {
-  opacity: 1;
-}
-
-
-.dropdown.open .arrow {
-  opacity: 1;
-  transform: rotate(-90deg);
-}
-
-.dropdown-content {
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  padding-left: 2rem;
-  font-size: 15px;
-  gap: 0.5em;
-  color: var(--text-muted);
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease-out, padding-top 0.3s ease-out, padding-bottom 0.3s ease-out;
-}
-
-.dropdown-content.open {
-  opacity: 1;
-  max-height: 200px;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-}
-
-
-.dropdown-content>div {
-  padding: 0.5rem 0.5rem;
-  cursor: pointer;
-  transition: all .1s;
-  border: var(--no-line);
-  border-radius: 5px;
-}
-
-
-.dropdown-content>div span {
-  color: var(--text-muted);
-}
-
-.dropdown-content>div:hover span,
-.dropdown-content>div.selected span {
-  color: var(--text);
-}
-
-
-.dropdown-content>div:hover,
-.dropdown-content>div.selected {
-  color: var(--text-secondary);
-  font-weight: 500;
-  background-color: var(--bg);
-  border: var(--border-card);
-  border-radius: 5px;
-  box-shadow: var(--shadow);
+#content>div.item.selected {
+  .material-symbols-outlined {
+      font-variation-settings:
+        'FILL' 1,
+        'wght' 600,
+        'GRAD' 0,
+        'opsz' 50
+    }
 }

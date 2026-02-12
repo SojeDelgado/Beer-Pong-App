@@ -27,26 +27,9 @@
             Partidos
         </div>
 
-        <div class="dropdown item" (click)="toggleDropdown()" [class.open]="dropdownOpen">
-            <div class="dropdown-item">
-                <span class="material-symbols-outlined">trophy</span>
-                Torneos
-            </div>
-
-            <span class="material-symbols-outlined arrow">arrow_left</span>
+        <div class="item" [routerLink]="['tournaments']" routerLinkActive="selected">
+            <span class="material-symbols-outlined">trophy</span>
+            Torneos
         </div>
-
-        <div class="dropdown-content" [class.open]="dropdownOpen">
-
-            <div class="dropdown-item" [routerLink]="['round-robin']" routerLinkActive="selected">
-                <span class="material-symbols-outlined">leaderboard</span>
-                Clasificación
-            </div>
-            <div class="dropdown-item" [routerLink]="['single-elimination']" routerLinkActive="selected">
-                <span class="material-symbols-outlined">upcoming</span>
-                Eliminación Directa
-            </div>
-        </div>
-
     </div>
 </header>
