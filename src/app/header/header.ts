@@ -7,11 +7,4 @@ import { RouterLink, RouterLinkActive } from "@angular/router";
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
-export class Header {
-  dropdownOpen = false;
-
-  toggleDropdown() {
-    this.dropdownOpen = !this.dropdownOpen;
-  }
-
-}
+export class Header { }

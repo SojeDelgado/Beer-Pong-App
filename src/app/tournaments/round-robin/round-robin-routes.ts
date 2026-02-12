@@ -6,17 +6,17 @@ import { NewRoundRobin } from "./new-round-robin/new-round-robin";
 export const routes: Routes = [
     {
         path: '',
-        redirectTo: 'list',
+        redirectTo: '',
         pathMatch: 'prefix'
     },
 
     {
-        path: 'list',
+        path: '',
         component:RoundRobinList
     },
     
     {
-        path: 'new-round-robin',
+        path: 'new',
         component: NewRoundRobin
     },
     

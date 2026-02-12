@@ -6,15 +6,15 @@ import { SingleEliminationBracketManager } from "./single-elimination-bracket-ma
 export const routes: Routes = [
     {
         path: '',
-        redirectTo: 'list',
+        redirectTo: '',
         pathMatch: 'prefix'
     },
     {
-        path: 'list',
+        path: '',
         component: SingleEliminationList
     },
     {
-        path: 'new-single-elimination',
+        path: 'new',
         component: NewSingleElimination
     },
     {

@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Component, inject, OnInit } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 
 @Component({
@@ -9,4 +9,9 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
   styleUrl: './matches.css',
 })
 export class MatchesComponent{
+  router = inject(Router);
+  
+  goToNew() {
+    this.router.navigate([this.router.url, 'new']);
+  }
 }
