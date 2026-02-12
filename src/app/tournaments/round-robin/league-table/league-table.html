@@ -42,9 +42,8 @@
         <td class="away">{{ match.away.nickname }}</td>
 
       </tr>
-      @if (selectedMatch === match && fields()?.status === "Pendiente" || fields()?.status === "Completado") {
-      <app-match-update [match]="match" (close)="selectedMatch = null"
-        (submitUpdate)="onMatchSubmit($event)" />
+      @if (selectedMatch == match && fields()?.status === "Pendiente" || selectedMatch == match && fields()?.status === "Completado") {
+        <app-match-update [match]="match" (close)="selectedMatch = undefined" (submitUpdate)="onMatchSubmit($event)" />
       }
       }
     </table>

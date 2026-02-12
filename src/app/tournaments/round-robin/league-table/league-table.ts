@@ -18,7 +18,7 @@ export class LeagueTable {
   matches = input.required<RoundRobinMatch[]>();
   fields = input.required<any>();
 
-  selectedMatch: RoundRobinMatch | null = null;
+  selectedMatch: RoundRobinMatch | undefined = undefined;
   rounds = computed(() => {
     const map = new Map<number, any[]>();
 
@@ -42,6 +42,13 @@ export class LeagueTable {
     }
   }
 
+  closeModal() {
+    this.selectedMatch = undefined;
+  }
+
+  // ToDo: Enviar este matchSubmit al round-robin-manager, para que ese sea el encargado de
+  // recibir y enviar datos.
+
   onMatchSubmit(formData: UpdateTournamentMatch) {
     this.rrService.updateRoundRobinMatch(
       this.tournamentId(), formData.matchId,
@@ -54,7 +61,8 @@ export class LeagueTable {
         away2in1: formData.away2in1,
         home3in1: formData.home3in1,
         away3in1: formData.away3in1,
+      }).subscribe({
+        next: () => this.rrService.notifyChange()
       })
   }
-
 }

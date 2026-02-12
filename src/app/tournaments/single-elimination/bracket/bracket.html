@@ -5,11 +5,11 @@
         <div class="match" [class.winner-top]="match.homeScore > match.awayScore"
             [class.winner-bottom]="match.awayScore > match.homeScore" (click)="openUpdateModal(match)">
 
-            @if (selectedMatch === match && fields()?.status !== "Finalizado") {
+            @if ( selectedMatchId === match.matchId && fields().status !== "Finalizado") {
                 <div (click)="$event.stopPropagation()">
                     <app-match-update 
                     [match]="match" 
-                    (close)="selectedMatch = null"
+                    (close)="selectedMatchId = -1"
                     (submitUpdate)="onSingleSubmit($event)"
                     />
                 </div>

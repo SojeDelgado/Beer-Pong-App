@@ -3,8 +3,7 @@
     flex-direction: column;
 
     min-width: 30rem;
-
-    margin: 1rem;
+    
     padding: 1rem 1.25rem 1rem 1.25rem;
 
     background-color: var(--bg-light);
@@ -53,22 +52,22 @@
     border-color: var(--red);
 }
 
-.text p{
+.text p {
     color: var(--text-muted);
     margin: 0;
 }
 
 .content {
     margin-top: 1rem;
-    
+
 }
 
-.winner span{
+.winner span {
     color: var(--text-secondary);
     font-weight: bold;
 }
 
-.winner p{
+.winner p {
     margin: 1rem 0 0 0;
     color: var(--text-muted);
 }

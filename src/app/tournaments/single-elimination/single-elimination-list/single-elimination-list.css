@@ -193,22 +193,22 @@
 }
 
 main {
-    display: flex;
-    flex-wrap: wrap;
-    max-width: 80vh;
-    margin: 0 auto;
-    gap: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 80vh;
+  margin: 0 auto;
+  gap: 1rem;
 }
 
 .content {
-    flex: 1 1;
-    
+  flex: 1 1;
+
 }
 
 
 .button {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 /* Animacion */

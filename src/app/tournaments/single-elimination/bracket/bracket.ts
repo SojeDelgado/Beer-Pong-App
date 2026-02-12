@@ -19,7 +19,8 @@ export class Bracket {
   submitUpdate = output<UpdateTournamentMatch>();
 
   // variables para la funcionalidad del bracket
-  selectedMatch: SingleEliminationMatch | null = null;
+  selectedMatchId: number = -1;
+
   rounds = computed(() => {
     const groups = this.matches().reduce((acc, match) => {
       if (!acc[match.round]) acc[match.round] = [];
@@ -34,14 +35,11 @@ export class Bracket {
   });
 
   openUpdateModal(match: SingleEliminationMatch) {
-    const isReady = !!(match.home?.nickname && match.away?.nickname);
-    if (isReady) {
-      this.selectedMatch = match;
-    }
+    this.selectedMatchId = match.matchId;
   }
 
   closeModal() {
-    this.selectedMatch = null;
+    this.selectedMatchId = -1;
   }
 
   getRoundClass(index: number): string {
@@ -49,7 +47,7 @@ export class Bracket {
     return classes[index] || 'one';
   }
 
-  onSingleSubmit(formData: UpdateTournamentMatch){
+  onSingleSubmit(formData: UpdateTournamentMatch) {
     this.submitUpdate.emit(formData);
   }
 

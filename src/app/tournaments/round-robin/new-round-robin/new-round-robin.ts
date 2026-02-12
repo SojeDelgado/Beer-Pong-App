@@ -18,6 +18,8 @@ export class NewRoundRobin {
       name: tournamentData.name,
       place: tournamentData.place,
       playerIds: tournamentData.players
+    }).subscribe({
+      next: () => this.roundRobinService.notifyChange()
     })
   }
 
