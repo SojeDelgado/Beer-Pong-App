@@ -38,7 +38,7 @@
     </div>
 
     <div class="total">
-      <span>{{ pagination().total }}</span>
+      <span>{{ pagination()!.total }}</span>
       <span class="material-symbols-outlined">swords</span>
     </div>
   </div>
@@ -68,23 +68,23 @@
       {{ currentPage() }}
     </div>
 
-    @if (currentPage() + 1 <= pagination().lastPage) {
+    @if (currentPage() + 1 <= pagination()!.lastPage) {
       <div class="btn-wrapper action-page" (click)="goToPage(currentPage() + 1)">
         {{ currentPage() + 1 }}
       </div>
     }
 
-    @if (currentPage() + 3 <= pagination().lastPage) {
+    @if (currentPage() + 3 <= pagination()!.lastPage) {
       <div class="ellipsis">···</div>
     }
 
-    @if (currentPage() + 1 < pagination().lastPage) {
-      <div class="btn-wrapper action-page" (click)="goToPage(pagination().lastPage)">
-        {{ pagination().lastPage }}
+    @if (currentPage() + 1 < pagination()!.lastPage) {
+      <div class="btn-wrapper action-page" (click)="goToPage(pagination()!.lastPage)">
+        {{ pagination()!.lastPage }}
       </div>
     }
 
-    @if (currentPage() !== pagination().lastPage) {
+    @if (currentPage() !== pagination()!.lastPage) {
       <button class="action-page btn-wrapper" (click)="nextPage()">
         <span class="material-symbols-outlined">arrow_right</span>
       </button>

@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal, WritableSignal } from '@angular/core';
+import { Component, computed, effect, inject, signal, WritableSignal } from '@angular/core';
 import { SingleEliminationService } from '../single-elimination.service';
 import { SingleEliminationItem } from "./single-elimination-item/single-elimination-item";
 import { ActivatedRoute, Router, RouterLinkActive, RouterLinkWithHref } from "@angular/router";
@@ -23,6 +23,12 @@ export class SingleEliminationList {
   limit = signal(10);
   dateFilter = signal('Recientes');
 
+  private lastPagination = signal<PaginationMeta>({
+    total: 0,
+    page: 1,
+    lastPage: 1,
+  });
+
   readonly seResource = rxResource({
     params: () => ({
       page: this.currentPage(),
@@ -41,14 +47,8 @@ export class SingleEliminationList {
     return this.seResource.value()!.data
   });
 
-  // Manejo de esta manera la paginacion para que se sigan mostrando las opciones de filtrado aunque haya errores
-  // Y no rompa con la estetica del programa.
-  pagination = computed(() => {
-    if (this.seResource.error() || !this.seResource.hasValue()) {
-      return { total: 0, page: 1, lastPage: 1 } as PaginationMeta;
-    }
-    return this.seResource.value().meta;
-  });
+  pagination = computed(() => this.lastPagination());
+
 
   isLoading = this.seResource.isLoading;
   error = computed(() => this.seResource.error() as HttpErrorResponse);
@@ -68,6 +68,12 @@ export class SingleEliminationList {
       this.limit.set(limit)
       this.dateFilter.set(dateFilter);
       this.seService.loadTournamentsData(page, limit, dateFilter);
+    });
+
+    effect(() => {
+      if (this.seResource.hasValue()) {
+        this.lastPagination.set(this.seResource.value()!.meta);
+      }
     });
   }
 

@@ -10,6 +10,7 @@ import { MatchComponent } from "./match/match.component";
 import { Match } from './match/match.model';
 import { PaginationMeta } from '../../common/models/pagination-meta.interface';
 import { setErrorMessage } from '../../error-message';
+import { skip } from 'rxjs';
 
 @Component({
   selector: 'app-matches-list',
@@ -26,10 +27,14 @@ export class MatchesList {
   limit = signal(10);
   dateFilter = signal('Recientes');
 
-  // loader was renamed to stream in rxResource in v20 (rxResource).
-  // also request was renamed to params:
-  // link to resource: https://www.youtube.com/watch?v=_KyCmpMlVTc&list=LL&index=2
+  // Variable para mantener la paginacion y que no haya parpadeos a la hora de cambiar de pagina.
+  private lastPagination = signal<PaginationMeta>({
+    total: 0,
+    page: 1,
+    lastPage: 1,
+  });
 
+  // link to resource: https://www.youtube.com/watch?v=_KyCmpMlVTc&list=LL&index=2
   readonly matchesResource = rxResource({
     params: () => ({
       page: this.currentPage(),
@@ -48,14 +53,7 @@ export class MatchesList {
     return this.matchesResource.value()!.data
   });
 
-  // Manejo de esta manera la paginacion para que se sigan mostrando las opciones de filtrado aunque haya errores
-  // Y no rompa con la estetica del programa.
-  pagination = computed(() => {
-    if (this.matchesResource.error() || !this.matchesResource.hasValue()) {
-      return { total: 0, page: 1, lastPage: 1 } as PaginationMeta;
-    }
-    return this.matchesResource.value().meta;
-  });
+  pagination = computed(() => this.lastPagination());
 
   isLoading = this.matchesResource.isLoading;
   error = computed(() => this.matchesResource.error() as HttpErrorResponse);
@@ -73,6 +71,12 @@ export class MatchesList {
       this.dateFilter.set(params['dateFilter'] || 'Recientes');
     });
 
+    // lo mando a llamar asi para que se le asigne solo la primera vez el valor de la paginacion.
+    effect(() => {
+      if (this.matchesResource.hasValue()) {
+        this.lastPagination.set(this.matchesResource.value()!.meta);
+      }
+    });
   }
 
   prevPage() {

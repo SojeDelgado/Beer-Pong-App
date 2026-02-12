@@ -5,14 +5,15 @@ import { inject, Injectable, signal } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
 // RxJS
 import { catchError, Observable, throwError } from "rxjs";
+// Services
+import { ErrorService } from "../../shared/error.service";
 // Interfaces
 import { SingleEliminationMatch } from "./models/single-elimination-match.model";
-import { SingleEliminationResponse } from "./models/single-elimination-response.interface";
+import { TournamentResponse } from "../../common/models/tournament-response.interface";
 // Common
 import { UpdateTournament } from "../../common/models/update-tournament.model";
 import { NewTournament } from "../../common/models/new-tournament.model";
 import { UpdateTournamentMatch } from "../../common/models/update-tournament-match.model";
-import { ErrorService } from "../../shared/error.service";
 import { TournamentFieldsResponse } from "./models/single-elimination-by-id-response";
 
 
@@ -30,14 +31,14 @@ export class SingleEliminationService {
     loadTournamentsData(
         page: number = 1, limit: number = 10,
         dateFilter: string = 'Recientes'
-    ): Observable<SingleEliminationResponse> {
+    ): Observable<TournamentResponse> {
         const params = new HttpParams()
             .set('page', page)
             .set('limit', limit)
             .set('dateFilter', dateFilter);
 
         return this.httpClient
-        .get<SingleEliminationResponse>(this.singleEliminationUrl, { params });
+            .get<TournamentResponse>(this.singleEliminationUrl, { params });
     }
 
     getSingleEliminationById(id: string, fields?: string): Observable<TournamentFieldsResponse> {
@@ -47,7 +48,7 @@ export class SingleEliminationService {
         }
 
         return this.httpClient
-        .get<TournamentFieldsResponse>( `${this.singleEliminationUrl}/${id}`, { params } );
+            .get<TournamentFieldsResponse>(`${this.singleEliminationUrl}/${id}`, { params });
     }
 
     getMatchesById(id: string): Observable<SingleEliminationMatch[]> {
@@ -56,42 +57,42 @@ export class SingleEliminationService {
 
     createSingleElimination(tournament: NewTournament) {
         return this.httpClient.post(`${this.singleEliminationUrl}`, tournament)
-        .pipe(
-            catchError(() => {
-                this.errorService.showError('Fallo al crear un torneo.');
-                return throwError(() => new Error('Fallo al crear un torneo.'))
-            })
-        )
+            .pipe(
+                catchError(() => {
+                    this.errorService.showError('Fallo al crear un torneo.');
+                    return throwError(() => new Error('Fallo al crear un torneo.'))
+                })
+            )
     }
 
     updateTournamentMatch(id: string, matchId: number, updateTournamentMatch: UpdateTournamentMatch) {
         return this.httpClient.patch(`${this.singleEliminationUrl}/${id}/matches/${matchId}`, updateTournamentMatch)
-        .pipe(
-            catchError((err) => {
-                this.errorService.showError(`Fallo al actualizar el partido`);
-                return throwError(() => new Error('Fallo al actualizar un torneo.'));
-            })
-        )
+            .pipe(
+                catchError((err) => {
+                    this.errorService.showError(`Fallo al actualizar el partido`);
+                    return throwError(() => new Error('Fallo al actualizar un torneo.'));
+                })
+            )
     }
 
     finishTournament(id: string) {
-        // Post null para que no se queje ts. (En el backend no pide un body).
+        // body null para que no se queje ts. (En el backend no pide un body).
         return this.httpClient.post(`${this.singleEliminationUrl}/${id}/finish-tournament`, null)
-        .pipe(
-            catchError((err) => {
-                this.errorService.showError(`Fallo al intentar terminar un torneo.`);
-                return throwError(() => new Error('Fallo al intentar terminar un torneo.'));
-            })
-        )
+            .pipe(
+                catchError((err) => {
+                    this.errorService.showError(`Fallo al intentar terminar un torneo.`);
+                    return throwError(() => new Error('Fallo al intentar terminar un torneo.'));
+                })
+            )
     }
 
-    // No component is implementing this. At the moment.
+    // At the moment no component is using this method.
     update(id: string, body: UpdateTournament) {
         return this.httpClient.patch(`${this.singleEliminationUrl}/${id}`, body);
     }
 
     // Metodo para notificar el cambio.
-    notifyChange(){
-        this.refreshTrigger.update( v=> v + 1);
+    notifyChange() {
+        this.refreshTrigger.update(v => v + 1);
     }
 }

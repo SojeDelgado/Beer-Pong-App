@@ -19,7 +19,7 @@
                 <div>
                     <label for="totalFinalist">Numero de finalistas</label>
                 </div>
-                <span>Max: {{fields()?.totalPlayers}} </span>
+                <span>Max: {{fields().totalPlayers}} </span>
                 <div>
                     <input type="number" formControlName="totalFinalist">
                 </div>
@@ -61,7 +61,7 @@
 
 <app-league-table [tournamentId]="roundRobinId()" [matches]="matches()" [fields]="fields()" />
 
-@if (fields()?.status === "Clasificacion Completada") {
+@if (fields().status === "Clasificacion Completada") {
 <div class="end-button">
     <button type="submit" (click)="clasificationDialog.showModal()">
         JUGAR FINALES
@@ -70,13 +70,13 @@
 }
 
 
-@if( fields()?.status !== 'Pendiente' || fields()?.status === 'Completado' ) {
+@if( seMatches().length !== 0 ) {
 <div class="end-button">
     <app-bracket [matches]="seMatches() " [fields]="fields()" (submitUpdate)="handleSingleSubmit($event)" />
 </div>
 }
 
-@if (fields()?.status === "Completado") {
+@if (fields().status === "Completado") {
 <div class="end-button">
     <button type="submit" (click)="finishDialog.showModal()">
         Terminar torneo
@@ -84,12 +84,12 @@
 </div>
 }
 
-@if (fields()?.winner) {
+@if (fields().winner) {
 <div class="winner-container">
     <span class="winner-label">Ganador</span>
     <div class="winner-card">
         <h1 class="winner-name">
-            {{ fields().winner.nickname }}
+            {{ fields().winner?.nickname }}
         </h1>
     </div>
 </div>
