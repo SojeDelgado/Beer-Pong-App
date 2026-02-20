@@ -57,40 +57,58 @@
     </div>
 </dialog>
 
-<app-leaderboard [results]="matches()" />
+<div class="container">
 
-<app-league-table [tournamentId]="roundRobinId()" [matches]="matches()" [fields]="fields()" />
-
-@if (fields().status === "Clasificacion Completada") {
-<div class="end-button">
-    <button type="submit" (click)="clasificationDialog.showModal()">
-        JUGAR FINALES
-    </button>
-</div>
-}
-
-
-@if( seMatches().length !== 0 ) {
-<div class="end-button">
-    <app-bracket [matches]="seMatches() " [fields]="fields()" (submitUpdate)="handleSingleSubmit($event)" />
-</div>
-}
-
-@if (fields().status === "Completado") {
-<div class="end-button">
-    <button type="submit" (click)="finishDialog.showModal()">
-        Terminar torneo
-    </button>
-</div>
-}
-
-@if (fields().winner) {
-<div class="winner-container">
-    <span class="winner-label">Ganador</span>
-    <div class="winner-card">
-        <h1 class="winner-name">
-            {{ fields().winner?.nickname }}
-        </h1>
+    <div class="toggle-container">
+        <button class="toggle-btn" (click)="toggleTable()">
+            <span class="material-symbols-outlined">
+                {{ showTable() ? 'visibility_off' : 'visibility' }}
+            </span>
+        </button>
     </div>
+
+    <app-leaderboard [results]="matches()" />
+    <!-- <hr class="separator"> -->
+
+
+    @if (showTable()) {
+    <div class="table-section">
+        <app-league-table [tournamentId]="roundRobinId()" [matches]="matches()" [fields]="fields()" />
+
+        @if (fields().status === "Clasificacion Completada") {
+        <div class="end-button">
+            <button type="submit" (click)="clasificationDialog.showModal()">
+                JUGAR FINALES
+            </button>
+        </div>
+        }
+    </div>
+    }
+
+
+    @if( seMatches().length !== 0 ) {
+    <div class="end-button">
+        <app-bracket [matches]="seMatches() " [fields]="fields()" (submitUpdate)="handleSingleSubmit($event)" />
+    </div>
+    }
+
+    @if (fields().status === "Completado") {
+    <div class="end-button">
+        <button type="submit" (click)="finishDialog.showModal()">
+            Terminar torneo
+        </button>
+    </div>
+    }
+
+    @if (fields().winner) {
+    <div class="winner-container">
+        <span class="winner-label">Ganador</span>
+        <div class="winner-card">
+            <h1 class="winner-name">
+                {{ fields().winner?.nickname }}
+            </h1>
+        </div>
+    </div>
+    }
+
 </div>
-}

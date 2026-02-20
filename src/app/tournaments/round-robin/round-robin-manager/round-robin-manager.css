@@ -60,6 +60,10 @@ dialog .text {
   justify-content: center;
 }
 
+.container {
+  min-width: 80vh;
+}
+
 .winner-container {
   display: flex;
   flex-direction: column;
@@ -87,7 +91,6 @@ dialog .text {
   overflow: hidden;
 }
 
-/* Un sutil reflejo superior para dar profundidad */
 .winner-card::after {
   content: '';
   position: absolute;
@@ -116,4 +119,62 @@ dialog .text {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Separador */
+.toggle-container {
+  position: sticky;
+  margin: -2rem 0 -2rem -5rem;
+  padding: 0;
+  filter: opacity(30%);
+
+}
+
+.toggle-container:hover {
+  filter: opacity(50%);
+
+}
+
+.toggle-btn {
+  display: flex;
+  align-items: center;
+  background: var(--bg-light);
+  color: var(--text);
+  border: var(--border-light-card);
+  padding: .5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.toggle-btn:hover {
+  border-color: var(--text-secondary);
+  background: var(--bg-dark);
+}
+
+.toggle-btn span {
+  font-size: 20px;
+  color: var(--text-secondary);
+}
+
+.table-section {
+  animation: slideDown 0.3s ease-out;
+  overflow: hidden;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.separator {
+  border: none;
+  border-bottom: var(--border-light-card);
+  margin: 2rem 0;
 }
