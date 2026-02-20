@@ -1,4 +1,4 @@
-<div class="box" [routerLink]="['/round-robin', roundRobin().id, 'matches']">
+<div class="box" [routerLink]="['./', roundRobin().id, 'matches']">
     <div class="row">
         <div class="tittle">
             <h3>{{roundRobin().name}}</h3>
@@ -39,11 +39,3 @@
         }
     </div>
 </div>
-
-<!-- <header [routerLink]="['/round-robin', roundRobin().id, 'matches']">
-    <div>
-        <h4>{{ roundRobin().name }}</h4>
-        <span> {{ roundRobin().place }} </span>
-        <span> {{ roundRobin().createdAt | date: 'd/M/yy' }} {{ roundRobin().createdAt | date: 'shortTime'}}</span>
-    </div>
-</header> -->

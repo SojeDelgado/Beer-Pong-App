@@ -1,45 +1,47 @@
-<dialog #finishDialog (click)="closeOnBackdrop($event, finishDialog)">
-    <div class="close" (click)="finishDialog.close()">
-        <span class="material-symbols-outlined icon">
-            close
-        </span>
-    </div>
-
-    <div class="title">
-        <h2>¿Terminar el partido?</h2>
-    </div>
-
-    <div>
-    </div>
-
-    <div class="text">
-        <span>Si terminas el partido no lo podras modificar mas tarde</span>
-    </div>
-
-    <div class="dialog-buttons">
-        <button type="submit" (click)="finishDialog.close()">Cancelar</button>
-        <button type="submit" (click)="handleTournamentFinish()" (click)="finishDialog.close()">Aceptar</button>
-    </div>
-</dialog>
-
-<app-bracket [matches]="matches()" [fields]="fields()"
+<div class="container">
+    <dialog #finishDialog (click)="closeOnBackdrop($event, finishDialog)">
+        <div class="close" (click)="finishDialog.close()">
+            <span class="material-symbols-outlined icon">
+                close
+            </span>
+        </div>
+        
+        <div class="title">
+            <h2>¿Terminar el partido?</h2>
+        </div>
+        
+        <div>
+        </div>
+        
+        <div class="text">
+            <span>Si terminas el partido no lo podras modificar mas tarde</span>
+        </div>
+        
+        <div class="dialog-buttons">
+            <button type="submit" (click)="finishDialog.close()">Cancelar</button>
+            <button type="submit" (click)="handleTournamentFinish()" (click)="finishDialog.close()">Aceptar</button>
+        </div>
+    </dialog>
+    
+    <app-bracket [matches]="matches()" [fields]="fields()"
     (submitUpdate)="handleSingleSubmit($event)" />
-
-@if (fields().status === "Completado") {
-<div class="end-button">
-    <button type="submit" (click)="finishDialog.showModal()">
-        Terminar torneo
-    </button>
+    
+    @if (fields().status === "Completado") {
+        <div class="end-button">
+            <button type="submit" (click)="finishDialog.showModal()">
+                Terminar torneo
+            </button>
+        </div>
+    }
+    
+    @if (fields().winner) {
+        <div class="winner-container">
+            <span class="winner-label">Ganador</span>
+            <div class="winner-card">
+                <h1 class="winner-name">
+                    {{ fields().winner!.nickname }}
+                </h1>
+            </div>
+        </div>
+    }
 </div>
-}
-
-@if (fields().winner) {
-<div class="winner-container">
-    <span class="winner-label">Ganador</span>
-    <div class="winner-card">
-        <h1 class="winner-name">
-            {{ fields().winner!.nickname }}
-        </h1>
-    </div>
-</div>
-}

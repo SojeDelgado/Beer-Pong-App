@@ -1,4 +1,4 @@
-import { Component, computed, effect, EnvironmentInjector, inject, input } from '@angular/core';
+import { Component, computed, effect, EnvironmentInjector, inject, input, signal } from '@angular/core';
 import { RoundRobinService } from '../round-robin.service';
 import { LeagueTable } from "../league-table/league-table";
 import { rxResource, toObservable, toSignal } from '@angular/core/rxjs-interop';
@@ -134,7 +134,7 @@ export class RoundRobinManager {
 
   handleTournamentFinish() {
     this.rrService.finishTournament(this.roundRobinId()).subscribe({
-      next: () => { 
+      next: () => {
         this.fieldsResource.reload();
       }
     })
@@ -155,4 +155,10 @@ export class RoundRobinManager {
   }
 
 
+  // Mostrar leaguetable
+  showTable = signal<boolean>(true);
+
+  toggleTable() {
+    this.showTable.update(v => !v);
+  }
 }
