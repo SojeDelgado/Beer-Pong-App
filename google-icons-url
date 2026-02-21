@@ -1,0 +1,4 @@
+"https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=add,arrow_drop_down,arrow_left,arrow_right,check_small,compare_arrows,format_list_numbered,group,invert_colors,leaderboard,menu,network_ping,person,swords,trophy,upcoming,visibility,visibility_off"
+
+
+Pegar el link en el navegador y volver a copiar el enlace que viene en el "src:" y colocarlo en el navegador. se descargara un archivo woff y lo encontraremos en: public/icons
