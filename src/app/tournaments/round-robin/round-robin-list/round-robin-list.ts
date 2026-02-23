@@ -1,7 +1,7 @@
 import { Component, computed, effect, inject, signal, WritableSignal } from '@angular/core';
 import { RoundRobinService } from '../round-robin.service';
 import { RoundRobinItem } from "./round-robin-item/round-robin-item";
-import { ActivatedRoute, Router, RouterLinkActive, RouterLinkWithHref } from "@angular/router";
+import { ActivatedRoute, Router, RouterLinkActive } from "@angular/router";
 import { rxResource } from '@angular/core/rxjs-interop';
 import { TournamentData } from '../../../common/models/single-elimination-data.model';
 import { PaginationMeta } from '../../../common/models/pagination-meta.interface';
@@ -10,7 +10,7 @@ import { setErrorMessage } from '../../../error-message';
 
 @Component({
   selector: 'app-round-robin-list',
-  imports: [RoundRobinItem, RouterLinkActive, RouterLinkWithHref],
+  imports: [RoundRobinItem, RouterLinkActive],
   templateUrl: './round-robin-list.html',
   styleUrl: './round-robin-list.css',
 })

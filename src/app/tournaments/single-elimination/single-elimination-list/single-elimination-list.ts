@@ -1,7 +1,7 @@
 import { Component, computed, effect, inject, signal, WritableSignal } from '@angular/core';
 import { SingleEliminationService } from '../single-elimination.service';
 import { SingleEliminationItem } from "./single-elimination-item/single-elimination-item";
-import { ActivatedRoute, Router, RouterLinkActive, RouterLinkWithHref } from "@angular/router";
+import { ActivatedRoute, Router, RouterLinkActive } from "@angular/router";
 import { rxResource } from '@angular/core/rxjs-interop';
 import { TournamentData } from '../../../common/models/single-elimination-data.model';
 import { PaginationMeta } from '../../../common/models/pagination-meta.interface';
@@ -10,7 +10,7 @@ import { setErrorMessage } from '../../../error-message';
 
 @Component({
   selector: 'app-single-elimination-list',
-  imports: [SingleEliminationItem, RouterLinkActive, RouterLinkWithHref],
+  imports: [SingleEliminationItem, RouterLinkActive],
   templateUrl: './single-elimination-list.html',
   styleUrl: './single-elimination-list.css',
 })
